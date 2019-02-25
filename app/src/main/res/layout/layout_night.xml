@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@drawable/pleine_lune">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="89dp" android:id="@+id/textView2"
+            tools:text="La nuit tombe \n Endormez-vous "
+            android:textColor="@color/colorBlanc" android:textSize="36sp"
+            android:textStyle="bold"
+            android:shadowColor="@android:color/black" android:shadowDx="1.6" android:shadowDy="1.6"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="97dp" android:layout_marginTop="52dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
+</android.support.constraint.ConstraintLayout>
