@@ -6,5 +6,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".SignInActivity">
-
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/emailContainerIn"
+            android:hint="@string/adresse_mail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/passwordContainerIn" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="textWebEmailAddress"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:ems="10"
+            android:hint="@string/password"
+            android:id="@+id/passwordContainerIn"
+            app:layout_constraintTop_toBottomOf="@+id/emailContainerIn"
+            app:layout_constraintBottom_toTopOf="@+id/loginButton"
+            app:layout_constraintStart_toStartOf="@+id/emailContainerIn"
+            app:layout_constraintEnd_toEndOf="@+id/emailContainerIn" android:inputType="textPassword"/>
+    <Button
+            android:text="@string/sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordContainerIn"
+            app:layout_constraintStart_toStartOf="@+id/passwordContainerIn"
+            app:layout_constraintEnd_toEndOf="@+id/passwordContainerIn"/>
 </android.support.constraint.ConstraintLayout>
