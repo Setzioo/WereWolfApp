@@ -3,6 +3,6 @@
     <string name="accueil">Accueil</string>
     <string name="creer_une_partie">Créer une partie</string>
     <string name="rejoindre">Rejoindre</string>
-    <string name="nombre_de_joueurs">Nombre de joueurs: -  4  +</string>
+    <string name="nombre_de_joueurs">Nombre de joueurs</string>
     <string name="nom_de_la_partie">nom de la partie</string>
 </resources>
