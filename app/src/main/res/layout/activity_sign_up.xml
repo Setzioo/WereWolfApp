@@ -6,5 +6,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".SignUpActivity">
-
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/emailContainerUp"
+            android:hint="@string/adresse_mail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/passwordContainerUp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="textWebEmailAddress"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/passwordContainerUp"
+            android:hint="@string/password"
+            app:layout_constraintTop_toBottomOf="@+id/emailContainerUp"
+            app:layout_constraintBottom_toTopOf="@+id/signButton"
+            app:layout_constraintStart_toStartOf="@+id/emailContainerUp"
+            app:layout_constraintEnd_toEndOf="@+id/emailContainerUp"/>
+    <Button
+            android:text="@string/sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/signButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordContainerUp"
+            app:layout_constraintStart_toStartOf="@+id/passwordContainerUp"
+            app:layout_constraintEnd_toEndOf="@+id/passwordContainerUp"/>
 </android.support.constraint.ConstraintLayout>
