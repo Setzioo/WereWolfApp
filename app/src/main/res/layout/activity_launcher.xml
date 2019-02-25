@@ -9,12 +9,21 @@
         android:background="@color/colorBackground">
 
     <TextView
-            android:text="@string/launcher"
+            android:text="Touchez pour commencer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2" app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/LaunchText"
+            android:textSize="30sp" android:textColor="@android:color/white" android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"/>
+    <ImageView
+            android:src="@drawable/loup_garou"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:id="@+id/imageView"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-    />
+            app:layout_constraintVertical_bias="0.39999998"/>
 </android.support.constraint.ConstraintLayout>
