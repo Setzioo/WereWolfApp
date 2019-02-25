@@ -9,4 +9,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="adresse_mail">Adresse mail</string>
     <string name="password">Password</string>
+    <string name="launcher">Launcher</string>
+    <string name="bouton_retour">Bouton retour</string>
+    <string name="bouton_de_deconnexion">bouton de deconnexion</string>
+    <string name="bouton_parametres">bouton parametres</string>
 </resources>

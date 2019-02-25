@@ -5,7 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity" android:id="@+id/loginLayout">
+        tools:context=".LoginActivity" android:id="@+id/loginLayout"
+        android:background="@color/colorBackground">
     <Button
             android:text="@string/sign_in"
             android:layout_width="wrap_content"
@@ -24,4 +25,15 @@
             app:layout_constraintEnd_toEndOf="@+id/signInButton" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signInButton" app:layout_constraintHorizontal_bias="0.5"
             android:textSize="30sp"/>
+    <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="60dp" app:srcCompat="@android:drawable/ic_menu_revert"
+            android:id="@+id/returnLoginButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0" app:layout_constraintHorizontal_bias="0.0"
+            android:background="@color/colorBackground" android:scaleType="fitCenter"
+            android:contentDescription="@string/bouton_retour"/>
 </android.support.constraint.ConstraintLayout>

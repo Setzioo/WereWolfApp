@@ -17,6 +17,10 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+        returnSignInButton.setOnClickListener{
+            finish()
+        }
+
         var email:String
         var password:String
 
@@ -32,7 +36,6 @@ class SignInActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, start HomeActivity
                         Log.d("TAG", "signInWithEmail:success")
-                        val user = auth.currentUser
                         val intent = Intent(this, HomeActivity::class.java)
                         startActivity(intent)
                     } else {

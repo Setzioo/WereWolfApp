@@ -16,6 +16,10 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        returnSignUpButton.setOnClickListener{
+            finish()
+        }
+
         var email:String
         var password:String
 
@@ -31,7 +35,6 @@ class SignUpActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, start HomeActivity
                         Log.d("TAG", "createUserWithEmail:success")
-                        val user = auth.currentUser
 
                         val intent = Intent(this, HomeActivity::class.java)
                         startActivity(intent)
