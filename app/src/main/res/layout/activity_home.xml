@@ -36,4 +36,24 @@
             app:layout_constraintStart_toStartOf="@+id/createButton"
             app:layout_constraintEnd_toEndOf="@+id/createButton"
             app:layout_constraintHorizontal_bias="1.0"/>
+    <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp" app:srcCompat="@android:drawable/ic_lock_power_off"
+            android:id="@+id/decoButton"
+            android:tint="@android:color/white" android:background="@color/colorBackground"
+            android:scaleType="fitCenter" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/createButton" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0" android:contentDescription="@string/bouton_de_deconnexion"/>
+    <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp" app:srcCompat="@android:drawable/ic_menu_preferences"
+            android:id="@+id/settingButton"
+            android:background="@color/colorBackground"
+            android:scaleType="fitCenter" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/decoButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.0" app:layout_constraintHorizontal_bias="1.0"
+            android:tint="@android:color/white" android:contentDescription="@string/bouton_parametres"/>
 </android.support.constraint.ConstraintLayout>

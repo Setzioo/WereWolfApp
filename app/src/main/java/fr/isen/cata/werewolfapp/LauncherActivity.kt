@@ -14,12 +14,10 @@ class LauncherActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launcher)
 
-        launcherLayout.setOnTouchListener { v: View, m: MotionEvent ->
+        launcherLayout.setOnClickListener { v: View ->
 
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            // Perform tasks here
-            true
         }
     }
 
