@@ -1,4 +1,4 @@
-package models
+package fr.isen.cata.werewolfapp
 
 open class RoleModel (
     val id: Int,

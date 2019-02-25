@@ -1,4 +1,4 @@
-package models
+package fr.isen.cata.werewolfapp
 
 data class PlayerModel (
     val pseudo: String,
