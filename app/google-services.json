@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "332632544544-179mcsnccnsd75sb075k01chuqvuga1r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.isen.cata.werewolfapp",
+            "certificate_hash": "efad44f2ed220119bb83e85c401a102eac0ae766"
+          }
+        },
+        {
           "client_id": "332632544544-s20vjrdq4b0frngc64b8ib5nrsu1j5vs.apps.googleusercontent.com",
           "client_type": 3
         }
