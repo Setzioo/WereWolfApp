@@ -20,6 +20,11 @@
         <activity android:name=".GameActivity">
         </activity>
         <activity android:name=".BeginGameActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".JoinActivity">
         </activity>
@@ -32,11 +37,7 @@
         <activity android:name=".HomeActivity">
         </activity>
         <activity android:name=".LauncherActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 
