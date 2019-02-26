@@ -6,4 +6,5 @@ class LobbyModel{
     var name: String = ""
     var nbPlayer: Int = 0
     var listPlayer: List<String>? = null
+    var startGame: Boolean = false
 }

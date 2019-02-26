@@ -21,51 +21,25 @@ class BeginGameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_begin_game)
-        mLobbyReference = FirebaseDatabase.getInstance().reference.child("Lobby")
-        Log.e("TAG", mLobbyReference.toString())
-
-        var listPlayer = arrayListOf<Int>()
-        listPlayer.add(3)
-        listPlayer.add(2)
-        //val lobbyTest : LobbyModel = LobbyModel(3, 2, "lobby de test", listPlayer)
-        /*mLobbyReference.addListenerForSingleValueEvent(object: ValueEventListener{
-
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-                // ...
-            }
-        })*/
 
         mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
 
-
-
-        mLobbyReference.addListenerForSingleValueEvent(object : ValueEventListener {
+        mLobbyReference.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var lobby: LobbyModel? = null
                 if (dataSnapshot.exists()) {
-
-                    //Log.e("TAG", "changeData")
-                    lobby = dataSnapshot.getValue(LobbyModel::class.java)
-
-                    //Log.e("TAG", lobby?.name.toString())
-
-                    //Log.e("TAG", "changeData")
                     lobby = dataSnapshot.child("Lobby/lobbytest").getValue(LobbyModel::class.java)
 
-                    //Log.e("TAG", lobby?.name)
-                    var playerList : MutableList<PlayerModel?> = arrayListOf()
-                    for (user in dataSnapshot.child("Users").children) {
-                        playerList.add(user.getValue(PlayerModel::class.java))
-                    }
+                    if(lobby!!.startGame){
+                        val playerList : MutableList<PlayerModel?> = arrayListOf()
 
-                    attributeRole(lobby, playerList)
+                        for (user in dataSnapshot.child("Users").children) {
+                            playerList.add(user.getValue(PlayerModel::class.java))
+                        }
+
+                        attributeRole(lobby, playerList)
+                    }
 
                 }
             }
@@ -82,18 +56,11 @@ class BeginGameActivity : AppCompatActivity() {
         Log.e("RECCUP", "attribute")
         lobby?.let {
             var id = it.id
-            var nbPlayer = lobby.nbPlayer
-            var listPlayer = lobby.listPlayer
-            /*var nbPlayer = 4
-            var listPlayer = listOf<String>(
-            "95gfhBLmLWef4soYEESPiIgSIXI3",
-            "UECUWHd6DJOopvadKfHcBoY9JSy1",
-            "f5lJpGohtZhC4ZygEGK4sywc3yz1",
-            "fYSWKCs5PHfz6bhTYPD4nAOWUkl1"
-        )*/
+            val nbPlayer = lobby.nbPlayer
+            val listPlayer = lobby.listPlayer
             val listPlayerInGame: List<PlayerModel?> = listOfUser.filter { user -> listPlayer!!.contains(user?.id) }
 
-            var roleList = getRandomRoles(nbPlayer)
+            val roleList = getRandomRoles(nbPlayer)
 
             listPlayerInGame.forEachIndexed { key, player ->
                 player?.role = roleList[key].name
