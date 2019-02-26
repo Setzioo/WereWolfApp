@@ -42,16 +42,16 @@ class CreateActivity : AppCompatActivity() {
         }
 
         createButton.setOnClickListener {
-            onCreate()
+            //onCreate()
         }
     }
 
     private fun onCreate() {
         val partyName: String = partyNameView.text.toString()
-        val idParty = 6
+        val idParty = "6"
 
         val mDatabase = FirebaseDatabase.getInstance().reference
-        val  listPlayer1: List<Int> = emptyList()
+        val  listPlayer1: List<String> = emptyList()
         val lobbyTest = LobbyModel()
         mDatabase.child("Lobby").child(partyName).setValue(lobbyTest)
 
