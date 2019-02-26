@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : AppCompatActivity() {
@@ -36,6 +37,9 @@ class SignUpActivity : AppCompatActivity() {
                         // Sign in success, start HomeActivity
                         Log.d("TAG", "createUserWithEmail:success")
 
+                        val id: String = auth.currentUser!!.uid
+                        createUser(id)
+
                         val intent = Intent(this, HomeActivity::class.java)
                         startActivity(intent)
 
@@ -49,5 +53,12 @@ class SignUpActivity : AppCompatActivity() {
                 }
         }
 
+    }
+
+    private fun createUser(userId: String) {
+        val userPseudo = "Wawa nudiste"
+        val userTest = PlayerModel(userId, userPseudo)
+        val mDatabase = FirebaseDatabase.getInstance().reference
+        mDatabase.child("Users").child(userId).setValue(userTest)
     }
 }
