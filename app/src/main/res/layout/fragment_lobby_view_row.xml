@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             tools:context=".LobbyViewRowFragment" android:id="@+id/recyclerLayout"
+                                             android:background="#444">
+
+    <TextView
+            android:layout_width="223dp"
+            android:layout_height="52dp"
+            android:text="" android:id="@+id/nameText"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="30sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="12dp" android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="1.0"
+            android:textAlignment="textStart"/>
+    <TextView
+            android:text=""
+            android:layout_width="130dp"
+            android:layout_height="42dp"
+            android:id="@+id/nbPlayerText"
+            android:textSize="18sp" android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAlignment="textStart"
+            android:layout_marginEnd="264dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameText" app:layout_constraintVertical_bias="0.0"
+            android:layout_marginBottom="8dp"/>
+    <View
+            android:id="@+id/divider"
+            android:layout_width="395dp"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintVertical_bias="1.0" app:layout_constraintHorizontal_bias="0.0"/>
+    <Button
+            android:text="@string/rejoindre"
+            android:layout_width="125dp"
+            android:layout_height="77dp"
+            android:id="@+id/joinButton" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/divider"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -19,4 +19,5 @@
     <string name="bouton_retour">Bouton retour</string>
     <string name="bouton_de_deconnexion">bouton de deconnexion</string>
     <string name="bouton_parametres">bouton parametres</string>
+    <string name="rejoindre">Rejoindre</string>
 </resources>
