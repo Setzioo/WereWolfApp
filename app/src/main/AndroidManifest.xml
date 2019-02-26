@@ -12,7 +12,7 @@
         <activity android:name=".UserSettingsActivity">
         </activity>
         <activity android:name=".SignUpActivity">
-        </activity>
+        </activity>3
         <activity android:name=".SignInActivity">
         </activity>
         <activity android:name=".EndGameActivity">

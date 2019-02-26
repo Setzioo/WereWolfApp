@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.firebase.ui.auth.data.model.User
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create.*
@@ -15,8 +16,6 @@ class CreateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create)
-
-        var mDatabase: DatabaseReference = FirebaseDatabase.getInstance().reference
 
         nbPlayerView.text = nbPlayer.toString()
 
@@ -48,10 +47,15 @@ class CreateActivity : AppCompatActivity() {
     }
 
     private fun onCreate() {
-        var partyName: String = partyNameView.text.toString()
+        val partyName: String = partyNameView.text.toString()
         val idParty = 6
-    }
 
+        val mDatabase = FirebaseDatabase.getInstance().reference
+        val  listPlayer1: List<Int> = emptyList()
+        val lobbyTest = LobbyModel(idParty, nbPlayer, listPlayer1, 5, partyName)
+        mDatabase.child("Lobby").child(partyName).setValue(lobbyTest)
+
+    }
 
 
 }
