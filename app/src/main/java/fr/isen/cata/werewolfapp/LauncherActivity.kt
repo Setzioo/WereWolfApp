@@ -5,6 +5,7 @@ import android.animation.ValueAnimator.INFINITE
 import android.animation.ValueAnimator.REVERSE
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -22,6 +23,8 @@ class LauncherActivity : Activity() {
         setContentView(R.layout.activity_launcher)
 
         animateLaunchText()
+        /*val mp = MediaPlayer.create (this, R.raw.sf_meute)
+        mp.start ()*/
        /* animateCards()
         object : CountDownTimer(30000, 1000) {
 
