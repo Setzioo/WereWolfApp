@@ -4,7 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.firebase.ui.auth.data.model.User
+//import com.firebase.ui.auth.data.model.User
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create.*
@@ -52,8 +52,8 @@ class CreateActivity : AppCompatActivity() {
 
         val mDatabase = FirebaseDatabase.getInstance().reference
         val  listPlayer1: List<Int> = emptyList()
-        val lobbyTest = LobbyModel(idParty, nbPlayer, listPlayer1, 5, partyName)
-        mDatabase.child("Lobby").child(partyName).setValue(lobbyTest)
+        //val lobbyTest = LobbyModel(idParty, nbPlayer, listPlayer1, 5, partyName)
+        //mDatabase.child("Lobby").child(partyName).setValue(lobbyTest)
 
     }
 

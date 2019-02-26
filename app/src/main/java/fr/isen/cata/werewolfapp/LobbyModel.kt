@@ -5,5 +5,5 @@ class LobbyModel{
     var masterId: Int = 0
     var name: String = ""
     var nbPlayer: Int = 0
-    var listPlayer: List<Int>? = null
-    }
+    var listPlayer: List<String>? = null
+}

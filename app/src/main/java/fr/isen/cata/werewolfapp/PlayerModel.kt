@@ -1,7 +1,7 @@
 package fr.isen.cata.werewolfapp
 
 class PlayerModel {
-    var id: Int = 0
+    var id: String = ""
     var pseudo: String = ""
     var avatar: String = ""
     var role: RoleModel? = null
