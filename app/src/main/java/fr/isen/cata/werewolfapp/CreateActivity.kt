@@ -52,7 +52,7 @@ class CreateActivity : AppCompatActivity() {
 
         val mDatabase = FirebaseDatabase.getInstance().reference
         val  listPlayer1: List<Int> = emptyList()
-        val lobbyTest = LobbyModel(idParty, nbPlayer, listPlayer1, 5, partyName)
+        val lobbyTest = LobbyModel()
         mDatabase.child("Lobby").child(partyName).setValue(lobbyTest)
 
     }
