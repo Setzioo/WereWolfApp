@@ -1,8 +1,9 @@
 package fr.isen.cata.werewolfapp
 
-data class LobbyModel(
-    val id: Int,
-    val masterId: Int,
-    val name: String,
-    val listPlayer: List<PlayerModel>
-)
+class LobbyModel{
+    var id: Int = 0
+    var masterId: Int = 0
+    var name: String = ""
+    var nbPlayer: Int = 0
+    var listPlayer: List<Int>? = null
+    }
