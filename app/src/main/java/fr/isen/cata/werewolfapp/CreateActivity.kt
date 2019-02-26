@@ -69,11 +69,11 @@ class CreateActivity : AppCompatActivity() {
         }
 
         createButton.setOnClickListener {
-            onCreate()
+            onCreateLobby()
         }
     }
 
-    private fun onCreate() {
+    private fun onCreateLobby() {
         val partyName: String = partyNameView.text.toString()
         val mDatabase = FirebaseDatabase.getInstance().reference
         var listPlayer1: MutableList<String> = arrayListOf()
