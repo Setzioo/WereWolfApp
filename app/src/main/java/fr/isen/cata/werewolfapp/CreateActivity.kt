@@ -1,21 +1,50 @@
 package fr.isen.cata.werewolfapp
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
-//import com.firebase.ui.auth.data.model.User
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_create.*
 
 class CreateActivity : AppCompatActivity() {
-
+/*
     private var nbPlayer = 4
+    private lateinit var auth: FirebaseAuth
+    private var currentPlayer: PlayerModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create)
+
+        auth = FirebaseAuth.getInstance()
+        val id: String = auth.currentUser!!.uid
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    for(i in dataSnapshot.children){
+                        user.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for(i in user){
+                        if(i?.id == id){
+                            currentPlayer = i
+                            Log.d("USERID------", currentPlayer!!.id)
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
 
         nbPlayerView.text = nbPlayer.toString()
 
@@ -47,15 +76,11 @@ class CreateActivity : AppCompatActivity() {
     }
 
     private fun onCreate() {
-        val partyName: String = partyNameView.text.toString()
-        val idParty = 6
-
-        val mDatabase = FirebaseDatabase.getInstance().reference
-        val  listPlayer1: List<Int> = emptyList()
-        //val lobbyTest = LobbyModel(idParty, nbPlayer, listPlayer1, 5, partyName)
-        //mDatabase.child("Lobby").child(partyName).setValue(lobbyTest)
-
-    }
-
-
+    val partyName: String = partyNameView.text.toString()
+    val mDatabase = FirebaseDatabase.getInstance().reference
+    var listPlayer1: MutableList<String> = arrayListOf()
+    listPlayer1.add(currentPlayer!!.id)
+    val lobbyTest = LobbyModel(currentPlayer!!.id, partyName, nbPlayer, listPlayer1)
+    mDatabase.child("Lobby").child(partyName).setValue(lobbyTest)
+}*/
 }

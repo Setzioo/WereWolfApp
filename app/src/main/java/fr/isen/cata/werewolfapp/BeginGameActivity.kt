@@ -51,10 +51,10 @@ class BeginGameActivity : AppCompatActivity() {
                 var lobby: LobbyModel? = null
                 if (dataSnapshot.exists()) {
 
-                    Log.e("TAG", "changeData")
+                    //Log.e("TAG", "changeData")
                     lobby = dataSnapshot.getValue(LobbyModel::class.java)
 
-                    Log.e("TAG", lobby?.name.toString())
+                    //Log.e("TAG", lobby?.name.toString())
 
                     //Log.e("TAG", "changeData")
                     lobby = dataSnapshot.child("Lobby/lobbytest").getValue(LobbyModel::class.java)
@@ -63,11 +63,6 @@ class BeginGameActivity : AppCompatActivity() {
                     var playerList : MutableList<PlayerModel?> = arrayListOf()
                     for (user in dataSnapshot.child("Users").children) {
                         playerList.add(user.getValue(PlayerModel::class.java))
-                    }
-                    for (player in playerList) {
-                        //Log.e("TAG", "flag")
-                        var p = player?.role
-                        Log.e("TEST PLAYER", p?.name)
                     }
 
                     attributeRole(lobby, playerList)
@@ -89,8 +84,8 @@ class BeginGameActivity : AppCompatActivity() {
             var id = it.id
             var nbPlayer = lobby.nbPlayer
             var listPlayer = lobby.listPlayer
-            //var nbPlayer = 4
-            /*var listPlayer = listOf<String>(
+            /*var nbPlayer = 4
+            var listPlayer = listOf<String>(
             "95gfhBLmLWef4soYEESPiIgSIXI3",
             "UECUWHd6DJOopvadKfHcBoY9JSy1",
             "f5lJpGohtZhC4ZygEGK4sywc3yz1",
@@ -98,20 +93,15 @@ class BeginGameActivity : AppCompatActivity() {
         )*/
             val listPlayerInGame: List<PlayerModel?> = listOfUser.filter { user -> listPlayer!!.contains(user?.id) }
 
-            listPlayerInGame.forEach {
-                Log.e("RECCUP", it?.pseudo)
-            }
-
             var roleList = getRandomRoles(nbPlayer)
 
             listPlayerInGame.forEachIndexed { key, player ->
-                player?.role = roleList[key]
+                player?.role = roleList[key].name
             }
-
-            for (p in listPlayerInGame) {
-                Log.e("PUT ROLE", p?.role?.name)
+            listPlayerInGame.forEach {
+                mDatabase = FirebaseDatabase.getInstance().reference.child("")
+                mDatabase.child("Users").child(it?.id.toString()).child("role").setValue(it?.role)
             }
-
         }
     }
 
@@ -275,3 +265,4 @@ class BeginGameActivity : AppCompatActivity() {
         return list
     }
 }
+
