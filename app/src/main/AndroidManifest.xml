@@ -29,8 +29,6 @@
         </activity>
         <activity android:name=".LoginActivity">
         </activity>
-        <activity android:name=".HomeActivity">
-        </activity>
         <activity android:name=".LauncherActivity">
         </activity>
         <activity android:name=".HomeActivity">
