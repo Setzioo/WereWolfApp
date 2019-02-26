@@ -16,7 +16,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/passwordContainerIn" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="textWebEmailAddress"/>
+            android:inputType="textWebEmailAddress" android:textSize="24sp" android:textColor="@color/colorBlanc"
+            android:textColorLink="@color/colorBlanc" android:textColorHint="@color/colorBlanc"
+            android:textColorHighlight="@color/colorBlanc"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="46dp"
@@ -26,7 +28,9 @@
             app:layout_constraintTop_toBottomOf="@+id/emailContainerIn"
             app:layout_constraintBottom_toTopOf="@+id/loginButton"
             app:layout_constraintStart_toStartOf="@+id/emailContainerIn"
-            app:layout_constraintEnd_toEndOf="@+id/emailContainerIn" android:inputType="textPassword"/>
+            app:layout_constraintEnd_toEndOf="@+id/emailContainerIn" android:inputType="textPassword"
+            android:textSize="24sp" android:textColor="@color/colorBlanc" android:textColorLink="@color/colorBlanc"
+            android:textColorHint="@color/colorBlanc"/>
     <Button
             android:text="@string/sign_in"
             android:layout_width="wrap_content"
@@ -35,7 +39,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordContainerIn"
             app:layout_constraintStart_toStartOf="@+id/passwordContainerIn"
-            app:layout_constraintEnd_toEndOf="@+id/passwordContainerIn"/>
+            app:layout_constraintEnd_toEndOf="@+id/passwordContainerIn"
+            android:bottomRightRadius="15dp"
+            android:bottomLeftRadius="15dp"
+            android:topLeftRadius="15dp"
+            android:topRightRadius="15dp"
+
+            android:background="@drawable/buttonshape" android:textSize="24sp"/>
     <ImageButton
             android:layout_width="80dp"
             android:layout_height="60dp" app:srcCompat="@android:drawable/ic_menu_revert"
