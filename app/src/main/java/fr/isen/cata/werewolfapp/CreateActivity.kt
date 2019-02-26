@@ -51,4 +51,7 @@ class CreateActivity : AppCompatActivity() {
         var partyName: String = partyNameView.text.toString()
         val idParty = 6
     }
+
+
+
 }
