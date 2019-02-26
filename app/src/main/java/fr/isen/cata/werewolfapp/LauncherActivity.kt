@@ -8,8 +8,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.BounceInterpolator
 import kotlinx.android.synthetic.main.activity_launcher.*
+import android.os.CountDownTimer
+
+
 
 class LauncherActivity : Activity() {
 
@@ -18,6 +22,17 @@ class LauncherActivity : Activity() {
         setContentView(R.layout.activity_launcher)
 
         animateLaunchText()
+       /* animateCards()
+        object : CountDownTimer(30000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                LaunchText.setText("seconds remaining: " + millisUntilFinished / 1000)
+            }
+
+            override fun onFinish() {
+                LaunchText.setText("done!")
+            }
+        }.start()*/
 
         launcherLayout.setOnClickListener { v: View ->
 
@@ -25,6 +40,35 @@ class LauncherActivity : Activity() {
             startActivity(intent)
         }
     }
+   /* private fun animateCards() {
+        val valueAnimator = ValueAnimator.ofFloat(0f, 720f)
+
+        valueAnimator.addUpdateListener {
+            val value = it.animatedValue as Float
+
+            Cards.rotation =value
+
+        }
+        val valueAnimator1 = ValueAnimator.ofFloat(0f, 1f)
+
+        valueAnimator1.addUpdateListener {
+            val value = it.animatedValue as Float
+            Cards.alpha=value
+
+
+        }
+
+
+        valueAnimator.interpolator = AccelerateInterpolator()
+        valueAnimator.duration = 2000
+        valueAnimator1.interpolator = AccelerateInterpolator()
+        valueAnimator1.duration = 2000
+
+
+
+        valueAnimator.start()
+        valueAnimator1.start()
+    }*/
 
     private fun animateLaunchText() {
         val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
