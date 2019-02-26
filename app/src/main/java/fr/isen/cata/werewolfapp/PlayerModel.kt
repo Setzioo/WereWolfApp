@@ -6,7 +6,7 @@ class PlayerModel(_id: String="0", _pseudo: String=""/*, _avatar: Bitmap?=null, 
     var id: String = _id
     var pseudo: String = _pseudo
     var avatar: Bitmap? = null
-    var role: RoleModel? = null
+    var role: String = ""
     var state: Boolean = true
     var charmed: Boolean = false
     var connected: Boolean = false

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
+
 class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Adapter<LobbyAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -27,4 +28,5 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
         var name: TextView = itemView.findViewById(R.id.nameText)
         var nbPlayer: TextView = itemView.findViewById(R.id.nbPlayerText)
     }
+
 }
