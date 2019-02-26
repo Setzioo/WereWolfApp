@@ -12,7 +12,7 @@
         <activity android:name=".UserSettingsActivity">
         </activity>
         <activity android:name=".SignUpActivity">
-        </activity>3
+        </activity>
         <activity android:name=".SignInActivity">
         </activity>
         <activity android:name=".EndGameActivity">
@@ -29,9 +29,9 @@
         </activity>
         <activity android:name=".LoginActivity">
         </activity>
-        <activity android:name=".HomeActivity">
-        </activity>
         <activity android:name=".LauncherActivity">
+        </activity>
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -25,7 +25,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/passwordContainerUp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="textWebEmailAddress"/>
+            android:inputType="textWebEmailAddress" android:textSize="24sp" android:textColor="@color/colorBlanc"
+            android:textColorLink="@color/colorBlanc" android:textColorHint="@color/colorBlanc"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="46dp"
@@ -36,7 +37,9 @@
             app:layout_constraintTop_toBottomOf="@+id/emailContainerUp"
             app:layout_constraintBottom_toTopOf="@+id/signButton"
             app:layout_constraintStart_toStartOf="@+id/emailContainerUp"
-            app:layout_constraintEnd_toEndOf="@+id/emailContainerUp"/>
+            app:layout_constraintEnd_toEndOf="@+id/emailContainerUp" android:textColor="@color/colorBlanc"
+            android:textSize="24sp" android:textColorLink="@color/colorBlanc"
+            android:textColorHighlight="@color/colorBlanc" android:textColorHint="@color/colorBlanc"/>
     <Button
             android:text="@string/sign_up"
             android:layout_width="wrap_content"
@@ -45,5 +48,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordContainerUp"
             app:layout_constraintStart_toStartOf="@+id/passwordContainerUp"
-            app:layout_constraintEnd_toEndOf="@+id/passwordContainerUp"/>
+            app:layout_constraintEnd_toEndOf="@+id/passwordContainerUp"
+
+            android:background="@drawable/buttonshape" android:textSize="24sp"/>
 </android.support.constraint.ConstraintLayout>
