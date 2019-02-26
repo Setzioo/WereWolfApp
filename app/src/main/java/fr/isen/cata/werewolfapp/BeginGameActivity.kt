@@ -21,35 +21,26 @@ class BeginGameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_begin_game)
-        mLobbyReference = FirebaseDatabase.getInstance().reference.child("Lobby")
-        Log.e("TAG", mLobbyReference.toString())
 
-        var listPlayer = arrayListOf<Int>()
-        listPlayer.add(3)
-        listPlayer.add(2)
-        //val lobbyTest : LobbyModel = LobbyModel(3, 2, "lobby de test", listPlayer)
-        /*mLobbyReference.addListenerForSingleValueEvent(object: ValueEventListener{
+        mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-                // ...
-            }
-        })*/
-
-
-        mLobbyReference.addListenerForSingleValueEvent(object: ValueEventListener{
+        mLobbyReference.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var lobby: LobbyModel? = null
-                if(dataSnapshot.exists()){
-                    Log.e("TAG", "changeData")
-                    lobby = dataSnapshot.getValue(LobbyModel::class.java)
+                if (dataSnapshot.exists()) {
+                    lobby = dataSnapshot.child("Lobby/lobbytest").getValue(LobbyModel::class.java)
 
-                    Log.e("TAG", lobby?.name.toString())
+                    if(lobby!!.startGame){
+                        val playerList : MutableList<PlayerModel?> = arrayListOf()
+
+                        for (user in dataSnapshot.child("Users").children) {
+                            playerList.add(user.getValue(PlayerModel::class.java))
+                        }
+
+                        attributeRole(lobby, playerList)
+                    }
+
                 }
             }
 
@@ -61,8 +52,184 @@ class BeginGameActivity : AppCompatActivity() {
         })
     }
 
+    private fun attributeRole(lobby: LobbyModel?, listOfUser: MutableList<PlayerModel?>) {
+        Log.e("RECCUP", "attribute")
+        lobby?.let {
+            var id = it.id
+            val nbPlayer = lobby.nbPlayer
+            val listPlayer = lobby.listPlayer
+            val listPlayerInGame: List<PlayerModel?> = listOfUser.filter { user -> listPlayer!!.contains(user?.id) }
 
-    private fun attributeRole() {
+            val roleList = getRandomRoles(nbPlayer)
 
+            listPlayerInGame.forEachIndexed { key, player ->
+                player?.role = roleList[key].name
+            }
+            listPlayerInGame.forEach {
+                mDatabase = FirebaseDatabase.getInstance().reference.child("")
+                mDatabase.child("Users").child(it?.id.toString()).child("role").setValue(it?.role)
+            }
+        }
+    }
+
+    private fun getRandomRoles(nbPlayer: Int): ArrayList<RoleModel> {
+        val list = when (nbPlayer) {
+            4 -> arrayListOf(
+                LoupGarou(),
+                Villageois(), Villageois(),
+                Voyante()
+            )
+
+            5 -> arrayListOf(
+                LoupGarou(),
+                Villageois(), Villageois(),
+                Voyante(),
+                Chasseur()
+            )
+
+            6 -> arrayListOf(
+                LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(),
+                Voyante(),
+                Chasseur()
+            )
+
+            7 -> arrayListOf(
+                LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Chasseur()
+            )
+
+            8 -> arrayListOf(
+                LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Chasseur()
+            )
+
+            9 -> arrayListOf(
+                LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Chasseur(),
+                Cupidon()
+            )
+
+
+            10 -> arrayListOf(
+                LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Chasseur(),
+                Cupidon(),
+                Ange()
+            )
+
+            11 -> arrayListOf(
+                LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Chasseur(),
+                Cupidon(),
+                Sorciere(true, true)
+            )
+
+            12 -> arrayListOf(
+                LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Chasseur(),
+                Cupidon(),
+                Ange(),
+                Pipoteur()
+            )
+
+            13 -> arrayListOf(
+                LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Chasseur(),
+                Cupidon(),
+                Sorciere(true, true),
+                Pipoteur()
+            )
+
+            14 -> arrayListOf(
+                LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Ange(),
+                Cupidon(),
+                Chasseur(),
+                Pipoteur()
+            )
+
+            15 -> arrayListOf(
+                LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Cupidon(),
+                Chasseur(),
+                Sorciere(true, true),
+                Pipoteur()
+            )
+
+            16 -> arrayListOf(
+                LoupGarou(),
+                LoupGarou(),
+                LoupGarou(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Voyante(),
+                Ange(),
+                Cupidon(),
+                Chasseur(),
+                Sorciere(true, true),
+                Pipoteur()
+            )
+
+            17 -> arrayListOf(
+                LoupGarou(), LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                Voyante(),
+                Ange(),
+                Cupidon(),
+                Chasseur(),
+                Sorciere(true, true),
+                Pipoteur()
+            )
+
+            18 -> arrayListOf(
+                LoupGarou(),
+                LoupGarou(),
+                LoupGarou(),
+                LoupGarou(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Voyante(),
+                Ange(),
+                Cupidon(),
+                Chasseur(),
+                Sorciere(true, true),
+                Pipoteur()
+            )
+            else -> arrayListOf(LoupGarou(), Voyante(), Villageois(), Villageois())
+        }
+        list.shuffle()
+        return list
     }
 }
+
