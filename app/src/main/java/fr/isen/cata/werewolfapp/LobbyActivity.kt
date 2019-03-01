@@ -73,6 +73,12 @@ class LobbyActivity : AppCompatActivity() {
             listPlayerInGame.forEach {
                 mDatabase = FirebaseDatabase.getInstance().reference.child("")
                 mDatabase.child("Users").child(it?.id.toString()).child("role").setValue(it?.role)
+                mDatabase.child("Users").child(it?.id.toString()).child("charmed").setValue(false)
+                mDatabase.child("Users").child(it?.id.toString()).child("state").setValue(true)
+                if(it?.role == "Sorcière"){
+                    mDatabase.child("Users").child(it?.id.toString()).child("deathPotion").setValue(true)
+                    mDatabase.child("Users").child(it?.id.toString()).child("lifePotion").setValue(true)
+                }
             }
         }
     }
