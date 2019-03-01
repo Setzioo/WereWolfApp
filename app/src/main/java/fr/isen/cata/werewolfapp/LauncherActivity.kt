@@ -3,20 +3,15 @@ package fr.isen.cata.werewolfapp
 import android.animation.ValueAnimator
 import android.animation.ValueAnimator.INFINITE
 import android.animation.ValueAnimator.REVERSE
-import android.app.Activity
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.BounceInterpolator
 import kotlinx.android.synthetic.main.activity_launcher.*
-import android.os.CountDownTimer
 
 
-
-class LauncherActivity : Activity() {
+class LauncherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

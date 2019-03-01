@@ -4,15 +4,14 @@ import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.ImageView
-import com.bumptech.glide.Glide
+import android.widget.EditText
+import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_user_settings.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -21,8 +20,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import org.w3c.dom.Text
 import java.io.ByteArrayOutputStream
-import java.io.OutputStream
 
 
 class UserSettingsActivity : AppCompatActivity() {
@@ -48,6 +47,10 @@ class UserSettingsActivity : AppCompatActivity() {
         getCurrentPlayer()
 
         getPlayerAvatar()
+
+        editPseudoButton.setOnClickListener{
+            editPseudo()
+        }
 
         saveButton.setOnClickListener{
 
@@ -100,6 +103,44 @@ class UserSettingsActivity : AppCompatActivity() {
             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
             // ...
         }
+    }
+
+    fun editPseudo() {
+        val context = this
+        val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
+        builder.setTitle("Modifier le pseudo")
+
+        val view = layoutInflater.inflate(R.layout.pseudo_edit_layout, null)
+
+        val editPseudo = view.findViewById(R.id.editPseudoContainer) as EditText
+        editPseudo.setText(pseudoText.text.toString())
+
+
+        builder.setView(view)
+
+        // set up the ok button
+        builder.setPositiveButton(android.R.string.ok) { dialog, p1 ->
+            val newPseudo = editPseudo.text.toString()
+            var isValid = true
+            if (newPseudo.isBlank()) {
+                editPseudo.error = "ERREUR"
+                isValid = false
+            }
+
+            if (isValid) {
+                pseudoText.text = newPseudo
+            }
+
+            if (isValid) {
+                dialog.dismiss()
+            }
+        }
+
+        builder.setNegativeButton(android.R.string.cancel) { dialog, p1 ->
+            dialog.cancel()
+        }
+
+        builder.show()
     }
 
     private fun getCurrentPlayer() {
