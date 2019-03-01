@@ -2,9 +2,12 @@ package fr.isen.cata.werewolfapp
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.widget.LinearLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_join.*
 import kotlinx.android.synthetic.main.activity_lobby.*
 import kotlinx.android.synthetic.main.activity_user_settings.*
 
@@ -19,12 +22,37 @@ class LobbyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
 
+        /*
         auth = FirebaseAuth.getInstance()
         getCurrentPlayer()
 
-        startGame.setOnClickListener() {
+
+        val players: ArrayList<PlayerModel?> = ArrayList()
+
+        playerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+
+        val adapter = PlayerAdapter(players)
+        playerView.adapter = adapter*/
+/*
+        val mPlayerReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mPlayerReference.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for(i in dataSnapshot.children){
+                        players.add(i.getValue(PlayerModel::class.java))
+                        (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
+                    }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })*/
+
+        /*startGame.setOnClickListener() {
             startGame()
-        }
+        }*/
     }
 
     private fun startGame(){
