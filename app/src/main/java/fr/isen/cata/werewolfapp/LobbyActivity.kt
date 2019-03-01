@@ -1,5 +1,6 @@
 package fr.isen.cata.werewolfapp
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +13,10 @@ class LobbyActivity : AppCompatActivity() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mLobbyReference: DatabaseReference
+    private lateinit var mUserReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
+    private var context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,10 +24,33 @@ class LobbyActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         getCurrentPlayer()
-
         startGame.setOnClickListener() {
             startGame()
         }
+
+        mDatabase = FirebaseDatabase.getInstance().reference.child("Lobby").child(currentPlayer!!.currentGame!!)
+
+        mDatabase.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    val lobby = getLobby()
+                    if(lobby!!.startGame){
+                        val intent = Intent(context, GameActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+                // ...
+            }
+        })
+
     }
 
     private fun startGame(){
@@ -285,7 +311,7 @@ class LobbyActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    lobby = dataSnapshot.child("Lobby"+lobbbyRef).getValue(LobbyModel::class.java)
+                    lobby = dataSnapshot.child("Lobby").child(lobbbyRef!!).getValue(LobbyModel::class.java)
                 }
             }
 
@@ -297,6 +323,5 @@ class LobbyActivity : AppCompatActivity() {
 
         })
         return lobby
-
     }
 }
