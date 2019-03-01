@@ -11,8 +11,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.EditText
-import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_user_settings.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
-import org.w3c.dom.Text
+import kotlinx.android.synthetic.main.activity_user_settings.*
 import java.io.ByteArrayOutputStream
 
 
