@@ -20,4 +20,5 @@
     <string name="bouton_parametres">bouton parametres</string>
     <string name="commencer">Commencer !</string>
     <string name="exclure">Exclure</string>
+    <string name="hello_blank_fragment">yoh</string>
 </resources>
