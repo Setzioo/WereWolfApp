@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".LauncherActivity" android:id="@+id/launcherLayout"
-        android:background="@color/colorBackground">
+        android:background="@drawable/background3">
 
     <TextView
             android:text="Touchez pour commencer"
