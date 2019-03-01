@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_lobby.*
@@ -54,7 +55,7 @@ class LobbyActivity : AppCompatActivity() {
     private fun startGame(){
         mDatabase = FirebaseDatabase.getInstance().reference.child("")
 
-        mDatabase.child("Lobby").child(currentPlayer!!.currentGame!!).child("startGame").setValue(true)
+
 
         mDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
 
@@ -310,14 +311,22 @@ class LobbyActivity : AppCompatActivity() {
 
                 if (dataSnapshot.exists()) {
                     lobby = dataSnapshot.child("Lobby").child(lobbbyRef!!).getValue(LobbyModel::class.java)
+                    val nbPlayerAsked = lobby!!.nbPlayer
+                    val nbPlayerReady = lobby!!.listPlayer!!.size
+                    Log.e("NUMBER", "voulu : "+nbPlayerAsked.toString()+", prets : "+nbPlayerReady.toString())
                     if(lobby!!.masterId == currentPlayer!!.id){
                         val playerList : MutableList<PlayerModel?> = arrayListOf()
 
                         for (user in dataSnapshot.child("Users").children) {
                             playerList.add(user.getValue(PlayerModel::class.java))
                         }
-
-                        attributeRole(lobby, playerList)
+                        if( nbPlayerAsked == nbPlayerReady){
+                            attributeRole(lobby, playerList)
+                            mDatabase.child("Lobby").child(currentPlayer!!.currentGame!!).child("startGame").setValue(true)
+                        }
+                        else{
+                            Toast.makeText(context, "Pas assez de joueurs, veuillez attendre", Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
