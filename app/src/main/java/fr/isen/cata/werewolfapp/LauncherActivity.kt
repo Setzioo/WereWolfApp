@@ -28,12 +28,12 @@ class LauncherActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launcher)
-      /*  _____VIBREUR______
+    /*
       val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         // Vibrate for 400 milliseconds
-        v.vibrate(400)*/
-
+        v.vibrate(400)
+*/
 
         /*_________VIDEO_________
         val videoView = findViewById<VideoView>(R.id.videoView)

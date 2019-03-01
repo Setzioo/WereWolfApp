@@ -18,4 +18,8 @@
     <string name="bouton_retour">Bouton retour</string>
     <string name="bouton_de_deconnexion">bouton de deconnexion</string>
     <string name="bouton_parametres">bouton parametres</string>
+    <string name="commencer">Commencer !</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
