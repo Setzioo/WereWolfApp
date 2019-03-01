@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".SignUpActivity"
-        android:background="@color/colorBackground">
+        android:background="@drawable/background3">
     <ImageButton
             android:layout_width="80dp"
             android:layout_height="60dp" app:srcCompat="@android:drawable/ic_menu_revert"
@@ -50,5 +50,6 @@
             app:layout_constraintStart_toStartOf="@+id/passwordContainerUp"
             app:layout_constraintEnd_toEndOf="@+id/passwordContainerUp"
 
-            android:background="@drawable/buttonshape" android:textSize="24sp"/>
+            android:background="@drawable/buttonshape" android:textSize="18sp" android:textColor="@color/blanc_casse"
+            android:textStyle="bold"/>
 </android.support.constraint.ConstraintLayout>
