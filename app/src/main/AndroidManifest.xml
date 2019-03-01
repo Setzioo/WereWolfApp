@@ -26,20 +26,20 @@
         </activity>
         <activity android:name=".JoinActivity">
         </activity>
-        <activity android:name=".HomeActivity">
+        <activity android:name=".LauncherActivity">
         </activity>
         <activity android:name=".CreateActivity">
         </activity>
         <activity android:name=".LoginActivity">
         </activity>
-        <activity android:name=".LobbyActivity">
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LauncherActivity">
+        <activity android:name=".LobbyActivity">
 
         </activity>
     </application>
