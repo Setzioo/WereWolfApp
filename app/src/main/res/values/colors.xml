@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#581305</color>
-    <color name="colorPrimaryDark">#000</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#F5F5F5</color>
     <color name="colorBlanc">#F5F5F5</color>
-    <color name="colorBackground">#581305</color>
     <color name="dialogButtonText">#F44336</color>
-
+    <color name="colorBackground">#00581305</color>
+    <color name="blanc_casse">#FBC272</color>
 </resources>

@@ -55,7 +55,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var name: TextView = itemView.findViewById(R.id.nameText)
+        var name: TextView = itemView.findViewById(R.id.pseudoText)
         var nbPlayer: TextView = itemView.findViewById(R.id.nbPlayerText)
         var joinButton: Button = itemView.findViewById((R.id.joinButton))
     }
