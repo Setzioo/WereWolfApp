@@ -3,26 +3,40 @@ package fr.isen.cata.werewolfapp
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_lobby.*
+import kotlinx.android.synthetic.main.activity_user_settings.*
 
 class LobbyActivity : AppCompatActivity() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mLobbyReference: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+    private var currentPlayer: PlayerModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
-        mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
 
-        mLobbyReference.addListenerForSingleValueEvent(object : ValueEventListener {
+        auth = FirebaseAuth.getInstance()
+        getCurrentPlayer()
+
+        startGame.setOnClickListener() {
+            startGame()
+        }
+    }
+
+    private fun startGame(){
+        mDatabase = FirebaseDatabase.getInstance().reference.child("")
+
+        mDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var lobby: LobbyModel? = null
                 if (dataSnapshot.exists()) {
-                    lobby = dataSnapshot.child("Lobby/lobbytest").getValue(LobbyModel::class.java)
-
-                    if(lobby!!.startGame){
+                    lobby = getLobby()
+                    if(lobby!!.masterId == currentPlayer!!.id){
                         val playerList : MutableList<PlayerModel?> = arrayListOf()
 
                         for (user in dataSnapshot.child("Users").children) {
@@ -54,6 +68,7 @@ class LobbyActivity : AppCompatActivity() {
 
             listPlayerInGame.forEachIndexed { key, player ->
                 player?.role = roleList[key].name
+                Log.e("ROLE", "player: "+player?.pseudo+" role : "+player?.role)
             }
             listPlayerInGame.forEach {
                 mDatabase = FirebaseDatabase.getInstance().reference.child("")
@@ -220,5 +235,62 @@ class LobbyActivity : AppCompatActivity() {
         }
         list.shuffle()
         return list
+    }
+
+    private fun getCurrentPlayer() {
+
+        val id: String = auth.currentUser!!.uid
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.children) {
+                        user.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in user) {
+                        if (i?.id == id) {
+                            currentPlayer = i
+
+                            pseudoText.text = currentPlayer!!.pseudo
+                            Log.d("USERID------", currentPlayer!!.id)
+
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    private fun getLobby(): LobbyModel?{
+
+        var lobbbyRef : String? = currentPlayer!!.currentGame
+        var lobby: LobbyModel? = null
+        mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
+
+        mLobbyReference.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    lobby = dataSnapshot.child("Lobby"+lobbbyRef).getValue(LobbyModel::class.java)
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+                // ...
+            }
+
+        })
+        return lobby
+
     }
 }
