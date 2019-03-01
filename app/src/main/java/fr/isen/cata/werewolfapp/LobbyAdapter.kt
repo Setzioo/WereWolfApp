@@ -33,7 +33,6 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
             val mDatabase = FirebaseDatabase.getInstance().reference
 
             mDatabase.child("Users").child(auth.currentUser!!.uid).child("currentGame").setValue(lobbies[position]!!.name)
-            mDatabase.child("Lobby").child(lobbies[position]!!.name).child("currentGame").setValue(auth.currentUser!!.uid)
 
             val playerList = lobbies[position]!!.listPlayer as MutableList<String>
             playerList.add(auth.currentUser!!.uid)
