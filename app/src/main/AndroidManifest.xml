@@ -26,6 +26,12 @@
         </activity>
         <activity android:name=".JoinActivity">
         </activity>
+        <activity android:name=".LobbyActivity">
+        </activity>
+        <activity android:name=".CreateActivity">
+        </activity>
+        <activity android:name=".LoginActivity">
+        </activity>
         <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

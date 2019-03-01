@@ -1,13 +1,11 @@
 package fr.isen.cata.werewolfapp
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.widget.LinearLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_join.*
 import kotlinx.android.synthetic.main.activity_lobby.*
 import kotlinx.android.synthetic.main.activity_user_settings.*
 
@@ -15,64 +13,55 @@ class LobbyActivity : AppCompatActivity() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mLobbyReference: DatabaseReference
+    private lateinit var mUserReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
+    private var context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
 
-        /*
         auth = FirebaseAuth.getInstance()
         getCurrentPlayer()
 
 
-        val players: ArrayList<PlayerModel?> = ArrayList()
 
-        playerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 
-        val adapter = PlayerAdapter(players)
-        playerView.adapter = adapter*/
-/*
-        val mPlayerReference = FirebaseDatabase.getInstance().getReference("Users")
 
-        mPlayerReference.addListenerForSingleValueEvent(object: ValueEventListener {
+
+    }
+
+    private fun launchGame() {
+        mDatabase.addValueEventListener(object : ValueEventListener {
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                 if (dataSnapshot.exists()) {
-                    for(i in dataSnapshot.children){
-                        players.add(i.getValue(PlayerModel::class.java))
-                        (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
-                    }
+                    checkStartGame()
+
                 }
             }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-            }
-        })*/
 
-        /*startGame.setOnClickListener() {
-            startGame()
-        }*/
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+                // ...
+            }
+        })
     }
 
     private fun startGame(){
         mDatabase = FirebaseDatabase.getInstance().reference.child("")
+
+        mDatabase.child("Lobby").child(currentPlayer!!.currentGame!!).child("startGame").setValue(true)
 
         mDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var lobby: LobbyModel? = null
                 if (dataSnapshot.exists()) {
-                    lobby = getLobby()
-                    if(lobby!!.masterId == currentPlayer!!.id){
-                        val playerList : MutableList<PlayerModel?> = arrayListOf()
-
-                        for (user in dataSnapshot.child("Users").children) {
-                            playerList.add(user.getValue(PlayerModel::class.java))
-                        }
-
-                        attributeRole(lobby, playerList)
-                    }
+                    checkMaster()
 
                 }
             }
@@ -288,7 +277,14 @@ class LobbyActivity : AppCompatActivity() {
                         if (i?.id == id) {
                             currentPlayer = i
 
-                            pseudoText.text = currentPlayer!!.pseudo
+                            mDatabase = FirebaseDatabase.getInstance().reference.child("Lobby").child(currentPlayer!!.currentGame!!)
+
+                            startGame.setOnClickListener {
+                                startGame()
+                            }
+
+                            launchGame()
+
                             Log.d("USERID------", currentPlayer!!.id)
 
                         }
@@ -302,7 +298,7 @@ class LobbyActivity : AppCompatActivity() {
         })
     }
 
-    private fun getLobby(): LobbyModel?{
+    private fun checkMaster(){
 
         var lobbbyRef : String? = currentPlayer!!.currentGame
         var lobby: LobbyModel? = null
@@ -313,7 +309,16 @@ class LobbyActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    lobby = dataSnapshot.child("Lobby"+lobbbyRef).getValue(LobbyModel::class.java)
+                    lobby = dataSnapshot.child("Lobby").child(lobbbyRef!!).getValue(LobbyModel::class.java)
+                    if(lobby!!.masterId == currentPlayer!!.id){
+                        val playerList : MutableList<PlayerModel?> = arrayListOf()
+
+                        for (user in dataSnapshot.child("Users").children) {
+                            playerList.add(user.getValue(PlayerModel::class.java))
+                        }
+
+                        attributeRole(lobby, playerList)
+                    }
                 }
             }
 
@@ -324,7 +329,35 @@ class LobbyActivity : AppCompatActivity() {
             }
 
         })
-        return lobby
+    }
 
+
+
+    private fun checkStartGame(){
+
+        var lobbbyRef : String? = currentPlayer!!.currentGame
+        var lobby: LobbyModel? = null
+        mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
+
+        mLobbyReference.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    lobby = dataSnapshot.child("Lobby").child(lobbbyRef!!).getValue(LobbyModel::class.java)
+                    if (lobby!!.startGame) {
+                        val intent = Intent(context, GameActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+                // ...
+            }
+
+        })
     }
 }
