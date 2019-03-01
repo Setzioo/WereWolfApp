@@ -35,12 +35,14 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
             mDatabase.child("Users").child(auth.currentUser!!.uid).child("currentGame").setValue(lobbies[position]!!.name)
             mDatabase.child("Lobby").child(lobbies[position]!!.name).child("currentGame").setValue(auth.currentUser!!.uid)
 
-            var playerList = lobbies[position]!!.listPlayer
-            playerList!!.add(auth.currentUser!!.uid)
+            val playerList = lobbies[position]!!.listPlayer as MutableList<String>
+            playerList.add(auth.currentUser!!.uid)
+
+            mDatabase.child("Lobby").child(lobbies[position]!!.name).child("listPlayer").setValue(playerList)
 
 
 
-            val intent = Intent(holder.joinButton.context, HomeActivity::class.java)
+            val intent = Intent(holder.joinButton.context, LobbyActivity::class.java)
             holder.joinButton.context.startActivity(intent)
         }
     }
@@ -55,7 +57,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var name: TextView = itemView.findViewById(R.id.pseudoText)
+        var name: TextView = itemView.findViewById(R.id.nameText)
         var nbPlayer: TextView = itemView.findViewById(R.id.nbPlayerText)
         var joinButton: Button = itemView.findViewById((R.id.joinButton))
     }
