@@ -26,10 +26,12 @@ class JoinActivity : AppCompatActivity() {
 
         val mLobbyReference = FirebaseDatabase.getInstance().getReference("Lobby")
 
-        mLobbyReference.addListenerForSingleValueEvent(object: ValueEventListener {
+        mLobbyReference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 //val user: MutableList<LobbyModel?> = arrayListOf()
+                lobbies.clear()
                 if (dataSnapshot.exists()) {
+
                     for(i in dataSnapshot.children){
                         //user.add(i.getValue(LobbyModel::class.java))
                         lobbies.add(i.getValue(LobbyModel::class.java))
