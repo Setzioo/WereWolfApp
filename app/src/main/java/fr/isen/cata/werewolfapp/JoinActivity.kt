@@ -31,7 +31,6 @@ class JoinActivity : AppCompatActivity() {
                 //val user: MutableList<LobbyModel?> = arrayListOf()
                 lobbies.clear()
                 if (dataSnapshot.exists()) {
-
                     for(i in dataSnapshot.children){
                         //user.add(i.getValue(LobbyModel::class.java))
                         lobbies.add(i.getValue(LobbyModel::class.java))
