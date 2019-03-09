@@ -1,20 +1,18 @@
 package fr.isen.cata.werewolfapp
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_lobby.*
-import kotlinx.android.synthetic.main.activity_user_settings.*
 
 class LobbyActivity : AppCompatActivity() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mLobbyReference: DatabaseReference
-    private lateinit var mUserReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
     private var context = this
@@ -109,7 +107,7 @@ class LobbyActivity : AppCompatActivity() {
                     lobby = dataSnapshot.child("Lobby").child(lobbbyRef!!).getValue(LobbyModel::class.java)
                     val nbPlayerAsked = lobby!!.nbPlayer
                     val nbPlayerReady = lobby!!.listPlayer!!.size
-                    Log.e("NUMBER", "voulu : "+nbPlayerAsked.toString()+", prets : "+nbPlayerReady.toString())
+                    Log.e("NUMBER", "voulu : $nbPlayerAsked, prets : $nbPlayerReady")
                     if(lobby!!.masterId == currentPlayer!!.id){
                         val playerList : MutableList<PlayerModel?> = arrayListOf()
 
@@ -155,8 +153,8 @@ class LobbyActivity : AppCompatActivity() {
                 mDatabase.child("Users").child(it?.id.toString()).child("charmed").setValue(false)
                 mDatabase.child("Users").child(it?.id.toString()).child("state").setValue(true)
                 if(it?.role == "Sorcière"){
-                    mDatabase.child("Users").child(it?.id.toString()).child("deathPotion").setValue(true)
-                    mDatabase.child("Users").child(it?.id.toString()).child("lifePotion").setValue(true)
+                    mDatabase.child("Users").child(it.id).child("deathPotion").setValue(true)
+                    mDatabase.child("Users").child(it.id).child("lifePotion").setValue(true)
                 }
             }
         }
@@ -222,7 +220,7 @@ class LobbyActivity : AppCompatActivity() {
                 Voyante(),
                 Chasseur(),
                 Cupidon(),
-                Sorciere(true, true)
+                Sorciere(deathPotion = true, lifePotion = true)
             )
 
             12 -> arrayListOf(
@@ -241,7 +239,7 @@ class LobbyActivity : AppCompatActivity() {
                 Voyante(),
                 Chasseur(),
                 Cupidon(),
-                Sorciere(true, true),
+                Sorciere(deathPotion = true, lifePotion = true),
                 Pipoteur()
             )
 
@@ -261,7 +259,7 @@ class LobbyActivity : AppCompatActivity() {
                 Voyante(),
                 Cupidon(),
                 Chasseur(),
-                Sorciere(true, true),
+                Sorciere(deathPotion = true, lifePotion = true),
                 Pipoteur()
             )
 
@@ -281,7 +279,7 @@ class LobbyActivity : AppCompatActivity() {
                 Ange(),
                 Cupidon(),
                 Chasseur(),
-                Sorciere(true, true),
+                Sorciere(deathPotion = true, lifePotion = true),
                 Pipoteur()
             )
 
@@ -292,7 +290,7 @@ class LobbyActivity : AppCompatActivity() {
                 Ange(),
                 Cupidon(),
                 Chasseur(),
-                Sorciere(true, true),
+                Sorciere(deathPotion = true, lifePotion = true),
                 Pipoteur()
             )
 
@@ -313,7 +311,7 @@ class LobbyActivity : AppCompatActivity() {
                 Ange(),
                 Cupidon(),
                 Chasseur(),
-                Sorciere(true, true),
+                Sorciere(deathPotion = true, lifePotion = true),
                 Pipoteur()
             )
             else -> arrayListOf(LoupGarou(), Voyante(), Villageois(), Villageois())
