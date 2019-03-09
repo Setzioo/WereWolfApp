@@ -71,7 +71,7 @@ class LobbyActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    checkStartGame(dataSnapshot)
+                    launchGame(dataSnapshot)
 
                 }
             }
@@ -84,7 +84,7 @@ class LobbyActivity : AppCompatActivity() {
         })
     }
 
-    private fun checkStartGame(dataSnapshot: DataSnapshot){
+    private fun launchGame(dataSnapshot: DataSnapshot){
 
         val startGameVal  = dataSnapshot.value as Boolean
 

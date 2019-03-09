@@ -76,7 +76,7 @@ class CreateActivity : AppCompatActivity() {
     private fun onCreateLobby() {
         val partyName: String = partyNameView.text.toString()
         val mDatabase = FirebaseDatabase.getInstance().reference
-        var listPlayer1: MutableList<String> = arrayListOf()
+        val listPlayer1: MutableList<String> = arrayListOf()
         listPlayer1.add(currentPlayer!!.id)
         mDatabase.child("Users").child(currentPlayer!!.id).child("currentGame").setValue(partyName)
         val lobbyTest = LobbyModel(currentPlayer!!.id, partyName, nbPlayer, listPlayer1)

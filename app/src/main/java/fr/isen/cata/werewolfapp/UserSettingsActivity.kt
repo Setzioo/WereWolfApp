@@ -87,8 +87,6 @@ class UserSettingsActivity : AppCompatActivity() {
         // Create a reference to "mountains.jpg"
         val mountainsRef = storageRef.child(auth.currentUser!!.uid + "/avatar")
         // Get the data from an ImageView as bytes
-        avatarView.isDrawingCacheEnabled = true
-        avatarView.buildDrawingCache()
         val bitmap = (avatarView.drawable as BitmapDrawable).bitmap
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -103,7 +101,7 @@ class UserSettingsActivity : AppCompatActivity() {
         }
     }
 
-    fun editPseudo() {
+    private fun editPseudo() {
         val context = this
         val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
         builder.setTitle("Modifier le pseudo")
@@ -117,7 +115,7 @@ class UserSettingsActivity : AppCompatActivity() {
         builder.setView(view)
 
         // set up the ok button
-        builder.setPositiveButton(android.R.string.ok) { dialog, p1 ->
+        builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             val newPseudo = editPseudo.text.toString()
             var isValid = true
             if (newPseudo.isBlank()) {
@@ -134,7 +132,7 @@ class UserSettingsActivity : AppCompatActivity() {
             }
         }
 
-        builder.setNegativeButton(android.R.string.cancel) { dialog, p1 ->
+        builder.setNegativeButton(android.R.string.cancel) { dialog, _ ->
             dialog.cancel()
         }
 
