@@ -94,7 +94,6 @@ class LobbyActivity : AppCompatActivity() {
             lobby = dataSnapshot.child(lobbbyRef!!).getValue(LobbyModel::class.java)
             if(lobby!!.masterId == currentPlayer!!.id)
             {
-                // TODO : Creer le party et supprimer le lobby
                 createParty()
             }
 
