@@ -16,6 +16,7 @@ class LobbyActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
     private var context = this
+    var lobby: LobbyModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,8 +66,8 @@ class LobbyActivity : AppCompatActivity() {
     }
 
     private fun setLauncherListener() {
-        val startGameRef = mDatabase.child("Lobby").child(currentPlayer!!.currentGame!!).child("startGame")
-        startGameRef.addValueEventListener(object : ValueEventListener {
+        val lobbyRef = mDatabase.child("Lobby")
+        lobbyRef.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -86,9 +87,16 @@ class LobbyActivity : AppCompatActivity() {
 
     private fun launchGame(dataSnapshot: DataSnapshot){
 
-        val startGameVal  = dataSnapshot.value as Boolean
-
+        val startGameVal  = dataSnapshot.child(currentPlayer!!.currentGame!!).child("startGame").value as Boolean
         if (startGameVal) {
+
+            val lobbbyRef : String? = currentPlayer!!.currentGame
+            lobby = dataSnapshot.child(lobbbyRef!!).getValue(LobbyModel::class.java)
+            if(lobby!!.masterId == currentPlayer!!.id)
+            {
+                // TODO : Creer le party et supprimer le lobby
+            }
+
             val intent = Intent(context, GameActivity::class.java)
             startActivity(intent)
         }
@@ -97,7 +105,7 @@ class LobbyActivity : AppCompatActivity() {
     private fun startGame(){
 
         val lobbbyRef : String? = currentPlayer!!.currentGame
-        var lobby: LobbyModel?
+
 
         mLobbyReference.addListenerForSingleValueEvent(object : ValueEventListener {
 
