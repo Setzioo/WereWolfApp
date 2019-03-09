@@ -109,6 +109,7 @@ class LobbyActivity : AppCompatActivity() {
 
                 if (dataSnapshot.exists()) {
                     mDatabase.child("Party").child(gameName).setValue(dataSnapshot.value)
+                    setDefaultPartyValue()
                     mDatabase.child("Lobby").child(gameName).removeValue()
                 }
             }
@@ -119,6 +120,10 @@ class LobbyActivity : AppCompatActivity() {
                 // ...
             }
         })
+    }
+
+    private fun setDefaultPartyValue() {
+        // TODO : Mettre des valeurs par defaut a une party (exemple les event flag)
     }
 
     private fun startGame(){
