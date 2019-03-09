@@ -95,6 +95,7 @@ class LobbyActivity : AppCompatActivity() {
             if(lobby!!.masterId == currentPlayer!!.id)
             {
                 // TODO : Creer le party et supprimer le lobby
+                createParty()
             }
 
             val intent = Intent(context, GameActivity::class.java)
@@ -102,10 +103,28 @@ class LobbyActivity : AppCompatActivity() {
         }
     }
 
+    private fun createParty() {
+        val gameName : String? = currentPlayer!!.currentGame
+        mDatabase.child("Lobby").child(gameName!!).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    mDatabase.child("Party").child(gameName).setValue(dataSnapshot.value)
+                    mDatabase.child("Lobby").child(gameName).removeValue()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+                // ...
+            }
+        })
+    }
+
     private fun startGame(){
 
         val lobbbyRef : String? = currentPlayer!!.currentGame
-
 
         mLobbyReference.addListenerForSingleValueEvent(object : ValueEventListener {
 
@@ -327,12 +346,4 @@ class LobbyActivity : AppCompatActivity() {
         list.shuffle()
         return list
     }
-
-
-
-
-
-
-
-
 }
