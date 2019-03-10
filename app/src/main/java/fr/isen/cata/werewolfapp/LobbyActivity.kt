@@ -87,11 +87,11 @@ class LobbyActivity : AppCompatActivity() {
 
     private fun launchGame(dataSnapshot: DataSnapshot){
 
-        val startGameVal  = dataSnapshot.child(currentPlayer!!.currentGame!!).child("startGame").value as Boolean
-        if (startGameVal) {
+        val startGameVal  = dataSnapshot.child(currentPlayer!!.currentGame!!).child("startGame").value
+        if (startGameVal == true) {
 
-            val lobbbyRef : String? = currentPlayer!!.currentGame
-            lobby = dataSnapshot.child(lobbbyRef!!).getValue(LobbyModel::class.java)
+            val lobbyRef : String? = currentPlayer!!.currentGame
+            lobby = dataSnapshot.child(lobbyRef!!).getValue(LobbyModel::class.java)
             if(lobby!!.masterId == currentPlayer!!.id)
             {
                 createParty()
@@ -109,7 +109,7 @@ class LobbyActivity : AppCompatActivity() {
 
                 if (dataSnapshot.exists()) {
                     mDatabase.child("Party").child(gameName).setValue(dataSnapshot.value)
-                    setDefaultPartyValue()
+                    setDefaultPartyValue(gameName)
                     mDatabase.child("Lobby").child(gameName).removeValue()
                 }
             }
@@ -122,8 +122,15 @@ class LobbyActivity : AppCompatActivity() {
         })
     }
 
-    private fun setDefaultPartyValue() {
-        // TODO : Mettre des valeurs par defaut a une party (exemple les event flag)
+    private fun setDefaultPartyValue(gameName: String) {
+        // TODO : Mettrea jour les eventFlags si besoin
+        //Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
+        mDatabase.child("Party").child(gameName).child("LoupFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("VoyanteFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("AngeFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("CupidonFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("SorciereFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("PipoteurFlag").setValue(false)
     }
 
     private fun startGame(){
