@@ -31,21 +31,17 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        val manager = MyFragmentManager()
+        manager.BeginningFragment(this)
+
+
 
      /*   val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
           // Vibrate for 400 milliseconds
           v.vibrate(400)*/
 
-        val manager = MyFragmentManager()
-        manager.VideoFragment(this)
 
-
-        //VideoFragment()
-
-        //Handler().postDelayed({
-        //    CharacterFragment()
-        //},7000)
        // Thread.sleep(10_000)
         //setContentView(R.layout.layout_character)
         /* ____________________ANIMATION CARD___________
@@ -79,25 +75,5 @@ class GameActivity : AppCompatActivity() {
              valueAnimator1.start()
          }*/
     }
-    fun VideoFragment() {
-        var fragment: Fragment?
-
-
-        fragment = VideoFragment.newInstance()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment, fragment)
-
-            .commit()
-    }
-    fun CharacterFragment(){
-        var fragment: Fragment?
-        fragment = CharacterFragment.newInstance()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment, fragment)
-
-            .commit()
-        val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        v.vibrate(2000)}
-
 
 }

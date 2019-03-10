@@ -24,7 +24,7 @@ import android.support.v4.app.ActivityCompat
 
 class LauncherActivity : AppCompatActivity() {
 
-    private val MY_PERMISSIONS_REQUEST = 99
+    private val MY_PERMISSIONS_REQUEST = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

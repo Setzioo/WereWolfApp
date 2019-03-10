@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity
 
 class MyFragmentManager {
 
-    fun VideoFragment(context: Context) {
+    fun BeginningFragment(context: Context) {
         val fragment: Fragment?
 
         fragment = VideoFragment.newInstance()

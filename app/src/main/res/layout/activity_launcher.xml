@@ -9,7 +9,7 @@
         android:background="@drawable/background3">
 
     <TextView
-            android:text="Touchez pour commencer"
+            android:text="@string/touchez_pour_commencer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/LaunchText"
