@@ -29,7 +29,7 @@ class MyFragmentManager {
             .commit()
 
 
-        val v = (context as AppCompatActivity).getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if(v.hasVibrator())
         {
             if (Build.VERSION.SDK_INT >= 26) {
