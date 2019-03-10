@@ -24,7 +24,6 @@ import java.io.ByteArrayOutputStream
 
 class UserSettingsActivity : AppCompatActivity() {
 
-    private val MY_PERMISSIONS_REQUEST = 99
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
 
@@ -33,10 +32,6 @@ class UserSettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_settings)
 
         auth = FirebaseAuth.getInstance()
-
-        val permissionNotGranted = getAllPermissionNotGranted()
-
-        ActivityCompat.requestPermissions(this, permissionNotGranted, MY_PERMISSIONS_REQUEST)
 
         settingsView.setOnClickListener {
             chooseGalleryOrCamera()
@@ -168,11 +163,6 @@ class UserSettingsActivity : AppCompatActivity() {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
-    }
-
-    private fun getAllPermissionNotGranted(): Array<String> {
-
-        return arrayOf(Manifest.permission.CAMERA)
     }
 
     private fun chooseGalleryOrCamera() {

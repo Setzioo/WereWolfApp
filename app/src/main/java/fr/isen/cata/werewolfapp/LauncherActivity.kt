@@ -1,5 +1,6 @@
 package fr.isen.cata.werewolfapp
 
+import android.Manifest
 import android.animation.ValueAnimator
 import android.animation.ValueAnimator.INFINITE
 import android.animation.ValueAnimator.REVERSE
@@ -18,14 +19,20 @@ import android.widget.VideoView
 import android.content.Context.VIBRATOR_SERVICE
 import android.support.v4.content.ContextCompat.getSystemService
 import android.os.Vibrator
-
+import android.support.v4.app.ActivityCompat
 
 
 class LauncherActivity : AppCompatActivity() {
 
+    private val MY_PERMISSIONS_REQUEST = 99
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launcher)
+
+        val permissionNotGranted = getAllPermissionNotGranted()
+
+        ActivityCompat.requestPermissions(this, permissionNotGranted, MY_PERMISSIONS_REQUEST)
     /*
       val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -106,6 +113,11 @@ class LauncherActivity : AppCompatActivity() {
         valueAnimator.repeatMode = REVERSE
 
         valueAnimator.start()
+    }
+
+    private fun getAllPermissionNotGranted(): Array<String> {
+
+        return arrayOf(Manifest.permission.CAMERA, Manifest.permission.INTERNET, Manifest.permission.VIBRATE)
     }
 
 }
