@@ -32,6 +32,10 @@ class VideoFragment : Fragment() {
 
         videoView.setVideoURI(Uri.parse(path))
         videoView.start()
+        videoView.setOnCompletionListener {
+            val manager = MyFragmentManager()
+            manager.CharacterFragment(context!!)
+        }
     }
 
 

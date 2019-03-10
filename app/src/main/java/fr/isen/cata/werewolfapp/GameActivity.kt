@@ -13,7 +13,20 @@ import android.support.v4.os.HandlerCompat.postDelayed
 
 
 class GameActivity : AppCompatActivity() {
-var story =0
+
+    /* Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
+
+        Ordre de jeu la nuit:
+            - Cupidon (Première nuit seulement)
+            - Voyante
+            - Loups
+            - Sorciere
+            - Pipoteur (1 nuit sur 2)
+     */
+
+    var nbTour : Int = 0
+
+    var story =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -23,11 +36,16 @@ var story =0
 
           // Vibrate for 400 milliseconds
           v.vibrate(400)*/
-        Handler().postDelayed({
-            CharacterFragment()
-        },7000)
 
-        VideoFragment()
+        val manager = MyFragmentManager()
+        manager.VideoFragment(this)
+
+
+        //VideoFragment()
+
+        //Handler().postDelayed({
+        //    CharacterFragment()
+        //},7000)
        // Thread.sleep(10_000)
         //setContentView(R.layout.layout_character)
         /* ____________________ANIMATION CARD___________
