@@ -83,12 +83,12 @@ class LobbyActivity : AppCompatActivity() {
         val playersRef = mDatabase.child("Lobby").child(gameName!!).child("listPlayer")
         playersRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                //val user: MutableList<LobbyModel?> = arrayListOf()
+
                 players.clear()
                 if (dataSnapshot.exists()) {
 
                     for(i in dataSnapshot.children){
-                        //user.add(i.getValue(LobbyModel::class.java))
+
                         players.add(i.value as String)
                         (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
                     }
