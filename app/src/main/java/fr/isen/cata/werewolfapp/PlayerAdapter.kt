@@ -13,7 +13,7 @@ class PlayerAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_lobby_view_row, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_player_view_row, parent, false)
         return ViewHolder(v)
     }
 

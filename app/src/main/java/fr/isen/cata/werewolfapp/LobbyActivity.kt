@@ -49,16 +49,38 @@ class LobbyActivity : AppCompatActivity() {
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                user.clear()
                 if (dataSnapshot.exists()) {
-                    for (i in dataSnapshot.children) {
+                    /*for (i in dataSnapshot.children) {
                         user.add(i.getValue(PlayerModel::class.java))
                         (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
-                    }
+                    }*/
                     for (i in user) {
                         if (i?.id == id) {
+
                             currentPlayer = i
+                            val userArrayRef = mDatabase.child("Lobby").child(currentPlayer!!.currentGame!!).child("listPlayer")
+                            userArrayRef.addValueEventListener(object: ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    val userArray = dataSnapshot.value as MutableList<*>
+                                    for(idPlayer in userArray) {
+
+                                        Log.d("IDPLAYERLIST-------", "coucou")
+
+                                        //Log.d("IDPLAYERLIST-------", idPlayer.toString())
+
+                                    }
+                                }
+
+                                override fun onCancelled(databaseError: DatabaseError) {
+                                    Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+                                }
+
+                            })
+
                             setLauncherListener()
                             Log.d("USERID------", currentPlayer!!.id)
+
                         }
                     }
                 }
