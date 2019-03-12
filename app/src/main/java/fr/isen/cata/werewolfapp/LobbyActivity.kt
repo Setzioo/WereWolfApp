@@ -3,10 +3,13 @@ package fr.isen.cata.werewolfapp
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_join.*
 import kotlinx.android.synthetic.main.activity_lobby.*
 
 class LobbyActivity : AppCompatActivity() {
@@ -31,6 +34,70 @@ class LobbyActivity : AppCompatActivity() {
         mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
         setGameLauncher()
 
+        playerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+
+        val players: ArrayList<String?> = ArrayList()
+
+        val adapter = PlayerAdapter(players)
+        playerView.adapter = adapter
+
+        setPlayerList(players)
+
+    }
+
+    private fun setPlayerList(players : ArrayList<String?>) {
+
+        val id: String = auth.currentUser!!.uid
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.children) {
+                        user.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in user) {
+                        if (i?.id == id) {
+                            currentPlayer = i
+
+                            getLobbyPlayerList(players)
+
+                            Log.d("USERID------", currentPlayer!!.id)
+
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    private fun getLobbyPlayerList(players : ArrayList<String?>) {
+
+        val gameName : String? = currentPlayer!!.currentGame
+        val playersRef = mDatabase.child("Lobby").child(gameName!!).child("listPlayer")
+        playersRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                //val user: MutableList<LobbyModel?> = arrayListOf()
+                players.clear()
+                if (dataSnapshot.exists()) {
+
+                    for(i in dataSnapshot.children){
+                        //user.add(i.getValue(LobbyModel::class.java))
+                        players.add(i.value as String)
+                        (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
+                    }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
     }
 
     private fun setGameLauncher() {

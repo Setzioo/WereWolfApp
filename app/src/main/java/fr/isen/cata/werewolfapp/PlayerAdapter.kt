@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-class PlayerAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
+class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.pseudo.text = players[position]!!.pseudo
+        holder.pseudo.text = players[position]!!
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_lobby_view_row, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_player_view_row, parent, false)
         return ViewHolder(v)
     }
 
