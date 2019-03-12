@@ -95,6 +95,7 @@ class LobbyActivity : AppCompatActivity() {
 
                     }
                 }
+
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
