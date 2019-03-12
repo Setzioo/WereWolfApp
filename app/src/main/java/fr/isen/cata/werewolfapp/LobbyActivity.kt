@@ -32,7 +32,7 @@ class LobbyActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance().reference
-        mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
+        mLobbyReference = FirebaseDatabase.getInstance().reference.child("Lobby")
         setGameLauncher()
 
         playerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
@@ -232,22 +232,24 @@ class LobbyActivity : AppCompatActivity() {
 
         val lobbbyRef : String? = currentPlayer!!.currentGame
 
-        mLobbyReference.addListenerForSingleValueEvent(object : ValueEventListener {
+        mLobbyReference.child(lobbbyRef!!).addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    lobby = dataSnapshot.child("Lobby").child(lobbbyRef!!).getValue(LobbyModel::class.java)
+                    lobby = dataSnapshot.getValue(LobbyModel::class.java)
                     val nbPlayerAsked = lobby!!.nbPlayer
                     val nbPlayerReady = lobby!!.listPlayer!!.size
                     Log.e("NUMBER", "voulu : $nbPlayerAsked, prets : $nbPlayerReady")
                     if(lobby!!.masterId == currentPlayer!!.id){
-                        val playerList : MutableList<PlayerModel?> = arrayListOf()
+                        val playerList : MutableList<String?> = arrayListOf()
 
-                        for (user in dataSnapshot.child("Users").children) {
-                            playerList.add(user.getValue(PlayerModel::class.java))
+                        for (user in dataSnapshot.child("listPlayer").children) {
+
+                            playerList.add(user.value as String)
                         }
                         if( nbPlayerAsked == nbPlayerReady){
+
                             attributeRole(lobby, playerList)
                             mDatabase.child("Lobby").child(currentPlayer!!.currentGame!!).child("startGame").setValue(true)
                         }
@@ -267,30 +269,64 @@ class LobbyActivity : AppCompatActivity() {
         })
     }
 
-    private fun attributeRole(lobby: LobbyModel?, listOfUser: MutableList<PlayerModel?>) {
+    private fun attributeRole(lobby: LobbyModel?, listOfUser: MutableList<String?>) {
         Log.e("RECCUP", "attribute")
         lobby?.let {
             val nbPlayer = lobby.nbPlayer
             val listPlayer = lobby.listPlayer
-            val listPlayerInGame: List<PlayerModel?> = listOfUser.filter { user -> listPlayer!!.contains(user?.id) }
+            val listPlayerInGameId: List<String?> = listOfUser.filter { userId -> listPlayer!!.contains(userId!!) }
+            val listPlayerInGame: ArrayList<PlayerModel?> = ArrayList()
+            Log.d("YOOOO",listOfUser.toString())
 
-            val roleList = getRandomRoles(nbPlayer)
+            idIntoPlayerModel(listPlayerInGameId,listPlayerInGame, nbPlayer)
 
-            listPlayerInGame.forEachIndexed { key, player ->
-                player?.role = roleList[key].name
-                Log.e("ROLE", "player: "+player?.pseudo+" role : "+player?.role)
-            }
-            listPlayerInGame.forEach {
-                mDatabase = FirebaseDatabase.getInstance().reference.child("")
-                mDatabase.child("Users").child(it?.id.toString()).child("role").setValue(it?.role)
-                mDatabase.child("Users").child(it?.id.toString()).child("charmed").setValue(false)
-                mDatabase.child("Users").child(it?.id.toString()).child("state").setValue(true)
-                if(it?.role == "Sorcière"){
-                    mDatabase.child("Users").child(it.id).child("deathPotion").setValue(true)
-                    mDatabase.child("Users").child(it.id).child("lifePotion").setValue(true)
+        }
+    }
+
+    private fun idIntoPlayerModel(listPlayerInGameId: List<String?>, listPlayerInGame : ArrayList<PlayerModel?>, nbPlayer: Int) {
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    user.clear()
+                    for (i in dataSnapshot.children) {
+                        user.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (j in listPlayerInGameId)
+                    {
+                        for (i in user) {
+                            if (i?.id ==j) {
+                                listPlayerInGame.add(i)
+                            }
+                        }
+                    }
+
+                    val roleList = getRandomRoles(nbPlayer)
+
+                    listPlayerInGame.forEachIndexed { key, player ->
+                        player?.role = roleList[key].name
+                        Log.e("ROLE", "player: "+player?.pseudo+" role : "+player?.role)
+                    }
+                    listPlayerInGame.forEach {
+                        mDatabase = FirebaseDatabase.getInstance().reference.child("")
+                        mDatabase.child("Users").child(it?.id.toString()).child("role").setValue(it?.role)
+                        mDatabase.child("Users").child(it?.id.toString()).child("charmed").setValue(false)
+                        mDatabase.child("Users").child(it?.id.toString()).child("state").setValue(true)
+                        if(it?.role == "Sorcière"){
+                            mDatabase.child("Users").child(it.id).child("deathPotion").setValue(true)
+                            mDatabase.child("Users").child(it.id).child("lifePotion").setValue(true)
+                        }
+                    }
+
                 }
             }
-        }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
     }
 
     private fun getRandomRoles(nbPlayer: Int): ArrayList<RoleModel> {
