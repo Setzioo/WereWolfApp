@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity
 
 class MyFragmentManager {
 
+    //Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
+
     fun BeginningFragment(context: Context) {
         val fragment: Fragment?
 
@@ -28,7 +30,6 @@ class MyFragmentManager {
 
             .commit()
 
-
         val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if(v.hasVibrator())
         {
@@ -41,6 +42,15 @@ class MyFragmentManager {
             }
 
         }
+    }
+
+    fun DebutNuitFragment(context: Context) {
+        val fragment: Fragment?
+
+        fragment = DebutNuitFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commit()
     }
 
 

@@ -36,6 +36,7 @@ class GameActivity : AppCompatActivity() {
 
 
 
+
      /*   val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
           // Vibrate for 400 milliseconds
