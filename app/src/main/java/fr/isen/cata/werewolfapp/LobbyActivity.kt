@@ -20,6 +20,7 @@ class LobbyActivity : AppCompatActivity() {
     private var currentPlayer: PlayerModel? = null
     private var context = this
     var lobby: LobbyModel? = null
+    var pseudoPlayer: String = "notFound"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,9 +89,37 @@ class LobbyActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
 
                     for(i in dataSnapshot.children){
+                        idIntoName(i.value as String, players)
 
-                        players.add(i.value as String)
                         (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
+
+                    }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    private fun idIntoName(idPlayer: String, players : ArrayList<String?>) {
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    user.clear()
+                    for (i in dataSnapshot.children) {
+                        user.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in user) {
+                        if (i?.id ==idPlayer) {
+                            pseudoPlayer = i.pseudo
+                            players.add(pseudoPlayer)
+                            (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
+                        }
                     }
                 }
             }
@@ -125,7 +154,6 @@ class LobbyActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
