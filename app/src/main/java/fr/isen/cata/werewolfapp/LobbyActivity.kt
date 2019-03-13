@@ -125,12 +125,12 @@ class LobbyActivity : AppCompatActivity() {
     private fun setDefaultPartyValue(gameName: String) {
         // TODO : Mettrea jour les eventFlags si besoin
         //Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
-        mDatabase.child("Party").child(gameName).child("LoupFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("VoyanteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("AngeFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("CupidonFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("SorciereFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("PipoteurFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("AngeFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
     }
 
     private fun startGame(){
@@ -285,9 +285,9 @@ class LobbyActivity : AppCompatActivity() {
                 LoupGarou(), LoupGarou(), LoupGarou(),
                 Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
                 Voyante(),
-                Ange(),
-                Cupidon(),
                 Chasseur(),
+                Cupidon(),
+                Ange(),
                 Pipoteur()
             )
 
@@ -302,17 +302,8 @@ class LobbyActivity : AppCompatActivity() {
             )
 
             16 -> arrayListOf(
-                LoupGarou(),
-                LoupGarou(),
-                LoupGarou(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
+                LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
                 Voyante(),
                 Ange(),
                 Cupidon(),
@@ -333,18 +324,8 @@ class LobbyActivity : AppCompatActivity() {
             )
 
             18 -> arrayListOf(
-                LoupGarou(),
-                LoupGarou(),
-                LoupGarou(),
-                LoupGarou(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
-                Villageois(),
+                LoupGarou(), LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
                 Voyante(),
                 Ange(),
                 Cupidon(),

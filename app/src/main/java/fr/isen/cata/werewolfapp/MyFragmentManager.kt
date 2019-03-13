@@ -42,6 +42,27 @@ class MyFragmentManager {
 
         }
     }
+    fun CupidonFragment(context: Context){
 
+    }
+    fun SleepFragment(context: Context){
+    }
+    fun VoyanteFragment(context : Context){
 
+    }
+    fun LoupsFragment(context: Context){
+
+    }
+    fun SorciereFragment(context: Context, deathPotion : Boolean, lifePotion : Boolean){
+
+    }
+    fun PipoteurFragment(context: Context){
+
+    }
+    fun ChasseurFragment(context: Context){
+
+    }
+    fun VoteJourFragment(context : Context){
+
+    }
 }
