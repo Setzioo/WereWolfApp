@@ -6,4 +6,6 @@ class Flagmodel{
     var CupidonFlag : Boolean = false
     var SorciereFlag : Boolean = false
     var PipoteurFlag : Boolean = false
+
+
 }
