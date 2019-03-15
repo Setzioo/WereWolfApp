@@ -20,6 +20,7 @@ import android.content.Context.VIBRATOR_SERVICE
 import android.support.v4.content.ContextCompat.getSystemService
 import android.os.Vibrator
 import android.support.v4.app.ActivityCompat
+import kotlinx.android.synthetic.main.fragment_video.*
 
 
 class LauncherActivity : AppCompatActivity() {
@@ -110,11 +111,11 @@ class LauncherActivity : AppCompatActivity() {
 
         valueAnimator.addUpdateListener {
             val value = it.animatedValue as Float
-            LaunchText.alpha = value
+            compteur.alpha = value
         }
 
         valueAnimator.interpolator = AccelerateDecelerateInterpolator()
-        valueAnimator.duration = 1700
+        valueAnimator.duration = 1000
         valueAnimator.repeatCount = INFINITE
         valueAnimator.repeatMode = REVERSE
 
