@@ -34,7 +34,7 @@ class SignUpActivity : AppCompatActivity() {
 
             email = emailContainerUp.text.toString()
             password = passwordContainerUp.text.toString()
-
+            if(email !="" && password !="") {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
@@ -50,11 +50,20 @@ class SignUpActivity : AppCompatActivity() {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("TAG", "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
                     }
                 }
+             }
+            else {
+                // If sign in fails, display a message to the user.
+                Toast.makeText(
+                    baseContext, "Authentication failed",
+                    Toast.LENGTH_SHORT
+                ).show()}
         }
 
     }
