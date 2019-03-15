@@ -54,7 +54,7 @@ class GameActivity : AppCompatActivity() {
         //getParty()
         //getPlayers()
 
-        manager.BeginningFragment(context)
+        manager.CharacterFragment(context)
         nbTour = 1
 
         getPlayerInfo()

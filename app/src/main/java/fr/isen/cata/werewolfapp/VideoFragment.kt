@@ -84,7 +84,6 @@ class VideoFragment : Fragment() {
 
 
     companion object {
-
         fun newInstance() = VideoFragment()
     }
 }
