@@ -1,17 +1,12 @@
 package fr.isen.cata.werewolfapp
 
 import android.animation.ValueAnimator
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.os.Vibrator
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.getSystemService
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
-import android.widget.TextView
 import kotlinx.android.synthetic.main.layout_character.*
 
 
@@ -32,6 +27,8 @@ private val context=this
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         animateCards()
 
 
