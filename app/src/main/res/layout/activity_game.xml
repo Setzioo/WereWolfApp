@@ -8,7 +8,7 @@
         tools:context=".GameActivity">
     <fragment
             android:layout_width="435dp"
-            android:layout_height="760dp" android:name="fr.isen.cata.werewolfapp.VideoFragment"
+            android:layout_height="760dp" android:name="fr.isen.cata.werewolfapp.DefaultFragment"
             android:id="@+id/fragment" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

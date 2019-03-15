@@ -32,7 +32,7 @@ class LoupFragment : Fragment() {
         val players: ArrayList<String?> = ArrayList()
 
         val adapter = PlayerAdapter(players)
-        playerView.adapter = adapter
+        loupRecyclerView.adapter = adapter
 
 
 
