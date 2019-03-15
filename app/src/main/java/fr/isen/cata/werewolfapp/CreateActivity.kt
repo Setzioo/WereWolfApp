@@ -79,6 +79,7 @@ class CreateActivity : AppCompatActivity() {
         val listPlayer1: MutableList<String> = arrayListOf()
         listPlayer1.add(currentPlayer!!.id)
         mDatabase.child("Users").child(currentPlayer!!.id).child("currentGame").setValue(partyName)
+        mDatabase.child("Users").child(currentPlayer!!.id).child("inLobby").setValue(true)
         val lobbyTest = LobbyModel(currentPlayer!!.id, partyName, nbPlayer, listPlayer1)
         mDatabase.child("Lobby").child(partyName).setValue(lobbyTest)
 

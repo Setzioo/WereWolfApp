@@ -34,6 +34,7 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
         mLobbyReference = FirebaseDatabase.getInstance().reference.child("Lobby")
         setGameLauncher()
+        setKickListener()
 
         playerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 
@@ -44,6 +45,76 @@ class LobbyActivity : AppCompatActivity() {
 
         setPlayerList(players)
 
+    }
+
+    private fun setKickListener() {
+        val id: String = auth.currentUser!!.uid
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.children) {
+                        user.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in user) {
+                        if (i?.id == id) {
+                            currentPlayer = i
+
+                            if(!(currentPlayer!!.inLobby))
+                            {
+                                finish()
+                                Toast.makeText(context, "Vous n'etes plus dans le lobby", Toast.LENGTH_LONG).show()
+                            }
+
+                            checkMasterPresence(currentPlayer!!)
+
+                            Log.d("USERID------", currentPlayer!!.id)
+
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    private fun checkMasterPresence(currentPlayer: PlayerModel) {
+        val gameName = currentPlayer.currentGame
+        mLobbyReference.child(gameName!!).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    var list = dataSnapshot.child("listPlayer").value
+
+                    if (list!=null)
+                    {
+                        list = list as ArrayList<String>
+                        val masterId = dataSnapshot.child("masterId").value as String
+                        if (!list.contains(masterId))
+                        {
+                            val idToRemove = currentPlayer.id
+
+                            list.remove(idToRemove)
+
+                            Log.d("ABC", idToRemove)
+
+                            mDatabase.child("Lobby").child(gameName).child("listPlayer").setValue(list)
+                            mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
     }
 
     private fun setPlayerList(players : ArrayList<String?>) {
@@ -89,40 +160,13 @@ class LobbyActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
 
                     for(i in dataSnapshot.children){
-                        idIntoName(i.value as String, players)
+                        players.add(i.value as String)
 
                         (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
 
                     }
                 }
 
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-            }
-        })
-    }
-
-    private fun idIntoName(idPlayer: String, players : ArrayList<String?>) {
-
-        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
-
-        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: MutableList<PlayerModel?> = arrayListOf()
-                if (dataSnapshot.exists()) {
-                    user.clear()
-                    for (i in dataSnapshot.children) {
-                        user.add(i.getValue(PlayerModel::class.java))
-                    }
-                    for (i in user) {
-                        if (i?.id ==idPlayer) {
-                            pseudoPlayer = i.pseudo
-                            players.add(pseudoPlayer)
-                            (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
-                        }
-                    }
-                }
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())

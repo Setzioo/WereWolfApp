@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,7 +22,8 @@ class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
-        holder.pseudo.text = players[position]!!
+        //holder.pseudo.text = players[position]!!
+        idIntoName(players[position]!!, holder)
         holder.kickButton.setOnClickListener {
 
             changeDatabase(players[position]!!)
@@ -84,13 +86,15 @@ class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapt
                 if (dataSnapshot.exists()) {
 
                     val list = dataSnapshot.value as ArrayList<String>
+
+
+
                     list.remove(idToRemove)
 
                     Log.d("ABC", idToRemove)
 
-                    //TODO : RECUPERER l'id a partir du pseudo (pas logique)
-
                     mDatabase.child("Lobby").child(gameName!!).child("listPlayer").setValue(list)
+                    mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
 
                 }
             }
@@ -102,5 +106,35 @@ class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapt
             }
         })
     }
+
+
+
+    private fun idIntoName(idPlayer: String, holder: ViewHolder) {
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    user.clear()
+                    for (i in dataSnapshot.children) {
+                        user.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in user) {
+                        if (i?.id ==idPlayer) {
+                            holder.pseudo.text=i.pseudo
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
 }
+
+
 
