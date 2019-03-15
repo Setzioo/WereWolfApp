@@ -49,18 +49,23 @@ class SignInActivity : AppCompatActivity() {
 
             email = emailContainerIn.text.toString()
             password = passwordContainerIn.text.toString()
-            val editor = loginPrefs!!.edit()
 
-            if (rememberMeCheckBox.isChecked)
-            {
-                saveLoginPreferences(email, password, editor)
+            if(email != "" && password != "") {
+
+                val editor = loginPrefs!!.edit()
+
+                if (rememberMeCheckBox.isChecked) {
+                    saveLoginPreferences(email, password, editor)
+                } else {
+                    clearLoginPreferences(editor)
+                }
+
+                logIn(email, password)
             }
             else
             {
-                clearLoginPreferences(editor)
+                Toast.makeText(this, "Veuillez entrer un email valide et un mot de passe non vide", Toast.LENGTH_LONG).show()
             }
-
-            logIn(email, password)
         }
     }
 
@@ -70,22 +75,25 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun logIn(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, start HomeActivity
-                    Log.d("TAG", "signInWithEmail:success")
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w("TAG", "signInWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, start HomeActivity
+                        Log.d("TAG", "signInWithEmail:success")
+                        val intent = Intent(this, HomeActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w("TAG", "signInWithEmail:failure", task.exception)
+                        Toast.makeText(
+                            baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
+
+
     }
 
     private fun saveLoginPreferences(email: String, password: String, editor: SharedPreferences.Editor) {
