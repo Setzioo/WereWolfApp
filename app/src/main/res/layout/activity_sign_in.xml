@@ -27,9 +27,9 @@
             android:ems="10"
             android:hint="@string/password"
             android:id="@+id/passwordContainerIn"
-            app:layout_constraintTop_toBottomOf="@+id/emailContainerUp"
-            app:layout_constraintStart_toStartOf="@+id/emailContainerUp"
-            app:layout_constraintEnd_toEndOf="@+id/emailContainerUp" android:inputType="textPassword"
+            app:layout_constraintTop_toBottomOf="@+id/emailContainerIn"
+            app:layout_constraintStart_toStartOf="@+id/emailContainerIn"
+            app:layout_constraintEnd_toEndOf="@+id/emailContainerIn" android:inputType="textPassword"
             android:textSize="18sp" android:textColor="@color/colorBlanc" android:textColorLink="@color/colorBlanc"
             android:textColorHint="@color/colorBlanc"
             android:background="@drawable/edittextshape" android:layout_marginTop="40dp"
@@ -39,8 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/loginButton"
-            app:layout_constraintStart_toStartOf="@+id/passwordContainerUp"
-            app:layout_constraintEnd_toEndOf="@+id/passwordContainerUp"
+            app:layout_constraintStart_toStartOf="@+id/passwordContainerIn"
+            app:layout_constraintEnd_toEndOf="@+id/passwordContainerIn"
             android:bottomRightRadius="15dp"
             android:bottomLeftRadius="15dp"
             android:topLeftRadius="15dp"
@@ -65,24 +65,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rememberMeCheckBox"
-            app:layout_constraintStart_toStartOf="@+id/passwordContainerUp"
+            app:layout_constraintStart_toStartOf="@+id/passwordContainerIn"
             android:textColor="@android:color/white"
             style="@style/Widget.AppCompat.CompoundButton.CheckBox"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/passwordContainerUp"
+            app:layout_constraintTop_toBottomOf="@+id/passwordContainerIn"
             app:buttonTint="@color/colorBlanc"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@android:drawable/sym_action_email"
             android:id="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/emailContainerUp"
-            app:layout_constraintBottom_toBottomOf="@+id/emailContainerUp"
-            app:layout_constraintStart_toStartOf="@+id/emailContainerUp" android:layout_marginStart="8dp"/>
+            app:layout_constraintTop_toTopOf="@+id/emailContainerIn"
+            app:layout_constraintBottom_toBottomOf="@+id/emailContainerIn"
+            app:layout_constraintStart_toStartOf="@+id/emailContainerIn" android:layout_marginStart="8dp"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_lock_idle_lock"
             android:id="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/passwordContainerUp"
-            app:layout_constraintBottom_toBottomOf="@+id/passwordContainerUp"
-            app:layout_constraintStart_toStartOf="@+id/passwordContainerUp" android:layout_marginStart="8dp"/>
+            app:layout_constraintTop_toTopOf="@+id/passwordContainerIn"
+            app:layout_constraintBottom_toBottomOf="@+id/passwordContainerIn"
+            app:layout_constraintStart_toStartOf="@+id/passwordContainerIn" android:layout_marginStart="8dp"/>
 </android.support.constraint.ConstraintLayout>

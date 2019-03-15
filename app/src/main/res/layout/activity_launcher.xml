@@ -18,7 +18,7 @@
             app:layout_constraintTop_toBottomOf="@+id/launcherCard" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"/>
     <ImageView
-            android:src="@drawable/Loup_launcher"
+            android:src="@drawable/loup_launcher"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:id="@+id/launcherCard"
