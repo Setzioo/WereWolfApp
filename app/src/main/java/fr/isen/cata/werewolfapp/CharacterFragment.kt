@@ -1,20 +1,36 @@
 package fr.isen.cata.werewolfapp
 
 import android.animation.ValueAnimator
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Vibrator
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat.getSystemService
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
+import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.layout_character.*
 
 
 class CharacterFragment : Fragment() {
 private val context=this
+    private lateinit var mDatabase: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+    private var currentPlayer: PlayerModel? = null
+    private lateinit var gameName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mDatabase = FirebaseDatabase.getInstance().reference
+        auth = FirebaseAuth.getInstance()
+
 
     }
 
@@ -27,8 +43,6 @@ private val context=this
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         animateCards()
 
 
@@ -66,20 +80,47 @@ private val context=this
 
         valueAnimator.start()
         valueAnimator1.start()
+
+        getCurrentPlayer()
     }
 
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
+    private fun getCurrentPlayer() {
+
+        //val id: String = auth.currentUser!!.uid
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.children) {
+                        user.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in user) {
+                        /*if (i?.id == id) {
+                            currentPlayer = i
+                            gameName = currentPlayer!!.currentGame!!
+                        }*/
+                        if(i?.id == "f5lJpGohtZhC4ZygEGK4sywc3yz1"){    //Test
+                            currentPlayer = i
+                            gameName = currentPlayer!!.currentGame!!
+                        }
+                    }
+                    Handler().postDelayed({
+                        mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                        mDatabase.child("Party").child(gameName).child("endGame").setValue(false)
+                    },2000)
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
 
     companion object {
         fun newInstance() = CharacterFragment()

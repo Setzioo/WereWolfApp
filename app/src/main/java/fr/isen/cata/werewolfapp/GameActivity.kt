@@ -50,14 +50,14 @@ class GameActivity : AppCompatActivity() {
         mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
 
 
-        getPlayerInfo()
+
         //getParty()
         //getPlayers()
 
         manager.BeginningFragment(context)
         nbTour = 1
 
-
+        getPlayerInfo()
 
 
     }
@@ -111,6 +111,7 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
                 FlagListener()
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -325,13 +326,8 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     listenForFlags(dataSnapshot)
                     //listenForDead()
+                    getParty()
 
-                    if(game != null){
-                        if(!game!!.endGame){
-                            allGame()
-                            getPlayerInfo()
-                        }
-                    }
 
                 }
             }
@@ -360,7 +356,7 @@ class GameActivity : AppCompatActivity() {
             voyanteTurn()
         }
         else{
-            night()
+            //night()
         }
     }
 
@@ -449,7 +445,7 @@ class GameActivity : AppCompatActivity() {
     }
 
 
-/*private fun getParty(){
+private fun getParty(){
 
     val mPartyRef = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
@@ -457,7 +453,11 @@ class GameActivity : AppCompatActivity() {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
                 game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                listId = game!!.listPlayer
+                if(game != null){
+                    if(!game!!.endGame){
+                        allGame()
+                    }
+                }
             }
         }
 
@@ -466,6 +466,7 @@ class GameActivity : AppCompatActivity() {
         }
     })
 }
+    /*
 private fun getPlayers(){
     val mUsersRef = FirebaseDatabase.getInstance().getReference("Users")
 

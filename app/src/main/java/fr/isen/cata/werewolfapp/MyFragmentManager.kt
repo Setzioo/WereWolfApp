@@ -27,7 +27,7 @@ class MyFragmentManager {
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
 
-            .commit()
+            .commitAllowingStateLoss()
 
 
         val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -49,7 +49,7 @@ class MyFragmentManager {
         fragment = CupidonFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
     fun NightFragment(context: Context){
         val fragment: Fragment?
@@ -57,7 +57,7 @@ class MyFragmentManager {
         fragment = NightFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
     fun VoyanteFragment(context : Context){
         val fragment: Fragment?
@@ -65,7 +65,7 @@ class MyFragmentManager {
         fragment = VoyanteFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
     fun LoupsFragment(context: Context){
         val fragment: Fragment?
@@ -73,7 +73,7 @@ class MyFragmentManager {
         fragment = LoupFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
     fun SorciereFragment(context: Context, deathPotion : Boolean, lifePotion : Boolean){
         val fragment: Fragment?
@@ -81,7 +81,7 @@ class MyFragmentManager {
         fragment = SorciereFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
     fun PipoteurFragment(context: Context){
         val fragment: Fragment?
@@ -89,7 +89,7 @@ class MyFragmentManager {
         fragment = PipoteurFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
     fun ChasseurFragment(context: Context){
         val fragment: Fragment?
@@ -97,7 +97,7 @@ class MyFragmentManager {
         fragment = ChasseurFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
     fun VoteJourFragment(context : Context){
         val fragment: Fragment?
@@ -105,6 +105,6 @@ class MyFragmentManager {
         fragment = VoteJourFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
 }
