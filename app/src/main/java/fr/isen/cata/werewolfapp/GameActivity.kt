@@ -14,6 +14,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
+//TODO : Dans l'ordre a faire : Loup Voyante Chasseur Cupi Sorciere Pipoteur
+
 
 class GameActivity : AppCompatActivity() {
     private lateinit var mDatabase: DatabaseReference
