@@ -57,27 +57,7 @@ class GameActivity : AppCompatActivity() {
         manager.BeginningFragment(context)
         nbTour = 1
 
-        val mPlayerReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
-        mPlayerReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    listenForFlags(dataSnapshot)
-                    //listenForDead()
-                    getPlayerInfo()
-                    if(game != null){
-                        if(!game!!.endGame){
-                            allGame()
-                        }
-                    }
-
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
-            }
-        })
 
 
     }
@@ -102,7 +82,7 @@ class GameActivity : AppCompatActivity() {
                             currentRole = currentPlayer!!.role!!
 
                         }*/
-                        if(i?.id == "UECUWHd6DJOopvadKfHcBoY9JSy1"){    //Test
+                        if(i?.id == "f5lJpGohtZhC4ZygEGK4sywc3yz1"){    //Test
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                             currentRole = currentPlayer!!.role!!
@@ -111,10 +91,16 @@ class GameActivity : AppCompatActivity() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    listId = game!!.listPlayer
+                    if(game!=null){
+                        if(game!!.listPlayer != null){
+                            listId = game!!.listPlayer
+                        }
+                    }
+
+
 
                 }
-                if (dataSnapshot.exists()) {
+                if (listId != null) {
                     for(i in listId!!){
                         for(u in dataSnapshot.child("Users").children){
                             var user = u.getValue(PlayerModel::class.java)
@@ -124,6 +110,7 @@ class GameActivity : AppCompatActivity() {
                         }
                     }
                 }
+                FlagListener()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -197,6 +184,7 @@ class GameActivity : AppCompatActivity() {
         night()
         Log.e("FUN", "in game nigth")
         if(!currentPlayer!!.state){//Si vivant
+            Log.e("FUN", "Alive")
             if(cupidon){//Si cupidon alors voyante
                 if(game!!.Flags!!.CupidonFlag){//tour de cupidon
                     raiseFlagCupidon()
@@ -329,6 +317,31 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(true)
     }
 
+    private fun FlagListener(){
+        val mPlayerReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
+
+        mPlayerReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    listenForFlags(dataSnapshot)
+                    //listenForDead()
+
+                    if(game != null){
+                        if(!game!!.endGame){
+                            allGame()
+                            getPlayerInfo()
+                        }
+                    }
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "No Flag", databaseError.toException())
+            }
+        })
+    }
+
     private fun listenForFlags(dataSnapshot: DataSnapshot){
         val flags : Flagmodel? = dataSnapshot.getValue(Flagmodel::class.java)
         if(flags!!.CupidonFlag){
@@ -435,8 +448,8 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    /*
-private fun getParty(){
+
+/*private fun getParty(){
 
     val mPartyRef = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
@@ -445,7 +458,6 @@ private fun getParty(){
             if (dataSnapshot.exists()) {
                 game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                 listId = game!!.listPlayer
-                getPlayers()
             }
         }
 
