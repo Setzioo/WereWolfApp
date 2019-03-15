@@ -62,7 +62,7 @@ class LauncherActivity : AppCompatActivity() {
             }
         }.start()*/
 
-        launcherLayout.setOnClickListener { v: View ->
+        launcherLayout.setOnClickListener {
 
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

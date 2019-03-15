@@ -60,10 +60,10 @@
             android:text="Se souvenir de moi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/rememberMeCheckBox" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/passwordContainerIn" android:layout_marginBottom="8dp"
+            android:id="@+id/rememberMeCheckBox"
+            app:layout_constraintTop_toBottomOf="@+id/passwordContainerIn"
             app:layout_constraintBottom_toTopOf="@+id/loginButton"
             app:layout_constraintStart_toStartOf="@+id/passwordContainerIn"
             app:layout_constraintEnd_toEndOf="@+id/passwordContainerIn" android:textColor="@android:color/white"
-            style="@style/Widget.AppCompat.CompoundButton.CheckBox"/>
+            style="@style/Widget.AppCompat.CompoundButton.CheckBox" android:checked="true"/>
 </android.support.constraint.ConstraintLayout>
