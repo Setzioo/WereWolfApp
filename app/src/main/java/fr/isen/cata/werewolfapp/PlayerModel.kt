@@ -14,5 +14,6 @@ class PlayerModel(_id: String="0", _pseudo: String=""/*, _avatar: Bitmap?=null, 
     var inLobby : Boolean = false
     var deathPotion: Boolean = false
     var lifePotion: Boolean = false
+    var inLove : Boolean = false
 
 }
