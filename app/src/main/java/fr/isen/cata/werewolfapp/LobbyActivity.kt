@@ -131,9 +131,16 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
 
+        mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
         mDatabase.child("Party").child(gameName).child("voteResult").setValue(true)
+
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("AngeFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(false)
     }
 
     private fun startGame(){

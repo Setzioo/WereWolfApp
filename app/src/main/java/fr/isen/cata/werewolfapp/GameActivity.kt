@@ -64,7 +64,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun getPlayerInfo() {
 
-        //val id: String = auth.currentUser!!.uid
+        val id: String = auth.currentUser!!.uid
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
 
@@ -76,16 +76,11 @@ class GameActivity : AppCompatActivity() {
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
-                        /*if (i?.id == id) {
+                        if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                             currentRole = currentPlayer!!.role!!
 
-                        }*/
-                        if(i?.id == "f5lJpGohtZhC4ZygEGK4sywc3yz1"){    //Test
-                            currentPlayer = i
-                            gameName = currentPlayer!!.currentGame!!
-                            currentRole = currentPlayer!!.role!!
                         }
                     }
                 }
@@ -110,7 +105,7 @@ class GameActivity : AppCompatActivity() {
                         }
                     }
                 }
-                FlagListener()
+                gameListener()
 
             }
 
@@ -183,53 +178,70 @@ class GameActivity : AppCompatActivity() {
         val pipoteur = isPipoteur()
 
         night()
-        Log.e("FUN", "in game nigth")
-        if(!currentPlayer!!.state){//Si vivant
-            Log.e("FUN", "Alive")
+        Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
+        if(currentPlayer!!.state){//Si vivant
+            //Log.e("FUN", "Alive")
             if(cupidon){//Si cupidon alors voyante
-                if(game!!.Flags!!.CupidonFlag){//tour de cupidon
+                if(!game!!.Flags!!.CupidonFlag){//tour de cupidon
+                    Log.e("FUN", "Cupi joue")
                     raiseFlagCupidon()
+
                 }
                 else{//Cupidon a joué
-                    if(!game!!.Flags!!.VoyanteFlag){//tour de la voyante
+                    if(!game!!.Flags!!.VoyanteFlag && game!!.FinishFlags!!.CupidonFlag){//tour de la voyante
+                        Log.e("FUN", "Voyante joue avec cupi")
                         raiseFlagVoyante()
+
                     }
                     else{//la voyante a joué
-                        if(!game!!.Flags!!.LoupFlag){//tour des loups
+                        if(!game!!.Flags!!.LoupFlag && game!!.FinishFlags!!.VoyanteFlag){//tour des loups
+                            Log.e("FUN", "loup joue avec cupi")
                             raiseFlagLoups()
                         }
                         else{//les loups ont joués
                             if(sorciere && pipoteur){
-                                if(!game!!.Flags!!.SorciereFlag){//tour de la sorciere
+                                if(!game!!.Flags!!.SorciereFlag && game!!.FinishFlags!!.LoupFlag){//tour de la sorciere
+                                    Log.e("FUN", "sorciere joue avec pipo")
                                     raiseFlagSorciere()
                                 }
                                 else{
-                                    if(!game!!.Flags!!.PipoteurFlag){//tour du pipoteur
+                                    if(!game!!.Flags!!.PipoteurFlag && game!!.FinishFlags!!.SorciereFlag){//tour du pipoteur
+                                        Log.e("FUN", "pipo joue avec sorciere")
                                         raiseFlagPipoteur()
                                     }
                                     else{
-                                        //Lancer le jour
+                                        if(game!!.FinishFlags!!.PipoteurFlag){
+                                            launchDay()
+                                        }
                                     }
                                 }
                             }
                             else if(sorciere){
-                                if(!game!!.Flags!!.SorciereFlag){//tour de la sorciere
+                                if(!game!!.Flags!!.SorciereFlag && game!!.FinishFlags!!.LoupFlag){//tour de la sorciere
+                                    Log.e("FUN", "sorciere joue sans pipo")
                                     raiseFlagSorciere()
                                 }
                                 else{
-                                    //Lancer le jour
+                                    if(game!!.FinishFlags!!.SorciereFlag){
+                                        launchDay()
+                                    }
                                 }
                             }
                             else if(pipoteur){
-                                if(!game!!.Flags!!.PipoteurFlag){//tour du pipoteur
+                                if(!game!!.Flags!!.PipoteurFlag && game!!.FinishFlags!!.LoupFlag){//tour du pipoteur
+                                    Log.e("FUN", "pipo joue sans sorciere")
                                     raiseFlagPipoteur()
                                 }
                                 else{
-                                    //Lancer le jour
+                                    if(game!!.FinishFlags!!.PipoteurFlag){
+                                        launchDay()
+                                    }
                                 }
                             }
                             else{
-                                //Lancer le jour
+                                if(game!!.FinishFlags!!.LoupFlag){
+                                    launchDay()
+                                }
                             }
                         }
                     }
@@ -237,15 +249,29 @@ class GameActivity : AppCompatActivity() {
             }
             else{//si pas de cupidon voyante? + loups
                 if(voyante){
-                    if(game!!.Flags!!.VoyanteFlag){
+                    if(!game!!.Flags!!.VoyanteFlag){//Tour de la voyante
+                        Log.e("FUN", "Voyante joue sans cupi")
                         raiseFlagVoyante()
                     }
                     else{//La voyante a joué
-                        raiseFlagLoups()
+                        if(!game!!.Flags!!.LoupFlag && game!!.FinishFlags!!.VoyanteFlag){
+                            Log.e("FUN", "loup joue sans cupi")
+                            raiseFlagLoups()
+                        }
+                        else{
+                            if(game!!.FinishFlags!!.LoupFlag){
+                                launchDay()
+                            }
+                        }
+
                     }
                 }
                 else{//si pas de voyante que loups
+                    Log.e("FUN", "loup joue sans voyante")
                     raiseFlagLoups()
+                }
+                if(game!!.FinishFlags!!.LoupFlag){
+                    launchDay()
                 }
             }
         }
@@ -253,15 +279,18 @@ class GameActivity : AppCompatActivity() {
             //ecran des morts
             Toast.makeText(context, "Mort", Toast.LENGTH_LONG).show()
         }
-        nbTour++
-        //Lancement du jour
-        lowerFlag()
-        mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
+
     }
 
     private fun playDay(){
-        checkDead()
-        manager.VoteJourFragment(context)
+        if(game!!.voteResult == ""){
+            checkDead()
+            manager.VoteJourFragment(context)
+        }
+        else{
+            listenForDead()
+        }
+
     }
 
     private fun night(){
@@ -312,20 +341,24 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun lowerFlag(){
-        mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(true)
-        mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(true)
-        mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(true)
-        mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(true)
+        mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
+
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(false)
     }
 
-    private fun FlagListener(){
+    private fun gameListener(){
         val mPlayerReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
         mPlayerReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     listenForFlags(dataSnapshot)
-                    //listenForDead()
                     getParty()
 
 
@@ -364,6 +397,9 @@ class GameActivity : AppCompatActivity() {
         var deadPlayers: MutableList<PlayerModel>? = arrayListOf()
         var isLoverDead = false
         var isHunterDead = false
+        if(nbTour == 1){
+            alivePlayers = listPlayer
+        }
         if (alivePlayers != null) {
             for (player in alivePlayers!!) {
                 if (player!!.state) {//si mort
@@ -402,21 +438,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
     private fun checkDeadAfterVote(){
-        var deadPlayer : String? = null
-        val mPartyRef = FirebaseDatabase.getInstance().getReference("Party").child(gameName).child("voteResult")
-
-        mPartyRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    game = dataSnapshot.getValue(PartyModel::class.java)
-                    deadPlayer = game!!.voteResult
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-            }
-        })
+        var deadPlayer : String? = game!!.voteResult
         if(deadPlayer!=null){
             for(player in alivePlayers!!){
                 if(player!!.id == deadPlayer){
@@ -424,18 +446,19 @@ class GameActivity : AppCompatActivity() {
                 }
             }
         }
+        checkDead()
+        Log.e("FUN", "vote finie"
+        )
     }
 
     private fun listenForDead(){
-        if(game!!.voteResult != ""){
-            checkDeadAfterVote()
-            mDatabase.child("Party").child(gameName).child("voteResult").setValue(null)
-            mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
-        }
+        checkDeadAfterVote()
+        mDatabase.child("Party").child(gameName).child("voteResult").setValue("")
+
     }
 
     private fun allGame(){
-        Toast.makeText(context, "In game", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "role: "+currentPlayer!!.role+", state : "+currentPlayer!!.state.toString(), Toast.LENGTH_LONG).show()
         if(game!!.nightGame){
             playNight()
         }
@@ -452,7 +475,7 @@ private fun getParty(){
     mPartyRef.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
-                game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                game = dataSnapshot.getValue(PartyModel::class.java)
                 if(game != null){
                     if(!game!!.endGame){
                         allGame()
@@ -466,6 +489,13 @@ private fun getParty(){
         }
     })
 }
+
+    private fun launchDay(){
+        Log.e("FUN", "JOUR")
+        nbTour++
+        lowerFlag()
+        mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
+    }
     /*
 private fun getPlayers(){
     val mUsersRef = FirebaseDatabase.getInstance().getReference("Users")
