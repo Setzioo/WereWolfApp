@@ -1,15 +1,17 @@
 package fr.isen.cata.werewolfapp
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_video.*
+import kotlinx.android.synthetic.main.activity_lobby.*
+
+//TODO : Vote parmi les vivants
 
 
 class LoupFragment : Fragment() {
@@ -23,6 +25,16 @@ class LoupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.e("FUN", "LOUP")
         Toast.makeText(context, "Loups", Toast.LENGTH_LONG).show()
+
+        playerView.layoutManager = LinearLayoutManager(context!!, LinearLayout.VERTICAL, false)
+
+        val players: ArrayList<String?> = ArrayList()
+
+        val adapter = PlayerAdapter(players)
+        playerView.adapter = adapter
+
+
+
     }
 
     override fun onCreateView(
