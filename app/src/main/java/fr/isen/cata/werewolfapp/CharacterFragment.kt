@@ -38,9 +38,6 @@ class CharacterFragment : Fragment() {
     }
 
 
-
-
-
     private fun animateCards() {
         val valueAnimator = ValueAnimator.ofFloat(0f, 720f)
 

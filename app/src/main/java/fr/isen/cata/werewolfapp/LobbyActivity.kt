@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_join.*
 import kotlinx.android.synthetic.main.activity_lobby.*
 
 class LobbyActivity : AppCompatActivity() {
@@ -20,7 +19,6 @@ class LobbyActivity : AppCompatActivity() {
     private var currentPlayer: PlayerModel? = null
     private var context = this
     var lobby: LobbyModel? = null
-    var pseudoPlayer: String = "notFound"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
