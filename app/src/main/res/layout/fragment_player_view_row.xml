@@ -11,15 +11,14 @@
                                              android:layout_marginTop="2dp">
     <TextView
             android:layout_width="228dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:text="coucou" android:id="@+id/lobbyPseudoText"
             android:textSize="24sp"
             android:textColor="@android:color/white"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"
             android:textAlignment="textStart" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.0"
+            android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"/>
     <Button
             android:text="@string/exclure"
             android:layout_width="117dp"
