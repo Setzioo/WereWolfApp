@@ -3,11 +3,16 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".VideoFragment">
-    <VideoView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/videoView" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.25"/>
-
+                                             tools:context=".VideoFragment"
+                                             android:background="@drawable/background3">
+    <TextView
+            android:text="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/compteur" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="164dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="164dp" android:layout_marginTop="168dp"
+            app:layout_constraintTop_toTopOf="parent" android:textSize="250sp"
+            app:layout_constraintHorizontal_bias="0.511" android:textStyle="bold"
+            android:textColor="@color/blanc_casse"/>
 </android.support.constraint.ConstraintLayout>
