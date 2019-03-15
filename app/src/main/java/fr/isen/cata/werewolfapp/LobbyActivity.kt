@@ -336,7 +336,7 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
 
         mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
-        mDatabase.child("Party").child(gameName).child("voteResult").setValue(true)
+        mDatabase.child("Party").child(gameName).child("voteResult").setValue("")
 
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
