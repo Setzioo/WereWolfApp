@@ -46,9 +46,15 @@ class LauncherActivity : AppCompatActivity() {
         videoView?.setVideoURI(Uri.parse(path))
         videoView.start()*/
         animateLaunchText()
-        /*_________SON_______
-        val mp = MediaPlayer.create (this, R.raw.sf_meute)
-        mp.start ()*/
+
+/*
+        val mp = MediaPlayer.create (this, R.raw.victoire_pipoteur)
+        mp.setVolume(0.5f, 0.5f)
+        mp.start ()
+
+        val mp2 = MediaPlayer.create (this, R.raw.village_endort)
+        mp2.setVolume(0.7f, 0.7f)
+        mp2.start ()*/
        /* ________CHRONO_______
        animateCards()
         object : CountDownTimer(30000, 1000) {
