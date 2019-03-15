@@ -17,7 +17,6 @@ class FinJeuFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        animateCards()
 
     }
 
@@ -27,42 +26,6 @@ class FinJeuFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fin_jeu, container, false)
-    }
-
-    private fun animateCards() {
-        val valueAnimator = ValueAnimator.ofFloat(0f, 720f)
-
-        valueAnimator.addUpdateListener {
-            val value = it.animatedValue as Float
-
-            Cards.rotation =value
-
-        }
-        val valueAnimator1 = ValueAnimator.ofFloat(0f, 1f)
-
-        valueAnimator1.addUpdateListener {
-            val value = it.animatedValue as Float
-            Cards.alpha=value
-
-
-        }
-
-
-        valueAnimator.interpolator = AccelerateInterpolator()
-        valueAnimator.duration = 2000
-        valueAnimator1.interpolator = AccelerateInterpolator()
-        valueAnimator1.duration = 2000
-
-
-
-        valueAnimator.start()
-        valueAnimator1.start()
-
-        Handler().postDelayed({
-            val manager = MyFragmentManager()
-            manager.DebutNuitFragment(context!!)
-        },7000)
-
 
     }
 
