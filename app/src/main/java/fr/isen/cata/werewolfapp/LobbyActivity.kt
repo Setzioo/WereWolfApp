@@ -43,6 +43,59 @@ class LobbyActivity : AppCompatActivity() {
 
         setPlayerList(players)
 
+        
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        val id: String = auth.currentUser!!.uid
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.children) {
+                        user.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in user) {
+                        if (i?.id == id) {
+                            currentPlayer = i
+                            val gameName = currentPlayer!!.currentGame
+
+                            mLobbyReference.child(gameName!!).addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                                    if (dataSnapshot.exists()) {
+
+                                        val list = dataSnapshot.child("listPlayer").value as ArrayList<String>
+
+                                        removeIdFromLobby(currentPlayer!!,list,gameName)
+                                    }
+                                }
+
+                                override fun onCancelled(databaseError: DatabaseError) {
+                                    Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+                                }
+                            })
+
+
+
+
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+
+
     }
 
     private fun setKickAndDestroyListener() {
@@ -96,14 +149,7 @@ class LobbyActivity : AppCompatActivity() {
                         val masterId = dataSnapshot.child("masterId").value as String
                         if (!list.contains(masterId))
                         {
-                            val idToRemove = currentPlayer.id
-
-                            list.remove(idToRemove)
-
-                            Log.d("ABC", idToRemove)
-
-                            mDatabase.child("Lobby").child(gameName).child("listPlayer").setValue(list)
-                            mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
+                            removeIdFromLobby(currentPlayer, list, gameName)
                         }
                     }
                     else
@@ -117,6 +163,21 @@ class LobbyActivity : AppCompatActivity() {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
+    }
+
+    private fun removeIdFromLobby(
+        currentPlayer: PlayerModel,
+        list: ArrayList<String>,
+        gameName: String
+    ) {
+        val idToRemove = currentPlayer.id
+
+        list.remove(idToRemove)
+
+        Log.d("ABC", idToRemove)
+
+        mDatabase.child("Lobby").child(gameName).child("listPlayer").setValue(list)
+        mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
     }
 
     private fun setPlayerList(players : ArrayList<String?>) {
