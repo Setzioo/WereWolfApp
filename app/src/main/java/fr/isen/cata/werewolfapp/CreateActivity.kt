@@ -46,10 +46,6 @@ class CreateActivity : AppCompatActivity() {
 
         nbPlayerView.text = nbPlayer.toString()
 
-        returnButton.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-        }
-
         addButton.setOnClickListener {
             if(nbPlayer < 18) {
                 nbPlayer += 1
