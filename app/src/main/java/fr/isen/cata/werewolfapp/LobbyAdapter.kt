@@ -1,9 +1,12 @@
 package fr.isen.cata.werewolfapp
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -23,6 +26,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
         getCurrentPlayer()
+        buttonEffect(holder.joinButton)
         holder.name.text = lobbies[position]!!.name
         val nbPlayerMessage = lobbies[position]!!.listPlayer?.size.toString() + "/" + lobbies[position]!!.nbPlayer.toString()
         holder.nbPlayer.text = nbPlayerMessage
@@ -86,6 +90,24 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
+    }
+    fun buttonEffect(button: View) {
+        var color = Color.parseColor("#228B22")
+        button.setOnTouchListener { v, event ->
+
+            when (event.action) {
+
+                MotionEvent.ACTION_DOWN -> {
+                    v.background.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+                    v.invalidate()
+                }
+                MotionEvent.ACTION_UP -> {
+                    v.background.clearColorFilter()
+                    v.invalidate()
+                }
+            }
+            false
+        }
     }
 
 }
