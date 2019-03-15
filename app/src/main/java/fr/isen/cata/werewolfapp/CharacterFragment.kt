@@ -109,8 +109,8 @@ private val context=this
                         }
                     }
                     Handler().postDelayed({
-                        mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
-                        mDatabase.child("Party").child(gameName).child("endGame").setValue(false)
+                        mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
+                        mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
                     },2000)
 
                 }

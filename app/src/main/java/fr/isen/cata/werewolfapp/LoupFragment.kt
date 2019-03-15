@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_lobby.*
+import kotlinx.android.synthetic.main.fragment_loup.*
 
 //TODO : Vote parmi les vivants
 
@@ -26,12 +27,14 @@ class LoupFragment : Fragment() {
         Log.e("FUN", "LOUP")
         Toast.makeText(context, "Loups", Toast.LENGTH_LONG).show()
 
-        playerView.layoutManager = LinearLayoutManager(context!!, LinearLayout.VERTICAL, false)
+        loupRecyclerView.layoutManager = LinearLayoutManager(context!!, LinearLayout.VERTICAL, false)
 
         val players: ArrayList<String?> = ArrayList()
 
         val adapter = PlayerAdapter(players)
         playerView.adapter = adapter
+
+
 
 
 
