@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,8 @@ import java.io.PrintWriter
 
 
 class VideoFragment : Fragment() {
+
+    val compteurMax : Long = 5
 
 
     override fun onCreateView(
@@ -40,14 +43,14 @@ class VideoFragment : Fragment() {
             val manager = MyFragmentManager()
             manager.CharacterFragment(context!!)
         }*/
-        object : CountDownTimer(5000, 1000) {
+        object : CountDownTimer(compteurMax*1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                compteur.setText("" + (millisUntilFinished / 1000+1))
+                compteur.text = "" + (millisUntilFinished / 1000+1)
             }
 
             override fun onFinish() {
-                compteur.setText("GO")
+                compteur.text = "GO"
             }
         }.start()
         animateLaunchText()
@@ -61,10 +64,15 @@ class VideoFragment : Fragment() {
         }
 
         valueAnimator.interpolator = AccelerateDecelerateInterpolator()
-        valueAnimator.duration = 548
-        valueAnimator.repeatCount = ValueAnimator.INFINITE
+        valueAnimator.duration = 500
+        valueAnimator.repeatCount = (compteurMax*2 + 1).toInt()
         valueAnimator.repeatMode = ValueAnimator.REVERSE
         valueAnimator.start()
+
+        Handler().postDelayed({
+            val manager = MyFragmentManager()
+            manager.CharacterFragment(context!!)
+        },(compteurMax+2)*1000)
     }
 
 

@@ -111,7 +111,7 @@ class LauncherActivity : AppCompatActivity() {
 
         valueAnimator.addUpdateListener {
             val value = it.animatedValue as Float
-            compteur.alpha = value
+            LaunchText.alpha = value
         }
 
         valueAnimator.interpolator = AccelerateDecelerateInterpolator()

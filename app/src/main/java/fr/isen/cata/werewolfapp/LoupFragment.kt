@@ -2,13 +2,16 @@ package fr.isen.cata.werewolfapp
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_lobby.*
 import kotlinx.android.synthetic.main.fragment_loup.*
 
@@ -17,27 +20,49 @@ import kotlinx.android.synthetic.main.fragment_loup.*
 
 class LoupFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var mDatabase: DatabaseReference
+    private lateinit var adapter: LoupAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.e("FUN", "LOUP")
         Toast.makeText(context, "Loups", Toast.LENGTH_LONG).show()
 
-        loupRecyclerView.layoutManager = LinearLayoutManager(context!!, LinearLayout.VERTICAL, false)
+        loupRecyclerView.layoutManager = GridLayoutManager(context!!,2)
 
-        val players: ArrayList<String?> = ArrayList()
+        val players: ArrayList<PlayerModel?> = ArrayList()
 
-        val adapter = PlayerAdapter(players)
+        adapter = LoupAdapter(players)
         loupRecyclerView.adapter = adapter
 
+        getVillagers(players)
 
 
 
 
+
+    }
+
+    private fun getVillagers(players: ArrayList<PlayerModel?>) {
+        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    players.clear()
+                    for (i in dataSnapshot.children) {
+                        players.add(i.getValue(PlayerModel::class.java))
+                        adapter.notifyDataSetChanged()
+                    }
+
+
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
     }
 
     override fun onCreateView(
