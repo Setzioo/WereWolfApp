@@ -29,13 +29,13 @@
         </activity>
         <activity android:name=".CreateActivity">
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LauncherActivity">
+        <activity android:name=".LoginActivity">
 
         </activity>
         <activity android:name=".HomeActivity">
