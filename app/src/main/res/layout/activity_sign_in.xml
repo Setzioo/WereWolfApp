@@ -10,7 +10,7 @@
     <EditText
             android:layout_height="wrap_content"
             android:ems="10"
-            android:id="@+id/emailContainerUp"
+            android:id="@+id/emailContainerIn"
             android:hint="@string/adresse_mail"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/password"
-            android:id="@+id/passwordContainerUp"
+            android:id="@+id/passwordContainerIn"
             app:layout_constraintTop_toBottomOf="@+id/emailContainerUp"
             app:layout_constraintStart_toStartOf="@+id/emailContainerUp"
             app:layout_constraintEnd_toEndOf="@+id/emailContainerUp" android:inputType="textPassword"

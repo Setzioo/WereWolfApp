@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".HomeActivity"
-        android:background="@drawable/accueil_background1">
+        android:background="@drawable/background3">
 
     <Button
             android:text="@string/rejoindre"
@@ -16,7 +16,7 @@
             android:textAlignment="center" android:textSize="18sp"
             android:background="@drawable/buttonshape"
             android:textColor="@color/blanc_casse"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="80dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.497" app:layout_constraintEnd_toEndOf="parent"/>
     <Button
@@ -28,13 +28,13 @@
             android:background="@drawable/buttonshape"
             android:textColor="@color/blanc_casse"
             app:layout_constraintEnd_toEndOf="@+id/joinButton" app:layout_constraintStart_toStartOf="@+id/joinButton"
-            android:layout_marginBottom="44dp" app:layout_constraintBottom_toTopOf="@+id/joinButton"
-            app:layout_constraintHorizontal_bias="1.0"/>
+            android:layout_marginBottom="48dp" app:layout_constraintBottom_toTopOf="@+id/joinButton"
+            app:layout_constraintHorizontal_bias="0.0"/>
     <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp" app:srcCompat="@android:drawable/ic_lock_power_off"
             android:id="@+id/decoButton"
-            android:tint="@android:color/white" android:background="@color/colorBackground"
+            android:tint="@android:color/white" android:background="@color/transparentBackground"
             android:scaleType="fitCenter" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/createButton" app:layout_constraintHorizontal_bias="0.0"
@@ -43,11 +43,18 @@
             android:layout_width="60dp"
             android:layout_height="60dp" app:srcCompat="@android:drawable/ic_menu_preferences"
             android:id="@+id/settingButton"
-            android:background="@color/colorBackground"
+            android:background="@color/transparentBackground"
             android:scaleType="fitCenter" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/decoButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.0" app:layout_constraintHorizontal_bias="1.0"
             android:tint="@android:color/white" android:contentDescription="@string/bouton_parametres"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/wolf_moon"
+            android:id="@+id/imageView4" android:layout_marginBottom="64dp"
+            app:layout_constraintBottom_toTopOf="@+id/createButton"
+            app:layout_constraintStart_toStartOf="@+id/createButton"
+            app:layout_constraintEnd_toEndOf="@+id/createButton"/>
 </android.support.constraint.ConstraintLayout>
