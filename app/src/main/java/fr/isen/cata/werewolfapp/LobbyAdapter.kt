@@ -36,6 +36,8 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
 
             mDatabase.child("Lobby").child(lobbies[position]!!.name).child("listPlayer").setValue(playerList)
 
+            mDatabase.child("Users").child(currentPlayer!!.id).child("inLobby").setValue(true)
+
 
 
             val intent = Intent(holder.joinButton.context, LobbyActivity::class.java)
