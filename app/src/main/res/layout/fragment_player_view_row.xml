@@ -5,33 +5,29 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
                                              tools:context=".PlayerViewRowFragment" android:id="@+id/recyclerLayout"
-                                             android:background="#444">
-
+                                             android:background="@drawable/recycleritemshape"
+                                             android:layout_marginLeft="10dp"
+                                             android:layout_marginRight="10dp"
+                                             android:layout_marginTop="2dp">
     <TextView
-            android:layout_width="223dp"
+            android:layout_width="228dp"
             android:layout_height="wrap_content"
             android:text="coucou" android:id="@+id/lobbyPseudoText"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:textColor="@android:color/white"
-            android:layout_marginTop="12dp" android:layout_marginStart="16dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            android:textAlignment="textStart"/>
-    <View
-            android:id="@+id/divider"
-            android:layout_width="395dp"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintVertical_bias="1.0" app:layout_constraintHorizontal_bias="0.0"/>
+            android:textAlignment="textStart" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.0"/>
     <Button
             android:text="@string/exclure"
-            android:layout_width="125dp"
-            android:layout_height="77dp"
+            android:layout_width="117dp"
+            android:layout_height="29dp"
             android:id="@+id/kickButton" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/divider"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/buttonshapekick" android:textColor="@color/blanc_casse"
+            android:textAlignment="center" android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
 
 </android.support.constraint.ConstraintLayout>
