@@ -64,7 +64,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun getPlayerInfo() {
 
-        //val id: String = auth.currentUser!!.uid
+        val id: String = auth.currentUser!!.uid
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
 
@@ -76,13 +76,7 @@ class GameActivity : AppCompatActivity() {
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
-                        /*if (i?.id == id) {
-                            currentPlayer = i
-                            gameName = currentPlayer!!.currentGame!!
-                            currentRole = currentPlayer!!.role!!
-
-                        }*/
-                        if (i?.id == "f5lJpGohtZhC4ZygEGK4sywc3yz1") {
+                        if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                             currentRole = currentPlayer!!.role!!

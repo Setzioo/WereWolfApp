@@ -87,7 +87,7 @@ private val context=this
 
     private fun getCurrentPlayer() {
 
-        //val id: String = auth.currentUser!!.uid
+        val id: String = auth.currentUser!!.uid
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
 
@@ -99,18 +99,14 @@ private val context=this
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
-                        /*if (i?.id == id) {
-                            currentPlayer = i
-                            gameName = currentPlayer!!.currentGame!!
-                        }*/
-                        if(i?.id == "f5lJpGohtZhC4ZygEGK4sywc3yz1"){    //Test
+                        if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                         }
                     }
                     Handler().postDelayed({
-                        mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
-                        mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+                        mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                        mDatabase.child("Party").child(gameName).child("endGame").setValue(false)
                     },2000)
 
                 }
