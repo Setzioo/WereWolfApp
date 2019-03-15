@@ -34,7 +34,7 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
         mLobbyReference = FirebaseDatabase.getInstance().reference.child("Lobby")
         setGameLauncher()
-        setKickListener()
+        setKickAndDestroyListener()
 
         playerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 
@@ -47,7 +47,7 @@ class LobbyActivity : AppCompatActivity() {
 
     }
 
-    private fun setKickListener() {
+    private fun setKickAndDestroyListener() {
         val id: String = auth.currentUser!!.uid
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
@@ -69,7 +69,7 @@ class LobbyActivity : AppCompatActivity() {
                                 Toast.makeText(context, "Vous n'etes plus dans le lobby", Toast.LENGTH_LONG).show()
                             }
 
-                            checkMasterPresence(currentPlayer!!)
+                            checkMasterPresenceAndEmptiness(currentPlayer!!)
 
                             Log.d("USERID------", currentPlayer!!.id)
 
@@ -84,7 +84,7 @@ class LobbyActivity : AppCompatActivity() {
         })
     }
 
-    private fun checkMasterPresence(currentPlayer: PlayerModel) {
+    private fun checkMasterPresenceAndEmptiness(currentPlayer: PlayerModel) {
         val gameName = currentPlayer.currentGame
         mLobbyReference.child(gameName!!).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -107,6 +107,10 @@ class LobbyActivity : AppCompatActivity() {
                             mDatabase.child("Lobby").child(gameName).child("listPlayer").setValue(list)
                             mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
                         }
+                    }
+                    else
+                    {
+                        mDatabase.child("Lobby").child(gameName).removeValue()
                     }
                 }
             }
