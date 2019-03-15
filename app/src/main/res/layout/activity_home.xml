@@ -16,7 +16,7 @@
             android:textAlignment="center" android:textSize="18sp"
             android:background="@drawable/buttonshape"
             android:textColor="@color/blanc_casse"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="68dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.497" app:layout_constraintEnd_toEndOf="parent"/>
     <Button
@@ -28,20 +28,20 @@
             android:background="@drawable/buttonshape"
             android:textColor="@color/blanc_casse"
             app:layout_constraintEnd_toEndOf="@+id/joinButton" app:layout_constraintStart_toStartOf="@+id/joinButton"
-            android:layout_marginBottom="48dp" app:layout_constraintBottom_toTopOf="@+id/joinButton"
+            android:layout_marginBottom="40dp" app:layout_constraintBottom_toTopOf="@+id/joinButton"
             app:layout_constraintHorizontal_bias="0.0"/>
     <ImageButton
             android:layout_width="60dp"
-            android:layout_height="60dp" app:srcCompat="@android:drawable/ic_lock_power_off"
+            android:layout_height="60dp" app:srcCompat="@drawable/disconnect_icon"
             android:id="@+id/decoButton"
-            android:tint="@android:color/white" android:background="@color/transparentBackground"
+            android:tint="@color/transparentBackground" android:background="@color/transparentBackground"
             android:scaleType="fitCenter" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/createButton" app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="0.0" android:contentDescription="@string/bouton_de_deconnexion"/>
     <ImageButton
             android:layout_width="60dp"
-            android:layout_height="60dp" app:srcCompat="@android:drawable/ic_menu_preferences"
+            android:layout_height="60dp" app:srcCompat="@drawable/parmeter_icon"
             android:id="@+id/settingButton"
             android:background="@color/transparentBackground"
             android:scaleType="fitCenter" app:layout_constraintTop_toTopOf="parent"
@@ -49,12 +49,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.0" app:layout_constraintHorizontal_bias="1.0"
-            android:tint="@android:color/white" android:contentDescription="@string/bouton_parametres"/>
+            android:tint="@color/transparentBackground" android:contentDescription="@string/bouton_parametres"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/wolf_moon"
-            android:id="@+id/imageView4" android:layout_marginBottom="64dp"
+            android:id="@+id/imageView4" android:layout_marginBottom="52dp"
             app:layout_constraintBottom_toTopOf="@+id/createButton"
             app:layout_constraintStart_toStartOf="@+id/createButton"
             app:layout_constraintEnd_toEndOf="@+id/createButton"/>
+    <ImageButton
+            android:layout_width="49dp"
+            android:layout_height="48dp" app:srcCompat="@drawable/tuto_icon"
+            android:id="@+id/imageButton"
+            android:background="@color/transparentBackground"
+            app:layout_constraintTop_toBottomOf="@+id/settingButton"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="@+id/settingButton" android:layout_marginStart="8dp"/>
 </android.support.constraint.ConstraintLayout>
