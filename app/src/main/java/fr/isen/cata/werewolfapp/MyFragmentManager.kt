@@ -12,8 +12,6 @@ import android.support.v7.app.AppCompatActivity
 
 class MyFragmentManager {
 
-    //Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
-
     fun BeginningFragment(context: Context) {
         val fragment: Fragment?
 
@@ -30,6 +28,7 @@ class MyFragmentManager {
 
             .commit()
 
+
         val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if(v.hasVibrator())
         {
@@ -43,6 +42,40 @@ class MyFragmentManager {
 
         }
     }
+    fun CupidonFragment(context: Context){
+        val fragment: Fragment?
+
+        fragment = CupidonFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+    fun NightFragment(context: Context){
+        val fragment: Fragment?
+
+        fragment = NightFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+    fun VoyanteFragment(context : Context){
+        val fragment: Fragment?
+
+        fragment = VoyanteFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+    fun LoupsFragment(context: Context){
+        val fragment: Fragment?
+
+        fragment = LoupFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+    fun SorciereFragment(context: Context, deathPotion : Boolean, lifePotion : Boolean){
+        val fragment: Fragment?
 
     fun DebutNuitFragment(context: Context) {
         val fragment: Fragment?
@@ -53,5 +86,33 @@ class MyFragmentManager {
             .commit()
     }
 
+        fragment = SorciereFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+    fun PipoteurFragment(context: Context){
+        val fragment: Fragment?
 
+        fragment = PipoteurFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+    fun ChasseurFragment(context: Context){
+        val fragment: Fragment?
+
+        fragment = ChasseurFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+    fun VoteJourFragment(context : Context){
+        val fragment: Fragment?
+
+        fragment = VoteJourFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
 }
