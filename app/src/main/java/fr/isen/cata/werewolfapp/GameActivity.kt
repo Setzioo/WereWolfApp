@@ -371,7 +371,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun listenForFlags(dataSnapshot: DataSnapshot){
-        val flags : Flagmodel? = dataSnapshot.getValue(Flagmodel::class.java)
+        val flags : Flagmodel? = dataSnapshot.child("Flags").getValue(Flagmodel::class.java)
         if(flags!!.CupidonFlag){
             cupidonTurn()
         }
