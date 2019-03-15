@@ -76,17 +76,19 @@ class GameActivity : AppCompatActivity() {
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
-                        /*if (i?.id == id) {
+                        if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                             currentRole = currentPlayer!!.role!!
 
-                        }*/
+                        }
+                        /*
                         if(i!!.id=="f5lJpGohtZhC4ZygEGK4sywc3yz1"){
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                             currentRole = currentPlayer!!.role!!
                         }
+                        */
                     }
                 }
                 if (dataSnapshot.exists()) {
