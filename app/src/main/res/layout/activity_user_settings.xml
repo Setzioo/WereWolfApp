@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".UserSettingsActivity"
-        android:background="@color/colorBackground">
+        android:background="@drawable/background3">
 
     <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="150dp"
@@ -17,10 +17,11 @@
             app:civ_shadow="true"
             app:civ_shadow_radius="0"
             app:civ_shadow_color="#8BC34A"
-            android:id="@+id/avatarView" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/pseudoText" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/avatarView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-    />
+            app:layout_constraintHorizontal_bias="0.498" android:layout_marginTop="103dp"
+            app:layout_constraintTop_toTopOf="parent"/>
     <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -38,15 +39,24 @@
             android:layout_height="wrap_content"
             android:id="@+id/pseudoText" android:textColor="@android:color/white"
             android:textSize="30sp"
-            app:layout_constraintTop_toBottomOf="@+id/avatarView" app:layout_constraintBottom_toTopOf="@+id/saveButton"
-            app:layout_constraintEnd_toEndOf="@+id/avatarView" app:layout_constraintStart_toStartOf="@+id/avatarView"/>
+            app:layout_constraintEnd_toEndOf="@+id/avatarView" app:layout_constraintStart_toStartOf="@+id/avatarView"
+            android:layout_marginTop="102dp" app:layout_constraintTop_toBottomOf="@+id/avatarView"/>
     <Button
             android:text="Sauvegarder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/saveButton"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/pseudoText"
-            app:layout_constraintStart_toStartOf="@+id/pseudoText" app:layout_constraintEnd_toEndOf="@+id/pseudoText"/>
+            android:bottomRightRadius="15dp"
+            android:bottomLeftRadius="15dp"
+            android:topLeftRadius="15dp"
+            android:topRightRadius="15dp"
+
+            android:background="@drawable/buttonshape" android:textSize="18sp" android:textColor="@color/blanc_casse"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/editPseudoButton"
+            app:layout_constraintStart_toStartOf="@+id/pseudoText" android:layout_marginTop="94dp"
+            app:layout_constraintTop_toBottomOf="@+id/pseudoText"/>
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_edit"

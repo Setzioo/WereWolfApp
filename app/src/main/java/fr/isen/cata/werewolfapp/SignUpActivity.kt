@@ -1,9 +1,13 @@
 package fr.isen.cata.werewolfapp
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -16,7 +20,7 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-
+        buttonEffect(signButton)
         returnSignUpButton.setOnClickListener{
             finish()
         }
@@ -60,5 +64,23 @@ class SignUpActivity : AppCompatActivity() {
         val userTest = PlayerModel(userId, userPseudo)
         val mDatabase = FirebaseDatabase.getInstance().reference
         mDatabase.child("Users").child(userId).setValue(userTest)
+    }
+    fun buttonEffect(button: View) {
+        var color = Color.parseColor("#514e4e")
+        button.setOnTouchListener { v, event ->
+
+            when (event.action) {
+
+                MotionEvent.ACTION_DOWN -> {
+                    v.background.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+                    v.invalidate()
+                }
+                MotionEvent.ACTION_UP -> {
+                    v.background.clearColorFilter()
+                    v.invalidate()
+                }
+            }
+            false
+        }
     }
 }
