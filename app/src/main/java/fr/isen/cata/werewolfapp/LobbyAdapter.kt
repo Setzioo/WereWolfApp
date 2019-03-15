@@ -1,5 +1,6 @@
 package fr.isen.cata.werewolfapp
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,11 +28,14 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
         getCurrentPlayer()
-        buttonEffect(holder.joinButton)
+
         holder.name.text = lobbies[position]!!.name
         val nbPlayerMessage = lobbies[position]!!.listPlayer?.size.toString() + "/" + lobbies[position]!!.nbPlayer.toString()
         holder.nbPlayer.text = nbPlayerMessage
+
         holder.joinButton.setOnClickListener {
+            if(lobbies[position]!!.nbPlayer != lobbies[position]!!.listPlayer?.size){
+                buttonEffect(holder.joinButton)
             val mDatabase = FirebaseDatabase.getInstance().reference
 
             mDatabase.child("Users").child(auth.currentUser!!.uid).child("currentGame").setValue(lobbies[position]!!.name)
@@ -43,9 +48,13 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
             mDatabase.child("Users").child(currentPlayer!!.id).child("inLobby").setValue(true)
 
 
-
             val intent = Intent(holder.joinButton.context, LobbyActivity::class.java)
             holder.joinButton.context.startActivity(intent)
+            }
+            else{
+                buttonEffectWrong(holder.joinButton)
+            }
+
         }
     }
 
@@ -111,5 +120,26 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
             false
         }
     }
+    fun buttonEffectWrong(button: View) {
+        var color = Color.parseColor("#DB1702")
+        button.setOnTouchListener { v, event ->
+
+            when (event.action) {
+
+                MotionEvent.ACTION_DOWN -> {
+                    v.background.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+                    v.invalidate()
+                }
+                MotionEvent.ACTION_UP -> {
+                    v.background.clearColorFilter()
+                    v.invalidate()
+                }
+            }
+            false
+        }
+    }
+
+
+
 
 }
