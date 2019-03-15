@@ -15,7 +15,6 @@ class CupidonFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,7 +29,6 @@ class CupidonFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cupidon, container, false)
     }
-
 
     /**
      * This interface must be implemented by activities that contain this
