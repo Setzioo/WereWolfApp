@@ -8,62 +8,81 @@
         tools:context=".SignInActivity"
         android:background="@drawable/background3">
     <EditText
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/emailContainerUp"
+            android:hint="@string/adresse_mail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="textWebEmailAddress" android:textSize="18sp" android:textColor="@color/colorBlanc"
+            android:textColorLink="@color/colorBlanc" android:textColorHint="@color/colorBlanc"
+            android:textColorHighlight="@color/colorBlanc"
+            android:background="@drawable/edittextshape" app:layout_constraintHorizontal_bias="0.495"
+            android:layout_marginTop="180dp" android:layout_width="wrap_content"/>
+
+    <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:id="@+id/emailContainerIn"
-            android:hint="@string/adresse_mail"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/passwordContainerIn" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="textWebEmailAddress" android:textSize="24sp" android:textColor="@color/colorBlanc"
-            android:textColorLink="@color/colorBlanc" android:textColorHint="@color/colorBlanc"
-            android:textColorHighlight="@color/colorBlanc"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            android:ems="10"
             android:hint="@string/password"
-            android:id="@+id/passwordContainerIn"
-            app:layout_constraintTop_toBottomOf="@+id/emailContainerIn"
-            app:layout_constraintBottom_toTopOf="@+id/loginButton"
-            app:layout_constraintStart_toStartOf="@+id/emailContainerIn"
-            app:layout_constraintEnd_toEndOf="@+id/emailContainerIn" android:inputType="textPassword"
-            android:textSize="24sp" android:textColor="@color/colorBlanc" android:textColorLink="@color/colorBlanc"
-            android:textColorHint="@color/colorBlanc"/>
+            android:id="@+id/passwordContainerUp"
+            app:layout_constraintTop_toBottomOf="@+id/emailContainerUp"
+            app:layout_constraintStart_toStartOf="@+id/emailContainerUp"
+            app:layout_constraintEnd_toEndOf="@+id/emailContainerUp" android:inputType="textPassword"
+            android:textSize="18sp" android:textColor="@color/colorBlanc" android:textColorLink="@color/colorBlanc"
+            android:textColorHint="@color/colorBlanc"
+            android:background="@drawable/edittextshape" android:layout_marginTop="40dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
     <Button
             android:text="@string/sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/loginButton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordContainerIn"
-            app:layout_constraintStart_toStartOf="@+id/passwordContainerIn"
-            app:layout_constraintEnd_toEndOf="@+id/passwordContainerIn"
+            app:layout_constraintStart_toStartOf="@+id/passwordContainerUp"
+            app:layout_constraintEnd_toEndOf="@+id/passwordContainerUp"
             android:bottomRightRadius="15dp"
             android:bottomLeftRadius="15dp"
             android:topLeftRadius="15dp"
             android:topRightRadius="15dp"
 
             android:background="@drawable/buttonshape" android:textSize="18sp" android:textColor="@color/blanc_casse"
-            android:textStyle="bold"/>
+            android:textStyle="bold" app:layout_constraintHorizontal_bias="0.416"
+            android:layout_marginTop="76dp" app:layout_constraintTop_toBottomOf="@+id/rememberMeCheckBox"
+    />
     <ImageButton
             android:layout_width="80dp"
             android:layout_height="60dp" app:srcCompat="@android:drawable/ic_menu_revert"
             android:id="@+id/returnSignInButton"
-            android:background="@color/colorBackground" app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/transparentBackground" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0" android:scaleType="fitCenter" android:contentDescription="@string/bouton_retour"/>
+            app:layout_constraintVertical_bias="0.0" android:scaleType="fitCenter"
+            android:contentDescription="@string/bouton_retour"/>
     <CheckBox
             android:text="Se souvenir de moi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/rememberMeCheckBox" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/passwordContainerIn" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/loginButton"
-            app:layout_constraintStart_toStartOf="@+id/passwordContainerIn"
-            app:layout_constraintEnd_toEndOf="@+id/passwordContainerIn" android:textColor="@android:color/white"
-            style="@style/Widget.AppCompat.CompoundButton.CheckBox"/>
+            android:id="@+id/rememberMeCheckBox"
+            app:layout_constraintStart_toStartOf="@+id/passwordContainerUp"
+            android:textColor="@android:color/white"
+            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/passwordContainerUp"
+            app:buttonTint="@color/colorBlanc"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@android:drawable/sym_action_email"
+            android:id="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/emailContainerUp"
+            app:layout_constraintBottom_toBottomOf="@+id/emailContainerUp"
+            app:layout_constraintStart_toStartOf="@+id/emailContainerUp" android:layout_marginStart="8dp"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_lock_idle_lock"
+            android:id="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/passwordContainerUp"
+            app:layout_constraintBottom_toBottomOf="@+id/passwordContainerUp"
+            app:layout_constraintStart_toStartOf="@+id/passwordContainerUp" android:layout_marginStart="8dp"/>
 </android.support.constraint.ConstraintLayout>

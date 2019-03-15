@@ -27,8 +27,8 @@ class SignInActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener{
 
-            email = emailContainerIn.text.toString()
-            password = passwordContainerIn.text.toString()
+            email = emailContainerUp.text.toString()
+            password = passwordContainerUp.text.toString()
 
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->

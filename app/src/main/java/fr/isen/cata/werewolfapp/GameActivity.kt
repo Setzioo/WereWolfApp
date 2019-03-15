@@ -32,7 +32,7 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         val manager = MyFragmentManager()
-        manager.BeginningFragment(this)
+        manager.fragmentCupidonLauncher(this)
 
 
 

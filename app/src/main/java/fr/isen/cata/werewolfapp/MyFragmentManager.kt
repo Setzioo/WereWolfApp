@@ -14,14 +14,16 @@ class MyFragmentManager {
 
     //Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
 
-    fun BeginningFragment(context: Context) {
+    fun fragmentCupidonLauncher(context: Context) {
         val fragment: Fragment?
 
-        fragment = VideoFragment.newInstance()
+        fragment = CupidonFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
             .commit()
     }
+
+
     fun CharacterFragment(context: Context){
         val fragment: Fragment?
         fragment = CharacterFragment.newInstance()
@@ -43,7 +45,14 @@ class MyFragmentManager {
 
         }
     }
+    fun BeginningFragment(context: Context) {
+        val fragment: Fragment?
 
+        fragment = VideoFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commit()
+    }
     fun DebutNuitFragment(context: Context) {
         val fragment: Fragment?
 
@@ -52,6 +61,8 @@ class MyFragmentManager {
             .replace(R.id.fragment, fragment)
             .commit()
     }
+
+
 
 
 }
