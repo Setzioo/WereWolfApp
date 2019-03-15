@@ -8,4 +8,5 @@
     <color name="colorBackground">#581305</color>
     <color name="blanc_casse">#FBC272</color>
     <color name="transparentBackground">#00581305</color>
+    <color name="colorDarkerBackground">#370D04</color>
 </resources>
