@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.VideoView
+import kotlinx.android.synthetic.main.activity_launcher.*
 import kotlinx.android.synthetic.main.fragment_video.*
 import java.io.FileDescriptor
 import java.io.PrintWriter
@@ -29,13 +30,23 @@ class VideoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val path = "android.resource://" + activity?.packageName + "/" + R.raw.coutdown
-
+/*
         videoView.setVideoURI(Uri.parse(path))
         videoView.start()
         videoView.setOnCompletionListener {
             val manager = MyFragmentManager()
             manager.CharacterFragment(context!!)
-        }
+        }*/
+        object : CountDownTimer(30000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                compteur.setText("" + millisUntilFinished / 1000)
+            }
+
+            override fun onFinish() {
+                compteur.setText("done!")
+            }
+        }.start()
     }
 
 
