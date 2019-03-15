@@ -131,6 +131,9 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+        mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+        mDatabase.child("Party").child(gameName).child("voteResult").setValue(true)
     }
 
     private fun startGame(){
