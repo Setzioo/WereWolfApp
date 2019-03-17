@@ -12,7 +12,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/icon_avatar"
-            app:civ_border_color="#FF5722"
+            app:civ_border_color="@color/blanc_casse"
             app:civ_border_width="4dp"
             app:civ_shadow="true"
             app:civ_shadow_radius="0"
@@ -20,29 +20,34 @@
             android:id="@+id/avatarView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.498" android:layout_marginTop="103dp"
+            app:layout_constraintHorizontal_bias="0.498" android:layout_marginTop="112dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/icon_settings"
+            android:src="@drawable/parmeter_icon"
             app:civ_border_color="#000000"
             app:civ_border_width="1dp"
             app:civ_shadow="true"
             app:civ_shadow_radius="0"
-            app:civ_shadow_color="#8BC34A"
+            app:civ_shadow_color="#000000"
             app:layout_constraintEnd_toEndOf="@+id/avatarView"
-            app:layout_constraintBottom_toBottomOf="@+id/avatarView" android:id="@+id/settingsView"/>
+            app:layout_constraintBottom_toBottomOf="@+id/avatarView" android:id="@+id/settingsView"
+            android:background="@color/transparentBackground"/>
     <TextView
-            android:text="Pseudo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/pseudoText" android:textColor="@android:color/white"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="@+id/avatarView" app:layout_constraintStart_toStartOf="@+id/avatarView"
-            android:layout_marginTop="102dp" app:layout_constraintTop_toBottomOf="@+id/avatarView"/>
+            android:text="@string/pseudo"
+            android:layout_width="270dp"
+            android:id="@+id/pseudoText"
+            android:layout_marginTop="28dp" app:layout_constraintTop_toBottomOf="@+id/avatarView"
+            android:textSize="24sp" android:textColor="@color/colorBlanc"
+            android:textColorLink="@color/colorBlanc" android:textColorHint="@color/colorBlanc"
+            android:textColorHighlight="@color/colorBlanc"
+            android:background="@drawable/pseudoshape"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.495" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="32dp" android:textAlignment="center"/>
     <Button
-            android:text="Sauvegarder"
+            android:text="@string/sauvegarder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/saveButton"
@@ -53,15 +58,15 @@
 
             android:background="@drawable/buttonshape" android:textSize="18sp" android:textColor="@color/blanc_casse"
             android:textStyle="bold"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/editPseudoButton"
-            app:layout_constraintStart_toStartOf="@+id/pseudoText" android:layout_marginTop="94dp"
-            app:layout_constraintTop_toBottomOf="@+id/pseudoText"/>
+            android:layout_marginTop="136dp"
+            app:layout_constraintTop_toBottomOf="@+id/pseudoText"
+            app:layout_constraintStart_toStartOf="@+id/pseudoText" app:layout_constraintEnd_toEndOf="@+id/pseudoText"/>
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_edit"
             android:id="@+id/editPseudoButton"
-            android:background="@color/colorBackground" android:tint="@android:color/white"
+            android:background="@color/transparentBackground" android:tint="@android:color/white"
             app:layout_constraintTop_toTopOf="@+id/pseudoText" app:layout_constraintBottom_toBottomOf="@+id/pseudoText"
-            app:layout_constraintStart_toEndOf="@+id/pseudoText" android:layout_marginStart="8dp"/>
+            app:layout_constraintVertical_bias="1.0"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="@+id/pseudoText"/>
 </android.support.constraint.ConstraintLayout>
