@@ -25,6 +25,8 @@ class LoupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mDatabase = FirebaseDatabase.getInstance().reference
         Log.e("FUN", "LOUP")
         Toast.makeText(context, "Loups", Toast.LENGTH_LONG).show()
 
@@ -35,6 +37,8 @@ class LoupFragment : Fragment() {
         adapter = LoupAdapter(players)
         loupRecyclerView.adapter = adapter
 
+        initVotes()
+
         getVillagers(players)
 
 
@@ -44,19 +48,38 @@ class LoupFragment : Fragment() {
     }
 
     private fun getVillagers(players: ArrayList<PlayerModel?>) {
-        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+        val mUserReference = mDatabase.child("Users")
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: MutableList<PlayerModel?> = arrayListOf()
                 if (dataSnapshot.exists()) {
                     players.clear()
                     for (i in dataSnapshot.children) {
-                        players.add(i.getValue(PlayerModel::class.java))
+                        val tempPlayer = i.getValue(PlayerModel::class.java)
+                        mDatabase.child("Users").child(tempPlayer!!.id).child("nbVotesLoup").setValue(0)
+                        players.add(tempPlayer)
                         adapter.notifyDataSetChanged()
                     }
 
 
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    private fun initVotes() {
+        val mUserReference = mDatabase.child("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.children) {
+                        val tempPlayer = i.getValue(PlayerModel::class.java)
+                        mDatabase.child("Users").child(tempPlayer!!.id).child("nbVotesLoup").setValue(0)
+                    }
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {

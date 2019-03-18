@@ -26,6 +26,8 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
         //holder.pseudo.text = players[position]!!
         getPlayerAvatar(holder, players[position]!!)
         holder.pseudo.text = players[position]!!.pseudo
+        val nbVotesString = players[position]!!.nbVotesLoup.toString()
+        holder.nbVotes.text = "$nbVotesString votes"
 
     }
 
@@ -41,6 +43,7 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var avatar: ImageView = itemView.findViewById(R.id.avatarPlayerLoup)
         var pseudo: TextView = itemView.findViewById(R.id.pseudoPlayerLoup)
+        var nbVotes: TextView = itemView.findViewById(R.id.nbVotesLoup)
     }
 
     private fun getPlayerAvatar(holder: ViewHolder, player: PlayerModel) {

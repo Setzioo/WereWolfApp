@@ -18,25 +18,39 @@
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
     >
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical" android:id="@+id/constraintLayout">
 
             <ImageView
                     android:id="@+id/avatarPlayerLoup"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    app:srcCompat="@drawable/icon_avatar"/>
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:srcCompat="@drawable/icon_avatar"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/pseudoPlayerLoup"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                     android:id="@+id/pseudoPlayerLoup"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="TextView"
                     android:textSize="18sp"
-                    android:textStyle="italic|bold"/>
-        </LinearLayout>
+                    android:textStyle="italic|bold"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/avatarPlayerLoup"
+                    app:layout_constraintStart_toStartOf="@+id/avatarPlayerLoup" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="@+id/avatarPlayerLoup"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/nbVotesLoup"
+                    app:layout_constraintTop_toBottomOf="@+id/pseudoPlayerLoup"
+                    app:layout_constraintEnd_toEndOf="@+id/pseudoPlayerLoup"
+                    app:layout_constraintStart_toStartOf="@+id/pseudoPlayerLoup"/>
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>
