@@ -398,11 +398,15 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun lowerFlag(){
+        mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
         mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
+
+
+
+
 
 
 
@@ -411,6 +415,8 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
+
     }
 
     private fun lowerFlagVote(){
@@ -455,28 +461,29 @@ class GameActivity : AppCompatActivity() {
     }
     private fun listenForFlags(dataSnapshot: DataSnapshot){
         val flags : Flagmodel? = dataSnapshot.getValue(Flagmodel::class.java)
-
-        if(flags!!.DeadFlag){
-            checkDead()
-        }
-        else {
-            if (flags.VoteFlag) {
-                voteTurn()
-            } else if (flags.TourFlag) {
-                nbTour++
-            } else if (flags.PipoteurFlag) {
-                pipoteurTurn()
-            } else if (flags.SorciereFlag) {
-                sorciereTurn()
-            } else if (flags.LoupFlag) {
-                loupsTurn()
-            } else if (flags.VoyanteFlag) {
-                voyanteTurn()
-            } else if (flags.CupidonFlag) {
-                cupidonTurn()
+        if(!flags!!.LowerFlag){
+            if(flags!!.DeadFlag){
+                checkDead()
             }
-        }
+            else {
+                if (flags.VoteFlag) {
+                    voteTurn()
+                } else if (flags.TourFlag) {
+                    nbTour++
+                } else if (flags.PipoteurFlag) {
+                    pipoteurTurn()
+                } else if (flags.SorciereFlag) {
+                    sorciereTurn()
+                } else if (flags.LoupFlag) {
+                    loupsTurn()
+                } else if (flags.VoyanteFlag) {
+                    voyanteTurn()
+                } else if (flags.CupidonFlag) {
+                    cupidonTurn()
+                }
+            }
 
+        }
     }
 
     private fun checkDead() {

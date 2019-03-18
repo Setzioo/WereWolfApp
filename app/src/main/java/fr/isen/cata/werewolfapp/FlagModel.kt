@@ -10,5 +10,7 @@ class Flagmodel{
     var TourFlag : Boolean = false
     var DeadFlag : Boolean = false
     var ChasseurFlag : Boolean = false
+    var LowerFlag : Boolean = false
+
 
 }
