@@ -49,9 +49,10 @@ class VoyanteFragment : Fragment() {
     private fun lookAtPlayer(victimPlayer: PlayerModel?) {
         if (victimPlayer != null) {
             val mDatabase = FirebaseDatabase.getInstance().reference
-            //mDatabase.child("Users").child(victimPlayer.id).child("state").setValue(false)
             mDatabase.child("Party").child(victimPlayer.currentGame!!).child("FinishFlags").child("VoyanteFlag").setValue(true)
             Toast.makeText(context, adapter.victimPlayer!!.pseudo + " est observé", Toast.LENGTH_LONG).show()
+            val manager = MyFragmentManager()
+            manager.VisionFragment(context!!)
         } else {
             Toast.makeText(context, "Choisissez un joueur", Toast.LENGTH_LONG).show()
         }
