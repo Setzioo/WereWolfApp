@@ -125,6 +125,7 @@ class LauncherActivity : AppCompatActivity() {
     private fun getAllPermissionNotGranted(): Array<String> {
 
         return arrayOf(Manifest.permission.CAMERA, Manifest.permission.INTERNET, Manifest.permission.VIBRATE)
+
     }
 
 }

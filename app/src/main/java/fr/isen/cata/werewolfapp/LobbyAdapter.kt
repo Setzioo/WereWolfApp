@@ -26,6 +26,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
     private var currentPlayer: PlayerModel? = null
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         auth = FirebaseAuth.getInstance()
         getCurrentPlayer()
 
