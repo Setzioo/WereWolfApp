@@ -17,6 +17,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         buttonEffect(createButton)
         buttonEffect(joinButton)
+        buttonEffect(rulesButton)
         decoButton.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
             finish()
@@ -33,6 +34,9 @@ class HomeActivity : AppCompatActivity() {
 
         joinButton.setOnClickListener {
             startActivity(Intent(this, JoinActivity::class.java))
+        }
+        rulesButton.setOnClickListener {
+            startActivity(Intent(this, TutoActivity::class.java))
         }
     }
     fun buttonEffect(button: View) {
