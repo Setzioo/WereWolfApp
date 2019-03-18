@@ -1,5 +1,7 @@
 package fr.isen.cata.werewolfapp
 
+import android.graphics.Color
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +12,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
@@ -18,6 +23,7 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
+    var victimPlayer: PlayerModel? = null
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -25,8 +31,19 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
         //holder.pseudo.text = players[position]!!
         getPlayerAvatar(holder, players[position]!!)
         holder.pseudoButton.text = players[position]!!.pseudo
-        holder.pseudoButton.setOnClickListener {
-            Log.e("FUN", players[position]!!.pseudo)
+
+        getSelectedChange(holder, position)
+
+        holder.cards.setOnClickListener {
+            val mDatabase = FirebaseDatabase.getInstance().reference
+
+            for(player in players){
+                if(player!!.id == players[position]!!.id){
+                    mDatabase.child("Users").child(player.id).child("selected").setValue(true)
+                } else {
+                    mDatabase.child("Users").child(player.id).child("selected").setValue(false)
+                }
+            }
         }
     }
 
@@ -42,6 +59,7 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var avatar: ImageView = itemView.findViewById(R.id.avatarPlayerChasseur)
         var pseudoButton: Button = itemView.findViewById(R.id.pseudoPlayerChasseur)
+        var cards: CardView = itemView.findViewById(R.id.chasseurCard)
     }
 
     private fun getPlayerAvatar(holder: ViewHolder, player: PlayerModel) {
@@ -57,6 +75,32 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
         }
     }
 
+    private fun getSelectedChange(holder: ViewHolder, position: Int) {
+        val mUserReference = mDatabase.child("Users")
+        //val playersSelected: ArrayList<PlayerModel?> = ArrayList()
 
+        mUserReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.children) {
+                        val tempPlayer = i.getValue(PlayerModel::class.java)
+                        if (tempPlayer!!.id == players[position]!!.id) {
+                            if(tempPlayer.selected){
+                                holder.pseudoButton.setBackgroundResource(R.drawable.pseudoselectedshape)
+                                holder.pseudoButton.setTextColor(Color.BLACK)
+                                victimPlayer = tempPlayer
+                            } else {
+                                holder.pseudoButton.setBackgroundResource(R.drawable.pseudoshape)
+                                holder.pseudoButton.setTextColor(Color.WHITE)
+                            }
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
 
 }
