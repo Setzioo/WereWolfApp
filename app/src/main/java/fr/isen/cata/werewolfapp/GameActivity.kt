@@ -54,15 +54,15 @@ class GameActivity : AppCompatActivity() {
         //getParty()
         //getPlayers()
 
-        manager.VoteJourFragment(context)
+        manager.BeginningFragment(context)
         nbTour = 1
 
-        //getPlayerInfo()
+        getPlayerInfo()
 
 
     }
 
-    /*private fun getPlayerInfo() {
+    private fun getPlayerInfo() {
 
         val id: String = auth.currentUser!!.uid
 
@@ -586,7 +586,7 @@ private fun getPlayers(){
             Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
         }
     })
-}*/
+}
 
 }
 
