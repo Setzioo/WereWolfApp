@@ -87,7 +87,7 @@ private val context=this
 
     private fun getCurrentPlayer() {
 
-        val id: String = auth.currentUser!!.uid
+        //val id: String = auth.currentUser!!.uid
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
 
@@ -99,7 +99,11 @@ private val context=this
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
-                        if (i?.id == id) {
+                        /*if (i?.id == id) {
+                            currentPlayer = i
+                            gameName = currentPlayer!!.currentGame!!
+                        }*/
+                        if(i!!.id=="f5lJpGohtZhC4ZygEGK4sywc3yz1"){
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                         }

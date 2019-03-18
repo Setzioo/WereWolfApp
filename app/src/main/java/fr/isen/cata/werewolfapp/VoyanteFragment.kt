@@ -21,8 +21,7 @@ class VoyanteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("FUN", "VOYANTE")
-        Toast.makeText(context, "Voyante", Toast.LENGTH_LONG).show()
+        Log.e("FUN", "fragment : VOYANTE")
 
     }
 

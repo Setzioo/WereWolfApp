@@ -54,8 +54,7 @@ class GameActivity : AppCompatActivity() {
         //getParty()
         //getPlayers()
 
-        manager.BeginningFragment(context)
-        nbTour = 1
+        manager.CharacterFragment(context)
 
         getPlayerInfo()
 
@@ -64,7 +63,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun getPlayerInfo() {
 
-        val id: String = auth.currentUser!!.uid
+        //val id: String = auth.currentUser!!.uid
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
 
@@ -76,19 +75,19 @@ class GameActivity : AppCompatActivity() {
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
-                        if (i?.id == id) {
+                        /*if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                             currentRole = currentPlayer!!.role!!
 
-                        }
-                        /*
+                        }*/
+
                         if(i!!.id=="f5lJpGohtZhC4ZygEGK4sywc3yz1"){
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                             currentRole = currentPlayer!!.role!!
                         }
-                        */
+
                     }
                 }
                 if (dataSnapshot.exists()) {
@@ -298,12 +297,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun playDay(){
-        if(!game!!.Flags!!.VoteFlag){
-            Log.e("FUN", "check des morts de la nuit")
-            checkDead()
-            Log.e("FUN", "Heure du vote")
-            raiseFlagVote()
+        if(!game!!.Flags!!.DeadFlag){
+            raiseFlagDead()
         }
+
         else if(game!!.FinishFlags!!.VoteFlag){
             Log.e("FUN", "check mort du vote")
             listenForDead()
@@ -369,6 +366,9 @@ class GameActivity : AppCompatActivity() {
     private fun raiseFlagTour(){
         mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(true)
     }
+    private fun raiseFlagDead(){
+        mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(true)
+    }
 
     private fun lowerFlag(){
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
@@ -381,11 +381,16 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
     }
 
     private fun lowerFlagVote(){
         mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(false)
+    }
+
+    private fun lowerFlagDead(){
+        mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
     }
 
     private fun gameListener(){
@@ -396,8 +401,6 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     listenForFlags(dataSnapshot)
                     getParty()
-
-
                 }
             }
 
@@ -429,7 +432,9 @@ class GameActivity : AppCompatActivity() {
         }
         else if(flags.TourFlag){
             nbTour++
-            mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(false)
+        }
+        else if(flags.DeadFlag){
+            checkDead()
         }
         else{
             //night()
@@ -437,19 +442,26 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun checkDead() {
+        Log.e("FUN", "check des morts de la nuit")
         var deadPlayers: MutableList<PlayerModel>? = arrayListOf()
         var isLoverDead = false
         var isHunterDead = false
+        Log.d("FUN", nbTour.toString())
         if(nbTour == 1 && listPlayer != null){
             Log.d("FUN", "init alive")
             alivePlayers = listPlayer
+            if(alivePlayers != null){
+                for(i in alivePlayers!!){
+                    Log.d("FUN", "alive after init : "+i!!.id)
+                }
+            }
         }
         if (alivePlayers != null) {
             for (player in alivePlayers!!) {
-                Log.d("FUN", "qui est mort?")
+
                 if (!player!!.state) {//si mort
                     Log.d("FUN", "dead night : "+player.id)
-                    deadPlayers?.add(player)
+                    deadPlayers!!.add(player)
                     if (player.inLove) {
                         isLoverDead = true
                     }
@@ -462,40 +474,33 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
             }
-            if (deadPlayers != null) {
-                Log.d("FUN", "on verifie les morts")
+            if (deadPlayers != null){
+                Log.d("FUN", "on verifie si il y a un chasseur")
                 for (player in deadPlayers) {
                     if (player.role == "Chasseur") {
                         isHunterDead = true
                     }
                 }
-                for (dead in deadPlayers) {
-                    for (p in alivePlayers!!) {
-                        Log.d("FUN", "check alive/dead")
-                        if (dead.id == p!!.id) {
-                            alivePlayers!!.remove(p)
-                        }
-                    }
-                }
+                Log.d("FUN", "mise à mort")
+                alivePlayers!!.removeAll(deadPlayers)
+
             }
-
-            if (isHunterDead) {
-
+            Log.d("FUN", "tour du chasseur")
+            if (isHunterDead && !game!!.Flags!!.ChasseurFlag) {
+                Log.d("FUN", "tour du chasseur")
                 manager.ChasseurFragment(context)
             }
+
         }
-        if(alivePlayers != null){
-            for(i in alivePlayers!!){
-                Log.d("FUN", "alive : "+i!!.id)
-            }
+        if(isHunterDead && !game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && !game!!.FinishFlags!!.ChasseurFlag){
+            Log.e("FUN", "Heure du vote")
+            raiseFlagVote()
         }
-        if(deadPlayers != null){
-            for(i in deadPlayers!!){
-                Log.d("FUN", "dead : "+i!!.id)
-            }
-        }
-        else{
-            Log.d("FUN", "no dead")
+        else if(!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag){
+            Log.e("FUN", "Heure du vote")
+            raiseFlagVote()
+
+
         }
     }
     private fun checkDeadAfterVote(){
@@ -508,7 +513,7 @@ class GameActivity : AppCompatActivity() {
                 }
             }
         }
-        checkDead()
+        raiseFlagDead()
         Log.e("FUN", "vote finie")
     }
 
@@ -529,64 +534,69 @@ class GameActivity : AppCompatActivity() {
     }
 
 
-private fun getParty(){
+    private fun getParty(){
 
-    val mPartyRef = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
+        val mPartyRef = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
-    mPartyRef.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            if (dataSnapshot.exists()) {
-                game = dataSnapshot.getValue(PartyModel::class.java)
-                getPlayers()
-                if(game != null){
-                    if(!game!!.endGame){
-                        allGame()
-                    }
-                }
-            }
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-        }
-    })
-}
-
-    private fun launchDay(){
-        Log.e("FUN", "lancement JOUR")
-        raiseFlagTour()
-        Log.d("FUN", "tour : "+nbTour)
-        if(game!!.Flags!!.TourFlag){
-            lowerFlag()
-            mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
-        }
-    }
-
-private fun getPlayers(){
-    val mUsersRef = FirebaseDatabase.getInstance().getReference("Users")
-
-    mUsersRef.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            if (dataSnapshot.exists()) {
-                for(i in listId!!){
-                    for(u in dataSnapshot.children){
-                        var user = u.getValue(PlayerModel::class.java)
-                        if(i == user!!.id){
-                            listPlayer!!.add(user)
+        mPartyRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    game = dataSnapshot.getValue(PartyModel::class.java)
+                    getPlayers()
+                    if(game != null){
+                        if(!game!!.endGame){
+                            allGame()
                         }
                     }
                 }
             }
-            /*for(i in listPlayer!!){
-                Log.e("RECCUP", "player : "+i!!.pseudo)
-            }*/
-        }
 
-        override fun onCancelled(databaseError: DatabaseError) {
-            Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    private fun launchDay(){
+
+
+        if(game!!.Flags!!.TourFlag){
+            Log.e("FUN", "lancement JOUR")
+
+            lowerFlag()
+
         }
-    })
-}
+        else{
+            raiseFlagTour()
+        }
+    }
+
+    private fun getPlayers(){
+        val mUsersRef = FirebaseDatabase.getInstance().getReference("Users")
+
+        mUsersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for(i in listId!!){
+                        for(u in dataSnapshot.children){
+                            var user = u.getValue(PlayerModel::class.java)
+                            if(i == user!!.id){
+                                listPlayer!!.add(user)
+                            }
+                        }
+                    }
+                }
+                /*for(i in listPlayer!!){
+                    Log.e("RECCUP", "player : "+i!!.pseudo)
+                }*/
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+
+    }
 
 }
 

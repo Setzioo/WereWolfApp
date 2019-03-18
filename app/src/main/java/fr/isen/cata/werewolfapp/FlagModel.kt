@@ -8,5 +8,7 @@ class Flagmodel{
     var PipoteurFlag : Boolean = false
     var VoteFlag : Boolean = false
     var TourFlag : Boolean = false
+    var DeadFlag : Boolean = false
+    var ChasseurFlag : Boolean = false
 
 }

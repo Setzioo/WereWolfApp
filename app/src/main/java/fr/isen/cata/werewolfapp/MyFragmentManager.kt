@@ -12,14 +12,14 @@ import android.support.v7.app.AppCompatActivity
 
 class MyFragmentManager {
 
-    fun BeginningFragment(context: Context) {
+    /*fun BeginningFragment(context: Context) {
         val fragment: Fragment?
 
         fragment = VideoFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
             .commit()
-    }
+    }*/
     fun CharacterFragment(context: Context){
         val fragment: Fragment?
         fragment = CharacterFragment.newInstance()
