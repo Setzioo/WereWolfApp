@@ -17,5 +17,6 @@ class PlayerModel(_id: String="0", _pseudo: String=""/*, _avatar: Bitmap?=null, 
     var inLove: Boolean = false
     var selected: Boolean = true
     var nbVotesLoup: Int = 0
+    var nbVotesJour: Int = 0
     //var isAvatar: Boolean = false
 }
