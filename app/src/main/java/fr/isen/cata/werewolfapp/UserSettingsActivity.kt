@@ -31,6 +31,8 @@ class UserSettingsActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
 
+    val mDatabase = FirebaseDatabase.getInstance().reference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_settings)
@@ -72,7 +74,6 @@ class UserSettingsActivity : AppCompatActivity() {
     }
 
     private fun saveUserPseudo() {
-        val mDatabase = FirebaseDatabase.getInstance().reference
 
         mDatabase.child("Users").child(auth.currentUser!!.uid).child("pseudo").setValue(pseudoText.text)
     }
@@ -95,8 +96,7 @@ class UserSettingsActivity : AppCompatActivity() {
         uploadTask.addOnFailureListener {
             // Handle unsuccessful uploads
         }.addOnSuccessListener {
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
+            mDatabase.child("Users").child(auth.currentUser!!.uid).child("isAvatar").setValue(true)
         }
     }
 

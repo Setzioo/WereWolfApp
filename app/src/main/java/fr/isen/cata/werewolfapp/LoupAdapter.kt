@@ -1,5 +1,7 @@
 package fr.isen.cata.werewolfapp
 
+import android.graphics.Bitmap
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,14 +22,60 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
 
+    var currentVote:String = ""
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
-        //holder.pseudo.text = players[position]!!
-        getPlayerAvatar(holder, players[position]!!)
+
+        holder.avatar.setImageBitmap(players[position]!!.avatar)
+
         holder.pseudo.text = players[position]!!.pseudo
         val nbVotesString = players[position]!!.nbVotesLoup.toString()
         holder.nbVotes.text = "$nbVotesString votes"
+
+        holder.card.setOnClickListener {
+            val id = players[position]!!.id
+            changeVote(id)
+        }
+
+    }
+
+    private fun changeVote(id: String) {
+
+        val mUserReference = mDatabase.child("Users")
+
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (i in dataSnapshot.children) {
+                        val tempPlayer = i.getValue(PlayerModel::class.java)
+
+                        if (tempPlayer!!.id == id)
+                        {
+                            tempPlayer.nbVotesLoup += 1
+                            mUserReference.child(id).child("nbVotesLoup").setValue(tempPlayer.nbVotesLoup)
+                        }
+
+                        if (tempPlayer.id == currentVote)
+                        {
+                            tempPlayer.nbVotesLoup -= 1
+                            mUserReference.child(currentVote).child("nbVotesLoup").setValue(tempPlayer.nbVotesLoup)
+                        }
+
+
+                    }
+                    currentVote = id
+
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+
 
     }
 
@@ -44,49 +92,10 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
         var avatar: ImageView = itemView.findViewById(R.id.avatarPlayerLoup)
         var pseudo: TextView = itemView.findViewById(R.id.pseudoPlayerLoup)
         var nbVotes: TextView = itemView.findViewById(R.id.nbVotesLoup)
+        var card: CardView = itemView.findViewById(R.id.playerCardLoup)
     }
 
-    private fun getPlayerAvatar(holder: ViewHolder, player: PlayerModel) {
-        val storageReference = FirebaseStorage.getInstance().reference.child(player.id + "/avatar")
 
-        storageReference.downloadUrl.addOnSuccessListener {
-            // Got the download URL for 'users/me/profile.png'
-            Picasso.get()
-                .load(it)
-                .into(holder.avatar)
-        }.addOnFailureListener {
-            // Handle any errors
-        }
-    }
-
-    /*
-    private fun idIntoPlayerModel(idPlayer: String, holder: LoupAdapter.ViewHolder) {
-
-        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
-
-        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: MutableList<PlayerModel?> = arrayListOf()
-                if (dataSnapshot.exists()) {
-                    user.clear()
-                    for (i in dataSnapshot.children) {
-                        user.add(i.getValue(PlayerModel::class.java))
-                    }
-                    for (i in user) {
-                        if (i?.id ==idPlayer) {
-                            playerInModel = i
-                            getPlayerAvatar(holder, playerInModel!!)
-                            holder.pseudo.text = playerInModel!!.pseudo
-                        }
-                    }
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-            }
-        })
-    }
-    */
 
 }
 
