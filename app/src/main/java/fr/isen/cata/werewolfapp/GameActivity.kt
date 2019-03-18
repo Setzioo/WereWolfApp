@@ -160,6 +160,15 @@ class GameActivity : AppCompatActivity() {
         return false
     }
 
+    private fun isPipoteurAlive(): Boolean{
+        for(player in alivePlayers!!){
+            if(player!!.role == "Pipoteur"){
+                return true
+            }
+        }
+        return false
+    }
+
     private fun isCupidon(): Boolean{
         for(player in listPlayer!!){
             if(player!!.role == "Cupidon"){
@@ -193,7 +202,12 @@ class GameActivity : AppCompatActivity() {
         val voyante = isVoyante()
         val sorciere = isSorciere()
         val pipoteur = isPipoteur()
-
+        if(game!!.Flags!!.VoteFlag){
+            lowerFlagVote()
+        }
+        if(game!!.Flags!!.DeadFlag){
+            lowerFlagDead()
+        }
         night()
         //Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
         if(currentPlayer!!.state){//Si vivant
@@ -318,6 +332,9 @@ class GameActivity : AppCompatActivity() {
             checkDeadAfterVote()
 
         }
+        else if(game!!.Flags!!.DeadFlag){
+            checkDead()
+        }
     }
 
     private fun night(){
@@ -353,6 +370,9 @@ class GameActivity : AppCompatActivity() {
 
     private fun voteTurn(){
             manager.VoteJourFragment(context)
+    }
+
+    private fun victoryTurn(){
     }
 
     private fun raiseFlagCupidon(){
@@ -456,6 +476,7 @@ class GameActivity : AppCompatActivity() {
         var deadPlayers: MutableList<PlayerModel>? = arrayListOf()
         var isLoverDead = false
         var isHunterDead = false
+        var didAngeWin = false
         Log.d("FUN", nbTour.toString())
 
         if (alivePlayers != null) {
@@ -476,8 +497,14 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
             }
-            if (deadPlayers != null){
-
+            if (deadPlayers != null && deadPlayers.size != 0){
+                if(nbTour == 1 && isAnge() && game!!.Flags!!.VoteFlag){
+                    for(player in deadPlayers){
+                        if(player.role=="Ange"){
+                            didAngeWin = true
+                        }
+                    }
+                }
                 for (player in deadPlayers) {
 
                     if (player.role == "Chasseur") {
@@ -503,6 +530,13 @@ class GameActivity : AppCompatActivity() {
 
 
         }
+        if(alivePlayers != null){
+            if(isItTheEnd(didAngeWin) != 0){
+                Log.e("FUN", "FIN DE LA PARTIE : "+ isItTheEnd(didAngeWin))
+                manager.FinJeuFragmentFragment(context, isItTheEnd(didAngeWin), alivePlayers!!)
+            }
+        }
+
         lowerFlagDead()
         if(isHunterDead && !game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && !game!!.FinishFlags!!.ChasseurFlag){
             Log.e("FUN", "Heure du vote")
@@ -513,12 +547,7 @@ class GameActivity : AppCompatActivity() {
             raiseFlagVote()
         }
         else if(game!!.Flags!!.VoteFlag && game!!.FinishFlags!!.VoteFlag){
-            Log.e("FUN", "Fin de jour")
-            lowerFlagVote()
-
-        }
-        else{
-            Log.e("FUN", "lancement nuit")
+            Log.e("FUN", "Fin de jour, lancement nuit")
             mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
         }
     }
@@ -530,7 +559,8 @@ class GameActivity : AppCompatActivity() {
             for(player in alivePlayers!!){
                 if(player!!.id == deadPlayer){
                     mDatabase.child("Users").child(player.id).child("state").setValue(false)
-
+                    deadPlayer = null
+                    mDatabase.child("Party").child(gameName).child("voteResult").setValue("")
                 }
             }
             getPlayers()
@@ -618,5 +648,67 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+    private fun isItTheEnd(angeAlreadyWin : Boolean): Int{
+        var codeGame = 0
+
+        val nbPlayer = alivePlayers!!.size
+
+        val amoureux = isCupidon()
+        val pipoteur = isPipoteurAlive()
+
+        var nbLoup = 0
+        var nbVillageois = 0
+        /*****WINNER******
+        * 1 : amoureux
+        * 2 : pipoteur
+        * 3 : villageois
+        * 4 : ange
+        * 5 : loups
+        * */
+        for(player in alivePlayers!!){
+            if(player!!.role=="Loup-Garou"){
+                nbLoup++
+            }
+            else{
+                nbVillageois++
+            }
+        }
+        if(nbLoup==nbPlayer){
+            codeGame = 5
+            mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+        }
+        else if(nbVillageois==nbPlayer){
+            codeGame = 3
+            mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+        }
+        if(pipoteur){
+
+            var nbPipo = 1
+            for(player in alivePlayers!!){
+                if(player!!.charmed){
+                    nbPipo++
+                }
+            }
+            if(nbPipo == nbPlayer){
+                codeGame = 2
+                mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+            }
+        }
+        if(amoureux){
+            if(alivePlayers!!.size == 2){
+                for(player in alivePlayers!!){
+                    if(player!!.inLove){
+                        codeGame = 1
+                        mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+
+                    }
+                }
+            }
+        }
+        if(angeAlreadyWin){
+            codeGame = 4
+        }
+        return codeGame
+    }
 }
 

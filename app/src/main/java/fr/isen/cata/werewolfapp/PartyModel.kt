@@ -13,4 +13,5 @@ class PartyModel(_masterId: String = "0", _name: String = "", _nbPlayer: Int = 0
     var voteResult: String = ""//id of the dead
     var nightGame: Boolean = false
     var endGame: Boolean = false
+    var winner: Int = 0
 }

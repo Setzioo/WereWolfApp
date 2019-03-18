@@ -115,4 +115,8 @@ class MyFragmentManager {
             .replace(R.id.fragment, fragment)
             .commitAllowingStateLoss()
     }
+
+    fun FinJeuFragmentFragment(context: Context, victoryCode : Int, lastplayer : MutableList<PlayerModel?>){
+
+    }
 }
