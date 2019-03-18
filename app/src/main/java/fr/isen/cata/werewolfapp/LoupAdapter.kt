@@ -1,5 +1,7 @@
 package fr.isen.cata.werewolfapp
 
+import android.graphics.Color
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +21,7 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
+    private var currentVote = ""
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -28,6 +31,73 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
         holder.pseudo.text = players[position]!!.pseudo
         val nbVotesString = players[position]!!.nbVotesLoup.toString()
         holder.nbVotes.text = "$nbVotesString votes"
+
+        holder.card.setOnClickListener {
+            val id = players[position]!!.id
+            changeVote(id)
+        }
+
+        setVoteListener(holder, position)
+
+    }
+
+    private fun setVoteListener(holder: ViewHolder, position: Int) {
+        val mUserReference = mDatabase.child("Users")
+        //val playersSelected: ArrayList<PlayerModel?> = ArrayList()
+
+        mUserReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.children) {
+                        val tempPlayer = i.getValue(PlayerModel::class.java)
+                        if (tempPlayer!!.id == players[position]!!.id) {
+                            val nbVotesString = tempPlayer.nbVotesLoup.toString()
+                            holder.nbVotes.text = "$nbVotesString votes"
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    private fun changeVote(id: String) {
+
+        val mUserReference = mDatabase.child("Users")
+
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (i in dataSnapshot.children) {
+                        val tempPlayer = i.getValue(PlayerModel::class.java)
+
+                        if (tempPlayer!!.id == id)
+                        {
+                            tempPlayer.nbVotesLoup += 1
+                            mUserReference.child(id).child("nbVotesLoup").setValue(tempPlayer.nbVotesLoup)
+                        }
+
+                        if (tempPlayer.id == currentVote)
+                        {
+                            tempPlayer.nbVotesLoup -= 1
+                            mUserReference.child(currentVote).child("nbVotesLoup").setValue(tempPlayer.nbVotesLoup)
+                        }
+
+
+                    }
+                    currentVote = id
+
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+
 
     }
 
@@ -44,6 +114,7 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
         var avatar: ImageView = itemView.findViewById(R.id.avatarPlayerLoup)
         var pseudo: TextView = itemView.findViewById(R.id.pseudoPlayerLoup)
         var nbVotes: TextView = itemView.findViewById(R.id.nbVotesLoup)
+        var card: CardView = itemView.findViewById(R.id.loupCardPlayer)
     }
 
     private fun getPlayerAvatar(holder: ViewHolder, player: PlayerModel) {
