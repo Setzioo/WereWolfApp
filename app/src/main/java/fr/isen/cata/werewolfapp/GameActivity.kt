@@ -36,6 +36,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var currentRole : String
     var listId : MutableList<String>? = arrayListOf()
     var listPlayer : MutableList<PlayerModel?>? = arrayListOf()
+    var aliveId : MutableList<String>? = arrayListOf()
     var alivePlayers : MutableList<PlayerModel?>? = arrayListOf()
     var gameName : String =""
     var game : PartyModel? = null
@@ -95,6 +96,7 @@ class GameActivity : AppCompatActivity() {
                     if(game!=null){
                         if(game!!.listPlayer != null){
                             listId = game!!.listPlayer
+                            aliveId = listId
                         }
                     }
 
@@ -107,6 +109,15 @@ class GameActivity : AppCompatActivity() {
                             var user = u.getValue(PlayerModel::class.java)
                             if(i == user!!.id){
                                 listPlayer!!.add(user)
+                            }
+                        }
+                    }
+                    if(nbTour == 0 && listPlayer != null && !game!!.Flags!!.VoteFlag){
+                        Log.d("FUN", "init alive")
+                        alivePlayers = listPlayer
+                        if(alivePlayers != null){
+                            for(i in alivePlayers!!){
+                                //Log.d("FUN", "alive : "+i!!.id)
                             }
                         }
                     }
@@ -184,7 +195,7 @@ class GameActivity : AppCompatActivity() {
         val pipoteur = isPipoteur()
 
         night()
-        Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
+        //Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
         if(currentPlayer!!.state){//Si vivant
             //Log.e("FUN", "Alive")
             if(cupidon){//Si cupidon alors voyante
@@ -233,6 +244,7 @@ class GameActivity : AppCompatActivity() {
                                     }
                                 }
                             }
+
                             else if(pipoteur){
                                 if(!game!!.Flags!!.PipoteurFlag && game!!.FinishFlags!!.LoupFlag){//tour du pipoteur
                                     Log.e("FUN", "pipo joue sans sorciere")
@@ -297,14 +309,14 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun playDay(){
-        if(!game!!.Flags!!.DeadFlag){
+        if(!game!!.Flags!!.DeadFlag && !game!!.Flags!!.VoteFlag){
             raiseFlagDead()
         }
 
-        else if(game!!.FinishFlags!!.VoteFlag){
+        else if(game!!.FinishFlags!!.VoteFlag && !game!!.Flags!!.DeadFlag){
             Log.e("FUN", "check mort du vote")
-            listenForDead()
-            lowerFlagVote()
+            checkDeadAfterVote()
+
         }
     }
 
@@ -340,9 +352,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun voteTurn(){
-        if(currentRole=="Pipoteur"){
             manager.VoteJourFragment(context)
-        }
     }
 
     private fun raiseFlagCupidon(){
@@ -442,25 +452,17 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun checkDead() {
-        Log.e("FUN", "check des morts de la nuit")
+        Log.e("FUN", "check des morts")
         var deadPlayers: MutableList<PlayerModel>? = arrayListOf()
         var isLoverDead = false
         var isHunterDead = false
         Log.d("FUN", nbTour.toString())
-        if(nbTour == 1 && listPlayer != null){
-            Log.d("FUN", "init alive")
-            alivePlayers = listPlayer
-            if(alivePlayers != null){
-                for(i in alivePlayers!!){
-                    Log.d("FUN", "alive after init : "+i!!.id)
-                }
-            }
-        }
+
         if (alivePlayers != null) {
             for (player in alivePlayers!!) {
 
                 if (!player!!.state) {//si mort
-                    Log.d("FUN", "dead night : "+player.id)
+                    Log.d("FUN", "dead : "+player.id)
                     deadPlayers!!.add(player)
                     if (player.inLove) {
                         isLoverDead = true
@@ -475,9 +477,11 @@ class GameActivity : AppCompatActivity() {
                 }
             }
             if (deadPlayers != null){
-                Log.d("FUN", "on verifie si il y a un chasseur")
+
                 for (player in deadPlayers) {
+
                     if (player.role == "Chasseur") {
+                        Log.d("FUN", "on verifie si il y a un chasseur")
                         isHunterDead = true
                     }
                 }
@@ -485,41 +489,56 @@ class GameActivity : AppCompatActivity() {
                 alivePlayers!!.removeAll(deadPlayers)
 
             }
-            Log.d("FUN", "tour du chasseur")
             if (isHunterDead && !game!!.Flags!!.ChasseurFlag) {
                 Log.d("FUN", "tour du chasseur")
                 manager.ChasseurFragment(context)
             }
+            aliveId = arrayListOf()
+            if(alivePlayers != null){
+                for(player in alivePlayers!!){
+                    aliveId?.add(player!!.id)
+                }
+            }
+
+
 
         }
+        lowerFlagDead()
         if(isHunterDead && !game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && !game!!.FinishFlags!!.ChasseurFlag){
             Log.e("FUN", "Heure du vote")
             raiseFlagVote()
         }
         else if(!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag){
-            Log.e("FUN", "Heure du vote")
+            Log.e("FUN", "Heure du vote sans chasseur")
             raiseFlagVote()
+        }
+        else if(game!!.Flags!!.VoteFlag && game!!.FinishFlags!!.VoteFlag){
+            Log.e("FUN", "Fin de jour")
+            lowerFlagVote()
 
-
+        }
+        else{
+            Log.e("FUN", "lancement nuit")
+            mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
         }
     }
     private fun checkDeadAfterVote(){
         Log.e("FUN", "mort après vote")
+        mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
         var deadPlayer : String? = game!!.voteResult
         if(deadPlayer!=null){
             for(player in alivePlayers!!){
                 if(player!!.id == deadPlayer){
                     mDatabase.child("Users").child(player.id).child("state").setValue(false)
+
                 }
             }
+            getPlayers()
         }
-        raiseFlagDead()
-        Log.e("FUN", "vote finie")
-    }
 
-    private fun listenForDead(){
-        checkDeadAfterVote()
-        mDatabase.child("Party").child(gameName).child("voteResult").setValue("")
+        Log.e("FUN", "Fin du vote")
+
+        raiseFlagDead()
 
     }
 
@@ -542,10 +561,9 @@ class GameActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.getValue(PartyModel::class.java)
-                    getPlayers()
                     if(game != null){
                         if(!game!!.endGame){
-                            allGame()
+                            getPlayers()
                         }
                     }
                 }
@@ -577,14 +595,16 @@ class GameActivity : AppCompatActivity() {
         mUsersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for(i in listId!!){
+                    alivePlayers = arrayListOf()
+                    for(i in aliveId!!){
                         for(u in dataSnapshot.children){
                             var user = u.getValue(PlayerModel::class.java)
                             if(i == user!!.id){
-                                listPlayer!!.add(user)
+                                alivePlayers!!.add(user)
                             }
                         }
                     }
+                    allGame()
                 }
                 /*for(i in listPlayer!!){
                     Log.e("RECCUP", "player : "+i!!.pseudo)
