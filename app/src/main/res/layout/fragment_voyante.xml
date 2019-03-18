@@ -6,24 +6,42 @@
                                              android:layout_height="match_parent"
                                              tools:context=".VoyanteFragment"
                                              android:background="@drawable/background3">
+    <TextView
+            android:text="10"
+            android:layout_width="62dp"
+            android:layout_height="53dp"
+            android:id="@+id/voyanteTimer" android:textSize="36sp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent" android:textColor="@color/blanc_casse" android:textStyle="bold"
+            android:background="@drawable/pseudoshape"
+            android:textAlignment="center"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="5"
+            android:layout_marginTop="16dp"/>
     <android.support.v7.widget.RecyclerView
             android:layout_width="0dp"
-            android:layout_height="0dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="618dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:id="@+id/voyanteRecyclerView"
-            app:layout_constraintHorizontal_bias="0.5" android:layout_marginTop="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/lookButton"/>
-    <Button
-            android:text="@string/observer"
-            android:layout_width="185dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/lookButton" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/voyanteRecyclerView" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/voyanteRecyclerView"
-            app:layout_constraintEnd_toEndOf="@+id/voyanteRecyclerView"
-            android:background="@drawable/buttonshape" android:textSize="24sp" android:textColor="@color/blanc_casse"
-            app:layout_constraintVertical_bias="0.694" app:layout_constraintHorizontal_bias="0.5"/>
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/voyanteTimer"
+    />
+    <TextView
+            android:text="@string/selectionnez_un_joueur"
+            android:layout_width="296dp"
+            android:layout_height="42dp"
+            android:id="@+id/textView4" android:textSize="24sp"
+            android:textStyle="bold" android:textColor="@color/blanc_casse"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/voyanteTimer"
+            app:layout_constraintBottom_toBottomOf="@+id/voyanteTimer" android:textAlignment="textStart"
+            app:layout_constraintVertical_bias="0.0" android:layout_marginStart="16dp"/>
 </android.support.constraint.ConstraintLayout>

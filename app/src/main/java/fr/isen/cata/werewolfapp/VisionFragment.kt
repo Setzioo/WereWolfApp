@@ -1,6 +1,8 @@
 package fr.isen.cata.werewolfapp
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_loup.*
 import kotlinx.android.synthetic.main.fragment_vision.*
 
 class VisionFragment : Fragment() {
@@ -25,6 +28,8 @@ class VisionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mDatabase = FirebaseDatabase.getInstance().reference
+
         findSelectedPlayer()
     }
 
@@ -33,6 +38,7 @@ class VisionFragment : Fragment() {
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
         auth = FirebaseAuth.getInstance()
         val id: String = auth.currentUser!!.uid
+        var onePlayerSelected: Boolean = false
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -64,12 +70,20 @@ class VisionFragment : Fragment() {
                                 if(user.selected){
                                     selectedPlayer = user
                                     selectedPlayerPseudo.text = selectedPlayer!!.pseudo
+                                    messageText.text = "est"
                                     selectedPlayerRole.text = selectedPlayer!!.role
                                     changeCardImage(selectedPlayer!!.role)
+                                    mDatabase.child("Users").child(selectedPlayer!!.id).child("selected").setValue(false)
+                                    onePlayerSelected = true
+                                    beginCompteur(5)
                                 }
                             }
                         }
                     }
+                }
+                if(!onePlayerSelected) {
+                    messageText.text = "Trop tard ! Vous avez pris trop de temps pour choisir!    Rendormez-vous!"
+                    beginCompteur(5)
                 }
             }
 
@@ -77,6 +91,30 @@ class VisionFragment : Fragment() {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
+    }
+
+    fun beginCompteur(compteurMax: Long) {
+        object : CountDownTimer(compteurMax*1000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val timeLeft = "" + (millisUntilFinished / 1000)
+                visionTimer.text = timeLeft
+            }
+
+            override fun onFinish() {
+                visionTimer.text = "0"
+                Handler().postDelayed({
+                    endOfVision()
+                },1500)
+            }
+        }.start()
+    }
+
+    fun endOfVision() {
+        mDatabase.child("Party").child(currentPlayer!!.currentGame!!).child("FinishFlags").child("VoyanteFlag")
+            .setValue(true)
+        val manager = MyFragmentManager()
+        manager.NightFragment(context!!)
     }
 
     fun changeCardImage(role: String?) {

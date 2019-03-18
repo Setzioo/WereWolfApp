@@ -3,6 +3,8 @@ package fr.isen.cata.werewolfapp
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
@@ -12,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_vision.*
 import kotlinx.android.synthetic.main.fragment_voyante.*
 
 
@@ -39,23 +42,24 @@ class VoyanteFragment : Fragment() {
         voyanteRecyclerView.adapter = adapter
 
         getVillagers(players)
-
-        lookButton.setOnClickListener {
-            lookAtPlayer(adapter.victimPlayer)
-        }
-
     }
 
-    private fun lookAtPlayer(victimPlayer: PlayerModel?) {
-        if (victimPlayer != null) {
-            val mDatabase = FirebaseDatabase.getInstance().reference
-            mDatabase.child("Party").child(victimPlayer.currentGame!!).child("FinishFlags").child("VoyanteFlag").setValue(true)
-            Toast.makeText(context, adapter.victimPlayer!!.pseudo + " est observé", Toast.LENGTH_LONG).show()
-            val manager = MyFragmentManager()
-            manager.VisionFragment(context!!)
-        } else {
-            Toast.makeText(context, "Choisissez un joueur", Toast.LENGTH_LONG).show()
-        }
+    fun beginCompteur(compteurMax: Long) {
+        object : CountDownTimer(compteurMax*1000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val timeLeft = "" + (millisUntilFinished / 1000+1)
+                voyanteTimer.text = timeLeft
+            }
+
+            override fun onFinish() {
+                voyanteTimer.text = "0"
+                Handler().postDelayed({
+                    val manager = MyFragmentManager()
+                    manager.VisionFragment(context!!)
+                },1500)
+            }
+        }.start()
     }
 
     private fun getVillagers(players: ArrayList<PlayerModel?>) {
@@ -99,6 +103,7 @@ class VoyanteFragment : Fragment() {
                         }
                     }
                 }
+                beginCompteur(10)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
