@@ -3,6 +3,8 @@ package fr.isen.cata.werewolfapp
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
@@ -13,6 +15,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_chasseur.*
+import kotlinx.android.synthetic.main.fragment_voyante.*
 
 
 class ChasseurFragment : Fragment() {
@@ -39,11 +42,23 @@ class ChasseurFragment : Fragment() {
         chasseurRecyclerView.adapter = adapter
 
         getVillagers(players)
+    }
 
-        killButton.setOnClickListener {
-            killPlayer(adapter.victimPlayer)
-        }
+    fun beginCompteur(compteurMax: Long) {
+        object : CountDownTimer(compteurMax*1000, 1000) {
 
+            override fun onTick(millisUntilFinished: Long) {
+                val timeLeft = "" + (millisUntilFinished / 1000+1)
+                chasseurTimer.text = timeLeft
+            }
+
+            override fun onFinish() {
+                chasseurTimer.text = "0"
+                Handler().postDelayed({
+                    killPlayer(adapter.victimPlayer)
+                },1500)
+            }
+        }.start()
     }
 
     private fun getVillagers(players: ArrayList<PlayerModel?>) {
@@ -87,6 +102,7 @@ class ChasseurFragment : Fragment() {
                         }
                     }
                 }
+                beginCompteur(10)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -103,8 +119,10 @@ class ChasseurFragment : Fragment() {
             mDatabase.child("Party").child(victimPlayer.currentGame!!).child("FinishFlags").child("ChasseurFlag").setValue(true)
             Toast.makeText(context, adapter.victimPlayer!!.pseudo + " est mort", Toast.LENGTH_LONG).show()
         } else {
-            Toast.makeText(context, "Choisissez un joueur", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Trop tard, vous avez mis trop de temps...", Toast.LENGTH_LONG).show()
         }
+        val manager = MyFragmentManager()
+        manager.NightFragment(context!!)
     }
 
     /*override fun onCreate(savedInstanceState: Bundle?) {
