@@ -66,6 +66,16 @@ class MyFragmentManager {
             .replace(R.id.fragment, fragment)
             .commitAllowingStateLoss()
     }
+
+    fun VisionFragment(context : Context){
+        val fragment: Fragment?
+
+        fragment = VisionFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+
     fun LoupsFragment(context: Context){
         val fragment: Fragment?
 

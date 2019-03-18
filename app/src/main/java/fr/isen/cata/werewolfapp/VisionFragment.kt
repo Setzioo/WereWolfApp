@@ -1,10 +1,7 @@
 package fr.isen.cata.werewolfapp
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,16 +9,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_chasseur.*
+import kotlinx.android.synthetic.main.fragment_vision.*
 
-
-class ChasseurFragment : Fragment() {
+class VisionFragment : Fragment() {
 
     private lateinit var mDatabase: DatabaseReference
-    private lateinit var adapter: ChasseurAdapter
     private lateinit var auth: FirebaseAuth
 
     private var currentPlayer: PlayerModel? = null
+    private var selectedPlayer: PlayerModel?= null
     var gameName : String =""
     var game : PartyModel? = null
     var listId : MutableList<String>? = arrayListOf()
@@ -29,24 +25,10 @@ class ChasseurFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mDatabase = FirebaseDatabase.getInstance().reference
-
-        chasseurRecyclerView.layoutManager = GridLayoutManager(context!!,2)
-
-        val players: ArrayList<PlayerModel?> = ArrayList()
-
-        adapter = ChasseurAdapter(players)
-        chasseurRecyclerView.adapter = adapter
-
-        getVillagers(players)
-
-        killButton.setOnClickListener {
-            killPlayer(adapter.victimPlayer)
-        }
-
+        findSelectedPlayer()
     }
 
-    private fun getVillagers(players: ArrayList<PlayerModel?>) {
+    private fun findSelectedPlayer() {
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
         auth = FirebaseAuth.getInstance()
@@ -78,10 +60,12 @@ class ChasseurFragment : Fragment() {
                     for(i in listId!!){
                         for(u in dataSnapshot.child("Users").children){
                             val user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                if(user.id != currentPlayer!!.id && user.state) {
-                                    players.add(user)
-                                    adapter.notifyDataSetChanged()
+                            if(i == user!!.id) {
+                                if(user.selected){
+                                    selectedPlayer = user
+                                    selectedPlayerPseudo.text = selectedPlayer!!.pseudo
+                                    selectedPlayerRole.text = selectedPlayer!!.role
+                                    changeCardImage(selectedPlayer!!.role)
                                 }
                             }
                         }
@@ -95,29 +79,36 @@ class ChasseurFragment : Fragment() {
         })
     }
 
-    private fun killPlayer(victimPlayer: PlayerModel?) {
-        if (victimPlayer != null) {
-            val mDatabase = FirebaseDatabase.getInstance().reference
-            mDatabase.child("Users").child(victimPlayer.id).child("state").setValue(false)
-            mDatabase.child("Users").child(victimPlayer.id).child("selected").setValue(false)
-            mDatabase.child("Party").child(victimPlayer.currentGame!!).child("FinishFlags").child("ChasseurFlag").setValue(true)
-            Toast.makeText(context, adapter.victimPlayer!!.pseudo + " est mort", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(context, "Choisissez un joueur", Toast.LENGTH_LONG).show()
+    fun changeCardImage(role: String?) {
+        if(role == "Sorcière") {
+            selectedPlayerCard.setImageResource(R.drawable.sorciere)
+        }
+        if(role == "Villageois"){
+            selectedPlayerCard.setImageResource(R.drawable.villageaois)
+        }
+        if(role == "Loup-Garou"){
+            selectedPlayerCard.setImageResource(R.drawable.loup_garou)
+        }
+        if(role == "Cupidon"){
+            selectedPlayerCard.setImageResource(R.drawable.cupidon)
+        }
+        if(role == "Chasseur"){
+            selectedPlayerCard.setImageResource(R.drawable.chasseur)
+        }
+        if(role == "Pipoteur"){
+            selectedPlayerCard.setImageResource(R.drawable.pipoteur)
+        }
+        if(role == "Ange"){
+            selectedPlayerCard.setImageResource(R.drawable.ange)
         }
     }
-
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Toast.makeText(context, "Chasseur", Toast.LENGTH_LONG).show()
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chasseur, container, false)
+        return inflater.inflate(R.layout.fragment_vision, container, false)
     }
 
 
@@ -133,7 +124,12 @@ class ChasseurFragment : Fragment() {
      * for more information.
      */
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
     companion object {
-        fun newInstance() = ChasseurFragment()
+        fun newInstance() = VisionFragment()
     }
 }

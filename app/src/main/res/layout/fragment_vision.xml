@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".VisionFragment"
+                                             android:background="@drawable/background3">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/selectedPlayerPseudo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:textStyle="bold" android:textSize="36sp"
+            android:textColor="@color/blanc_casse"
+            android:textAlignment="center"
+            android:layout_marginTop="72dp" app:layout_constraintTop_toTopOf="parent"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="5"
+    />
+    <TextView
+            android:text="@string/est"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView6" android:textSize="36sp"
+            android:textColor="@color/blanc_casse" android:textStyle="bold" android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/selectedPlayerPseudo"
+            app:layout_constraintStart_toStartOf="@+id/selectedPlayerPseudo"
+            app:layout_constraintTop_toBottomOf="@+id/selectedPlayerPseudo"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="5"/>
+    <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/selectedPlayerRole" app:layout_constraintEnd_toEndOf="@+id/textView6"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" android:textStyle="bold"
+            android:textAlignment="center" android:textSize="36sp" android:textColor="@color/blanc_casse"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="5"/>
+    <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/selectedPlayerCard" android:layout_marginTop="80dp"
+            app:layout_constraintTop_toBottomOf="@+id/selectedPlayerRole"
+            app:layout_constraintStart_toStartOf="@+id/selectedPlayerRole"
+            app:layout_constraintEnd_toEndOf="@+id/selectedPlayerRole"/>
+</android.support.constraint.ConstraintLayout>
