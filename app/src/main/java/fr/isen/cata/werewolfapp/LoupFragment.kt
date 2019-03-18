@@ -43,6 +43,7 @@ class LoupFragment : Fragment() {
         loupRecyclerView.layoutManager = GridLayoutManager(context!!,2)
 
         players = ArrayList()
+        avatars = ArrayList()
 
         adapter = LoupAdapter(players)
         loupRecyclerView.adapter = adapter
@@ -51,10 +52,8 @@ class LoupFragment : Fragment() {
 
         getVillagers()
 
-        Handler().postDelayed({
-            setListenerOnUsers()
-        },1000)
 
+        //setListenerOnUsers()
 
 
 
@@ -101,7 +100,7 @@ class LoupFragment : Fragment() {
         mUserReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    val avatars: ArrayList<Bitmap?> = ArrayList()
+
 
                     for (i in players) {
                         avatars.add(i!!.avatar)
@@ -117,7 +116,7 @@ class LoupFragment : Fragment() {
 
                     }
 
-                    adapter.notifyDataSetChanged()
+                    //adapter.notifyDataSetChanged()
 
 
                 }
@@ -138,10 +137,10 @@ class LoupFragment : Fragment() {
 
                     for (i in dataSnapshot.children) {
                         val tempPlayer = i.getValue(PlayerModel::class.java)
-                        mDatabase.child("Users").child(tempPlayer!!.id).child("nbVotesLoup").setValue(0)
                         getAvatars(tempPlayer)
-
+                        adapter.notifyDataSetChanged()
                     }
+
 
 
 
