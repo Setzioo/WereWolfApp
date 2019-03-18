@@ -28,4 +28,7 @@
     <string name="tirer">Tirer</string>
     <string name="observer">Observer</string>
     <string name="est">est</string>
+    <string name="Resume_debut">• Pour les Villageois : éliminer les Loups-garous.\n
+        • Pour les Loups-garous : éliminer les Villageois</string>
+    <string name="selectionnez_un_joueur">Selectionnez un joueur</string>
 </resources>

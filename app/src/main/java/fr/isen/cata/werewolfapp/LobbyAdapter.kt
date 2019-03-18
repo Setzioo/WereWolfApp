@@ -35,7 +35,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
         holder.nbPlayer.text = nbPlayerMessage
 
         holder.joinButton.setOnClickListener {
-            if(lobbies[position]!!.nbPlayer != lobbies[position]!!.listPlayer?.size){
+            if((lobbies[position]!!.nbPlayer != lobbies[position]!!.listPlayer?.size) ){
                 buttonEffect(holder.joinButton)
             val mDatabase = FirebaseDatabase.getInstance().reference
 
