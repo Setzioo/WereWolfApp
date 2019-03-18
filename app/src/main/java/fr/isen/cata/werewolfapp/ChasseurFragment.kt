@@ -4,23 +4,67 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_chasseur.*
+import kotlinx.android.synthetic.main.fragment_loup.*
 
 
 class ChasseurFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var mDatabase: DatabaseReference
+    private lateinit var adapter: ChasseurAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mDatabase = FirebaseDatabase.getInstance().reference
+        Log.e("FUN", "CHASSEUR")
         Toast.makeText(context, "Chasseur", Toast.LENGTH_LONG).show()
+
+        chasseurRecyclerView.layoutManager = GridLayoutManager(context!!,2)
+
+        val players: ArrayList<PlayerModel?> = ArrayList()
+
+        adapter = ChasseurAdapter(players)
+        chasseurRecyclerView.adapter = adapter
+
+        getVillagers(players)
+
     }
+
+    private fun getVillagers(players: ArrayList<PlayerModel?>) {
+        val mUserReference = mDatabase.child("Users")
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    players.clear()
+                    for (i in dataSnapshot.children) {
+                        val tempPlayer = i.getValue(PlayerModel::class.java)
+                        mDatabase.child("Users").child(tempPlayer!!.id).child("nbVotesLoup").setValue(0)
+                        players.add(tempPlayer)
+                        adapter.notifyDataSetChanged()
+                    }
+
+
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    /*override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Toast.makeText(context, "Chasseur", Toast.LENGTH_LONG).show()
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
