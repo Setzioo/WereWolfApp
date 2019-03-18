@@ -10,10 +10,10 @@ class PlayerModel(_id: String="0", _pseudo: String=""/*, _avatar: Bitmap?=null, 
     var state: Boolean = true
     var charmed: Boolean = false
     var connected: Boolean = false
-    var currentGame : String? = null
-    var inLobby : Boolean = false
+    var currentGame: String? = null
+    var inLobby: Boolean = false
     var deathPotion: Boolean = false
     var lifePotion: Boolean = false
-    var inLove : Boolean = false
-
+    var inLove: Boolean = false
+    var nbVotesLoup: Int = 0
 }

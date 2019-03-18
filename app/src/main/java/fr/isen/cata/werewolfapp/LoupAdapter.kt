@@ -5,10 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,19 +14,20 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_user_settings.*
 
-class LoupAdapter(private val players: ArrayList<String?>): RecyclerView.Adapter<LoupAdapter.ViewHolder>() {
+class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Adapter<LoupAdapter.ViewHolder>() {
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
-    private var playerInModel: PlayerModel? = null
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
         //holder.pseudo.text = players[position]!!
-
-        idIntoPlayerModel(players[position]!!, holder)
+        getPlayerAvatar(holder, players[position]!!)
+        holder.pseudo.text = players[position]!!.pseudo
+        val nbVotesString = players[position]!!.nbVotesLoup.toString()
+        holder.nbVotes.text = "$nbVotesString votes"
 
     }
 
@@ -44,6 +43,7 @@ class LoupAdapter(private val players: ArrayList<String?>): RecyclerView.Adapter
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var avatar: ImageView = itemView.findViewById(R.id.avatarPlayerLoup)
         var pseudo: TextView = itemView.findViewById(R.id.pseudoPlayerLoup)
+        var nbVotes: TextView = itemView.findViewById(R.id.nbVotesLoup)
     }
 
     private fun getPlayerAvatar(holder: ViewHolder, player: PlayerModel) {
@@ -59,6 +59,7 @@ class LoupAdapter(private val players: ArrayList<String?>): RecyclerView.Adapter
         }
     }
 
+    /*
     private fun idIntoPlayerModel(idPlayer: String, holder: LoupAdapter.ViewHolder) {
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
@@ -85,6 +86,7 @@ class LoupAdapter(private val players: ArrayList<String?>): RecyclerView.Adapter
             }
         })
     }
+    */
 
 }
 

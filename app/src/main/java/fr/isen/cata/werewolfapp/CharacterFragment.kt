@@ -107,7 +107,7 @@ private val context=this
                     Handler().postDelayed({
                         mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
                         mDatabase.child("Party").child(gameName).child("endGame").setValue(false)
-                    },2000)
+                    },5000)
 
                 }
             }

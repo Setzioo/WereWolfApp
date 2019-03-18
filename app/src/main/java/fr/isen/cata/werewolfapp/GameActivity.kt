@@ -54,7 +54,7 @@ class GameActivity : AppCompatActivity() {
         //getParty()
         //getPlayers()
 
-        manager.CharacterFragment(context)
+        manager.BeginningFragment(context)
         nbTour = 1
 
         getPlayerInfo()
@@ -184,7 +184,7 @@ class GameActivity : AppCompatActivity() {
         val sorciere = isSorciere()
         val pipoteur = isPipoteur()
 
-        night()
+        //night()
         Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
         if(currentPlayer!!.state){//Si vivant
             //Log.e("FUN", "Alive")
