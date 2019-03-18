@@ -26,4 +26,5 @@
     <string name="pseudo">Pseudo</string>
     <string name="sauvegarder">Sauvegarder</string>
     <string name="tirer">Tirer</string>
+    <string name="observer">Observer</string>
 </resources>
