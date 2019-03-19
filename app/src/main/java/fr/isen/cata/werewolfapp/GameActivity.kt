@@ -450,7 +450,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun lowerFlagDead(){
-        mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
+        Thread.sleep(2000)
         mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
     }
 
@@ -591,7 +591,6 @@ class GameActivity : AppCompatActivity() {
         }
 
         lowerFlagDead()
-        Thread.sleep(1000)
         if(isHunterDead){
             if (!game!!.Flags!!.ChasseurFlag) {
                 //Log.d("FUN", "tour du chasseur")
@@ -613,7 +612,7 @@ class GameActivity : AppCompatActivity() {
         }
         else{
             if(!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag){
-                //Log.e("FUN", "Heure du vote")
+                Log.e("FUN", "Heure du vote")
                 raiseFlagVote()
             }
             else{
