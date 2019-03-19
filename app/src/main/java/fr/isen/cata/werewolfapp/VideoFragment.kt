@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_video.*
 
 class VideoFragment : Fragment() {
 
-    val compteurMax : Long = 5
+    val compteurMax: Long = 5
 
 
     override fun onCreateView(
@@ -39,10 +39,10 @@ class VideoFragment : Fragment() {
             val manager = MyFragmentManager()
             manager.CharacterFragment(context!!)
         }*/
-        object : CountDownTimer(compteurMax*1000, 1000) {
+        object : CountDownTimer(compteurMax * 1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                val timeLeft = "" + (millisUntilFinished / 1000+1)
+                val timeLeft = "" + (millisUntilFinished / 1000 + 1)
                 compteur.text = timeLeft
             }
 
@@ -53,6 +53,7 @@ class VideoFragment : Fragment() {
         }.start()
         animateLaunchText()
     }
+
     private fun animateLaunchText() {
         val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
 
@@ -63,17 +64,15 @@ class VideoFragment : Fragment() {
 
         valueAnimator.interpolator = AccelerateDecelerateInterpolator()
         valueAnimator.duration = 500
-        valueAnimator.repeatCount = (compteurMax*2 + 1).toInt()
+        valueAnimator.repeatCount = (compteurMax * 2 + 1).toInt()
         valueAnimator.repeatMode = ValueAnimator.REVERSE
         valueAnimator.start()
 
         Handler().postDelayed({
             val manager = MyFragmentManager()
             manager.CharacterFragment(context!!)
-        },(compteurMax+2)*1000)
+        }, (compteurMax + 2) * 1000)
     }
-
-
 
 
     /**

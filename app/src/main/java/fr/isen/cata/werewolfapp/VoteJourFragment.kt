@@ -23,9 +23,9 @@ class VoteJourFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
     private var currentPlayer: PlayerModel? = null
-    var gameName : String =""
-    var game : PartyModel? = null
-    var listId : MutableList<String>? = arrayListOf()
+    var gameName: String = ""
+    var game: PartyModel? = null
+    var listId: MutableList<String>? = arrayListOf()
     private val compteurMax: Long = 10
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class VoteJourFragment : Fragment() {
         Log.e("FUN", "Vote Jour")
         Toast.makeText(context, "Vote Jour", Toast.LENGTH_LONG).show()
 
-        voteRecyclerView.layoutManager = GridLayoutManager(context!!,2)
+        voteRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
 
         val players: ArrayList<PlayerModel?> = ArrayList()
 
@@ -47,19 +47,19 @@ class VoteJourFragment : Fragment() {
 
         getPeople(players)
 
-        object : CountDownTimer(compteurMax*1000, 1000) {
+        object : CountDownTimer(compteurMax * 1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                val timeLeft = "" + (millisUntilFinished / 1000+1)
+                val timeLeft = "" + (millisUntilFinished / 1000 + 1)
                 jourTiming.text = timeLeft
             }
 
             override fun onFinish() {
                 jourTiming.text = "0"
                 Handler().postDelayed({
-                    Log.e("VOTE JOUR","findu vote")
+                    Log.e("VOTE JOUR", "findu vote")
                     endOfVote()
-                },1500)
+                }, 1500)
             }
         }.start()
 
@@ -92,25 +92,22 @@ class VoteJourFragment : Fragment() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!=null){
-                        if(game!!.listPlayer != null){
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
                     }
                 }
                 if (listId != null) {
-                    for(i in listId!!){
-                        for(u in dataSnapshot.child("Users").children){
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                if(user.nbVotesJour > nbVotesMax)
-                                {
+                            if (i == user!!.id) {
+                                if (user.nbVotesJour > nbVotesMax) {
                                     nbVotesMax = user.nbVotesJour
                                     equality = false
                                     idToKill = user.id
-                                }
-                                else if (user.nbVotesJour == nbVotesMax)
-                                {
+                                } else if (user.nbVotesJour == nbVotesMax) {
                                     equality = true
                                 }
                             }
@@ -118,8 +115,7 @@ class VoteJourFragment : Fragment() {
                     }
                 }
 
-                if(!equality)
-                {
+                if (!equality) {
                     mUserReference.child(idToKill).child("state").setValue(false)
                 }
 
@@ -159,18 +155,18 @@ class VoteJourFragment : Fragment() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!=null){
-                        if(game!!.listPlayer != null){
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
                     }
                 }
                 if (listId != null) {
-                    for(i in listId!!){
-                        for(u in dataSnapshot.child("Users").children){
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                if(user.id != currentPlayer!!.id) {
+                            if (i == user!!.id) {
+                                if (user.id != currentPlayer!!.id) {
                                     players.add(user)
                                     jourAdapter.notifyDataSetChanged()
                                 }
@@ -198,6 +194,7 @@ class VoteJourFragment : Fragment() {
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }

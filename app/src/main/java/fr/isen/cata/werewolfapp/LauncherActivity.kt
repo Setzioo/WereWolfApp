@@ -23,12 +23,12 @@ class LauncherActivity : AppCompatActivity() {
         val permissionNotGranted = getAllPermissionNotGranted()
 
         ActivityCompat.requestPermissions(this, permissionNotGranted, MY_PERMISSIONS_REQUEST)
-    /*
-      val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        /*
+          val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-        // Vibrate for 400 milliseconds
-        v.vibrate(400)
-*/
+            // Vibrate for 400 milliseconds
+            v.vibrate(400)
+    */
 
         /*_________VIDEO_________
         val videoView = findViewById<VideoView>(R.id.videoView)
@@ -45,18 +45,18 @@ class LauncherActivity : AppCompatActivity() {
         val mp2 = MediaPlayer.create (this, R.raw.village_endort)
         mp2.setVolume(0.7f, 0.7f)
         mp2.start ()*/
-       /* ________CHRONO_______
-       animateCards()
-        object : CountDownTimer(30000, 1000) {
+        /* ________CHRONO_______
+        animateCards()
+         object : CountDownTimer(30000, 1000) {
 
-            override fun onTick(millisUntilFinished: Long) {
-                LaunchText.setText("seconds remaining: " + millisUntilFinished / 1000)
-            }
+             override fun onTick(millisUntilFinished: Long) {
+                 LaunchText.setText("seconds remaining: " + millisUntilFinished / 1000)
+             }
 
-            override fun onFinish() {
-                LaunchText.setText("done!")
-            }
-        }.start()*/
+             override fun onFinish() {
+                 LaunchText.setText("done!")
+             }
+         }.start()*/
 
         launcherLayout.setOnClickListener {
 
@@ -64,36 +64,36 @@ class LauncherActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-   /* ____________________ANIMATION CARD___________
-   private fun animateCards() {
-        val valueAnimator = ValueAnimator.ofFloat(0f, 720f)
+    /* ____________________ANIMATION CARD___________
+    private fun animateCards() {
+         val valueAnimator = ValueAnimator.ofFloat(0f, 720f)
 
-        valueAnimator.addUpdateListener {
-            val value = it.animatedValue as Float
+         valueAnimator.addUpdateListener {
+             val value = it.animatedValue as Float
 
-            Cards.rotation =value
+             Cards.rotation =value
 
-        }
-        val valueAnimator1 = ValueAnimator.ofFloat(0f, 1f)
+         }
+         val valueAnimator1 = ValueAnimator.ofFloat(0f, 1f)
 
-        valueAnimator1.addUpdateListener {
-            val value = it.animatedValue as Float
-            Cards.alpha=value
-
-
-        }
+         valueAnimator1.addUpdateListener {
+             val value = it.animatedValue as Float
+             Cards.alpha=value
 
 
-        valueAnimator.interpolator = AccelerateInterpolator()
-        valueAnimator.duration = 2000
-        valueAnimator1.interpolator = AccelerateInterpolator()
-        valueAnimator1.duration = 2000
+         }
+
+
+         valueAnimator.interpolator = AccelerateInterpolator()
+         valueAnimator.duration = 2000
+         valueAnimator1.interpolator = AccelerateInterpolator()
+         valueAnimator1.duration = 2000
 
 
 
-        valueAnimator.start()
-        valueAnimator1.start()
-    }*/
+         valueAnimator.start()
+         valueAnimator1.start()
+     }*/
 
     private fun animateLaunchText() {
         val valueAnimator = ValueAnimator.ofFloat(0f, 1f)

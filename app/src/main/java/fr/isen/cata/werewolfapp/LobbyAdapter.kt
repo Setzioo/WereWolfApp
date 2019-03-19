@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Adapter<LobbyAdapter.ViewHolder>() {
+class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>) : RecyclerView.Adapter<LobbyAdapter.ViewHolder>() {
 
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
@@ -29,28 +29,29 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
         getCurrentPlayer()
 
         holder.name.text = lobbies[position]!!.name
-        val nbPlayerMessage = lobbies[position]!!.listPlayer?.size.toString() + "/" + lobbies[position]!!.nbPlayer.toString()
+        val nbPlayerMessage =
+            lobbies[position]!!.listPlayer?.size.toString() + "/" + lobbies[position]!!.nbPlayer.toString()
         holder.nbPlayer.text = nbPlayerMessage
 
         holder.joinButton.setOnClickListener {
-            if((lobbies[position]!!.nbPlayer != lobbies[position]!!.listPlayer?.size) ){
+            if ((lobbies[position]!!.nbPlayer != lobbies[position]!!.listPlayer?.size)) {
                 buttonEffect(holder.joinButton)
-            val mDatabase = FirebaseDatabase.getInstance().reference
+                val mDatabase = FirebaseDatabase.getInstance().reference
 
-            mDatabase.child("Users").child(auth.currentUser!!.uid).child("currentGame").setValue(lobbies[position]!!.name)
+                mDatabase.child("Users").child(auth.currentUser!!.uid).child("currentGame")
+                    .setValue(lobbies[position]!!.name)
 
-            val playerList = lobbies[position]!!.listPlayer as MutableList<String>
-            playerList.add(auth.currentUser!!.uid)
+                val playerList = lobbies[position]!!.listPlayer as MutableList<String>
+                playerList.add(auth.currentUser!!.uid)
 
-            mDatabase.child("Lobby").child(lobbies[position]!!.name).child("listPlayer").setValue(playerList)
+                mDatabase.child("Lobby").child(lobbies[position]!!.name).child("listPlayer").setValue(playerList)
 
-            mDatabase.child("Users").child(currentPlayer!!.id).child("inLobby").setValue(true)
+                mDatabase.child("Users").child(currentPlayer!!.id).child("inLobby").setValue(true)
 
 
-            val intent = Intent(holder.joinButton.context, LobbyActivity::class.java)
-            holder.joinButton.context.startActivity(intent)
-            }
-            else{
+                val intent = Intent(holder.joinButton.context, LobbyActivity::class.java)
+                holder.joinButton.context.startActivity(intent)
+            } else {
                 buttonEffectWrong(holder.joinButton)
             }
 
@@ -66,7 +67,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
         return lobbies.size
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var name: TextView = itemView.findViewById(R.id.pseudoText)
         var nbPlayer: TextView = itemView.findViewById(R.id.nbPlayerText)
         var joinButton: Button = itemView.findViewById((R.id.joinButton))
@@ -101,6 +102,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
             }
         })
     }
+
     fun buttonEffect(button: View) {
         val color = Color.parseColor("#228B22")
         button.setOnTouchListener { v, event ->
@@ -119,6 +121,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
             false
         }
     }
+
     fun buttonEffectWrong(button: View) {
         val color = Color.parseColor("#DB1702")
         button.setOnTouchListener { v, event ->
@@ -137,8 +140,6 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
             false
         }
     }
-
-
 
 
 }

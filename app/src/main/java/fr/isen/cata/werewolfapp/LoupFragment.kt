@@ -24,9 +24,9 @@ class LoupFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
     private var currentPlayer: PlayerModel? = null
-    var gameName : String =""
-    var game : PartyModel? = null
-    var listId : MutableList<String>? = arrayListOf()
+    var gameName: String = ""
+    var game: PartyModel? = null
+    var listId: MutableList<String>? = arrayListOf()
     private val compteurMax: Long = 5
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,11 +36,11 @@ class LoupFragment : Fragment() {
         Log.e("FUN", "LOUP")
         Toast.makeText(context, "Loups", Toast.LENGTH_LONG).show()
 
-        loupRecyclerView.layoutManager = GridLayoutManager(context!!,2)
-        wolfies.layoutManager = GridLayoutManager(context!!,1, GridLayoutManager.HORIZONTAL, false)
+        loupRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
+        wolfies.layoutManager = GridLayoutManager(context!!, 1, GridLayoutManager.HORIZONTAL, false)
 
         val players: ArrayList<PlayerModel?> = ArrayList()
-        val wolfs : ArrayList<PlayerModel?> = ArrayList()
+        val wolfs: ArrayList<PlayerModel?> = ArrayList()
 
         loupAdapter = LoupAdapter(players)
         wolfieAdapter = WolfieAdapter(wolfs)
@@ -54,10 +54,10 @@ class LoupFragment : Fragment() {
 
         getWerewolves(wolfs)
 
-        object : CountDownTimer(compteurMax*1000, 1000) {
+        object : CountDownTimer(compteurMax * 1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                val timeLeft = "" + (millisUntilFinished / 1000+1)
+                val timeLeft = "" + (millisUntilFinished / 1000 + 1)
                 wolfieTiming.text = timeLeft
             }
 
@@ -65,12 +65,9 @@ class LoupFragment : Fragment() {
                 wolfieTiming.text = "0"
                 Handler().postDelayed({
                     endOfWolfiesTurn()
-                },1500)
+                }, 1500)
             }
         }.start()
-
-
-
 
 
     }
@@ -101,25 +98,22 @@ class LoupFragment : Fragment() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!=null){
-                        if(game!!.listPlayer != null){
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
                     }
                 }
                 if (listId != null) {
-                    for(i in listId!!){
-                        for(u in dataSnapshot.child("Users").children){
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                if(user.nbVotesLoup > nbVotesMax)
-                                {
+                            if (i == user!!.id) {
+                                if (user.nbVotesLoup > nbVotesMax) {
                                     nbVotesMax = user.nbVotesLoup
                                     equality = false
                                     idToKill = user.id
-                                }
-                                else if (user.nbVotesLoup == nbVotesMax)
-                                {
+                                } else if (user.nbVotesLoup == nbVotesMax) {
                                     equality = true
                                 }
                             }
@@ -127,8 +121,7 @@ class LoupFragment : Fragment() {
                     }
                 }
 
-                if(!equality)
-                {
+                if (!equality) {
                     mUserReference.child(idToKill).child("state").setValue(false)
                 }
 
@@ -168,18 +161,18 @@ class LoupFragment : Fragment() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!=null){
-                        if(game!!.listPlayer != null){
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
                     }
                 }
                 if (listId != null) {
-                    for(i in listId!!){
-                        for(u in dataSnapshot.child("Users").children){
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                if(user.id != currentPlayer!!.id && user.state && user.role!="Loup-Garou") {
+                            if (i == user!!.id) {
+                                if (user.id != currentPlayer!!.id && user.state && user.role != "Loup-Garou") {
                                     players.add(user)
                                     loupAdapter.notifyDataSetChanged()
                                 }
@@ -217,18 +210,18 @@ class LoupFragment : Fragment() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!=null){
-                        if(game!!.listPlayer != null){
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
                     }
                 }
                 if (listId != null) {
-                    for(i in listId!!){
-                        for(u in dataSnapshot.child("Users").children){
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                if(user.state && user.role=="Loup-Garou") {
+                            if (i == user!!.id) {
+                                if (user.state && user.role == "Loup-Garou") {
                                     players.add(user)
                                     wolfieAdapter.notifyDataSetChanged()
                                 }
@@ -256,6 +249,7 @@ class LoupFragment : Fragment() {
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }

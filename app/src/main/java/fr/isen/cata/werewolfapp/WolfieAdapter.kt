@@ -11,7 +11,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class WolfieAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Adapter<WolfieAdapter.ViewHolder>() {
+class WolfieAdapter(private val players: ArrayList<PlayerModel?>) : RecyclerView.Adapter<WolfieAdapter.ViewHolder>() {
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth

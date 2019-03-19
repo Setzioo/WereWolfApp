@@ -43,7 +43,6 @@ class LobbyActivity : AppCompatActivity() {
 
         setPlayerList(players)
 
-        
 
     }
 
@@ -66,23 +65,23 @@ class LobbyActivity : AppCompatActivity() {
                             currentPlayer = i
                             val gameName = currentPlayer!!.currentGame
 
-                            mLobbyReference.child(gameName!!).addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            mLobbyReference.child(gameName!!)
+                                .addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                                    if (dataSnapshot.exists()) {
+                                        if (dataSnapshot.exists()) {
 
-                                        val list = dataSnapshot.child("listPlayer").getValue(ArrayList<String>().javaClass)
+                                            val list =
+                                                dataSnapshot.child("listPlayer").getValue(ArrayList<String>().javaClass)
 
-                                        removeIdFromLobby(currentPlayer!!,list!!,gameName)
+                                            removeIdFromLobby(currentPlayer!!, list!!, gameName)
+                                        }
                                     }
-                                }
 
-                                override fun onCancelled(databaseError: DatabaseError) {
-                                    Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-                                }
-                            })
-
-
+                                    override fun onCancelled(databaseError: DatabaseError) {
+                                        Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+                                    }
+                                })
 
 
                         }
@@ -114,8 +113,7 @@ class LobbyActivity : AppCompatActivity() {
                         if (i?.id == id) {
                             currentPlayer = i
 
-                            if(!(currentPlayer!!.inLobby))
-                            {
+                            if (!(currentPlayer!!.inLobby)) {
                                 finish()
                                 Toast.makeText(context, "Vous n'etes plus dans le lobby", Toast.LENGTH_LONG).show()
                             }
@@ -143,17 +141,13 @@ class LobbyActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     var list = dataSnapshot.child("listPlayer").value
 
-                    if (list!=null)
-                    {
+                    if (list != null) {
                         list = list as ArrayList<String>
                         val masterId = dataSnapshot.child("masterId").value as String
-                        if (!list.contains(masterId))
-                        {
+                        if (!list.contains(masterId)) {
                             removeIdFromLobby(currentPlayer, list, gameName)
                         }
-                    }
-                    else
-                    {
+                    } else {
                         mDatabase.child("Lobby").child(gameName).removeValue()
                     }
                 }
@@ -180,7 +174,7 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
     }
 
-    private fun setPlayerList(players : ArrayList<String?>) {
+    private fun setPlayerList(players: ArrayList<String?>) {
 
         val id: String = auth.currentUser!!.uid
 
@@ -212,17 +206,17 @@ class LobbyActivity : AppCompatActivity() {
         })
     }
 
-    private fun getLobbyPlayerList(players : ArrayList<String?>) {
+    private fun getLobbyPlayerList(players: ArrayList<String?>) {
 
-        val gameName : String? = currentPlayer!!.currentGame
+        val gameName: String? = currentPlayer!!.currentGame
         val playersRef = mDatabase.child("Lobby").child(gameName!!).child("listPlayer")
-        playersRef.addValueEventListener(object: ValueEventListener {
+        playersRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 players.clear()
                 if (dataSnapshot.exists()) {
 
-                    for(i in dataSnapshot.children){
+                    for (i in dataSnapshot.children) {
                         players.add(i.value as String)
 
                         (playerView.adapter as PlayerAdapter).notifyDataSetChanged()
@@ -231,6 +225,7 @@ class LobbyActivity : AppCompatActivity() {
                 }
 
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
@@ -262,6 +257,7 @@ class LobbyActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
@@ -288,15 +284,14 @@ class LobbyActivity : AppCompatActivity() {
         })
     }
 
-    private fun launchGame(dataSnapshot: DataSnapshot){
+    private fun launchGame(dataSnapshot: DataSnapshot) {
 
-        val startGameVal  = dataSnapshot.child(currentPlayer!!.currentGame!!).child("startGame").value
+        val startGameVal = dataSnapshot.child(currentPlayer!!.currentGame!!).child("startGame").value
         if (startGameVal == true) {
 
-            val lobbyRef : String? = currentPlayer!!.currentGame
+            val lobbyRef: String? = currentPlayer!!.currentGame
             lobby = dataSnapshot.child(lobbyRef!!).getValue(LobbyModel::class.java)
-            if(lobby!!.masterId == currentPlayer!!.id)
-            {
+            if (lobby!!.masterId == currentPlayer!!.id) {
                 createParty()
             }
 
@@ -306,7 +301,7 @@ class LobbyActivity : AppCompatActivity() {
     }
 
     private fun createParty() {
-        val gameName : String? = currentPlayer!!.currentGame
+        val gameName: String? = currentPlayer!!.currentGame
         mDatabase.child("Lobby").child(gameName!!).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -352,9 +347,9 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag").setValue(false)
     }
 
-    private fun startGame(){
+    private fun startGame() {
 
-        val lobbbyRef : String? = currentPlayer!!.currentGame
+        val lobbbyRef: String? = currentPlayer!!.currentGame
 
         mLobbyReference.child(lobbbyRef!!).addListenerForSingleValueEvent(object : ValueEventListener {
 
@@ -365,19 +360,19 @@ class LobbyActivity : AppCompatActivity() {
                     val nbPlayerAsked = lobby!!.nbPlayer
                     val nbPlayerReady = lobby!!.listPlayer!!.size
                     Log.e("NUMBER", "voulu : $nbPlayerAsked, prets : $nbPlayerReady")
-                    if(lobby!!.masterId == currentPlayer!!.id){
-                        val playerList : MutableList<String?> = arrayListOf()
+                    if (lobby!!.masterId == currentPlayer!!.id) {
+                        val playerList: MutableList<String?> = arrayListOf()
 
                         for (user in dataSnapshot.child("listPlayer").children) {
 
                             playerList.add(user.value as String)
                         }
-                        if( nbPlayerAsked == nbPlayerReady){
+                        if (nbPlayerAsked == nbPlayerReady) {
 
                             attributeRole(lobby, playerList)
-                            mDatabase.child("Lobby").child(currentPlayer!!.currentGame!!).child("startGame").setValue(true)
-                        }
-                        else{
+                            mDatabase.child("Lobby").child(currentPlayer!!.currentGame!!).child("startGame")
+                                .setValue(true)
+                        } else {
                             Toast.makeText(context, "Pas assez de joueurs, veuillez attendre", Toast.LENGTH_LONG).show()
                         }
                     }
@@ -400,14 +395,18 @@ class LobbyActivity : AppCompatActivity() {
             val listPlayer = lobby.listPlayer
             val listPlayerInGameId: List<String?> = listOfUser.filter { userId -> listPlayer!!.contains(userId!!) }
             val listPlayerInGame: ArrayList<PlayerModel?> = ArrayList()
-            Log.d("YOOOO",listOfUser.toString())
+            Log.d("YOOOO", listOfUser.toString())
 
-            idIntoPlayerModel(listPlayerInGameId,listPlayerInGame, nbPlayer)
+            idIntoPlayerModel(listPlayerInGameId, listPlayerInGame, nbPlayer)
 
         }
     }
 
-    private fun idIntoPlayerModel(listPlayerInGameId: List<String?>, listPlayerInGame : ArrayList<PlayerModel?>, nbPlayer: Int) {
+    private fun idIntoPlayerModel(
+        listPlayerInGameId: List<String?>,
+        listPlayerInGame: ArrayList<PlayerModel?>,
+        nbPlayer: Int
+    ) {
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
 
@@ -419,10 +418,9 @@ class LobbyActivity : AppCompatActivity() {
                     for (i in dataSnapshot.children) {
                         user.add(i.getValue(PlayerModel::class.java))
                     }
-                    for (j in listPlayerInGameId)
-                    {
+                    for (j in listPlayerInGameId) {
                         for (i in user) {
-                            if (i?.id ==j) {
+                            if (i?.id == j) {
                                 listPlayerInGame.add(i)
                             }
                         }
@@ -432,14 +430,14 @@ class LobbyActivity : AppCompatActivity() {
 
                     listPlayerInGame.forEachIndexed { key, player ->
                         player?.role = roleList[key].name
-                        Log.e("ROLE", "player: "+player?.pseudo+" role : "+player?.role)
+                        Log.e("ROLE", "player: " + player?.pseudo + " role : " + player?.role)
                     }
                     listPlayerInGame.forEach {
                         mDatabase = FirebaseDatabase.getInstance().reference.child("")
                         mDatabase.child("Users").child(it?.id.toString()).child("role").setValue(it?.role)
                         mDatabase.child("Users").child(it?.id.toString()).child("charmed").setValue(false)
                         mDatabase.child("Users").child(it?.id.toString()).child("state").setValue(true)
-                        if(it?.role == "Sorcière"){
+                        if (it?.role == "Sorcière") {
                             mDatabase.child("Users").child(it.id).child("deathPotion").setValue(true)
                             mDatabase.child("Users").child(it.id).child("lifePotion").setValue(true)
                         }
@@ -447,6 +445,7 @@ class LobbyActivity : AppCompatActivity() {
 
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
@@ -557,8 +556,17 @@ class LobbyActivity : AppCompatActivity() {
             )
 
             16 -> arrayListOf(
-                LoupGarou(), LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                LoupGarou(),
+                LoupGarou(),
+                LoupGarou(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
                 Voyante(),
                 Ange(),
                 Cupidon(),
@@ -579,8 +587,18 @@ class LobbyActivity : AppCompatActivity() {
             )
 
             18 -> arrayListOf(
-                LoupGarou(), LoupGarou(), LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                LoupGarou(),
+                LoupGarou(),
+                LoupGarou(),
+                LoupGarou(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
+                Villageois(),
                 Voyante(),
                 Ange(),
                 Cupidon(),

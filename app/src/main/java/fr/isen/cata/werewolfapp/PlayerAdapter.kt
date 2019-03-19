@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
+class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
@@ -45,7 +45,7 @@ class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapt
         var kickButton: Button = itemView.findViewById(R.id.kickButton)
     }
 
-    private fun changeDatabase(idToRemove:String) {
+    private fun changeDatabase(idToRemove: String) {
 
         val id: String = auth.currentUser!!.uid
 
@@ -75,37 +75,37 @@ class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapt
         })
     }
 
-    private fun updateList(idToRemove:String) {
+    private fun updateList(idToRemove: String) {
 
         val gameName = currentPlayer!!.currentGame
 
-        mDatabase.child("Lobby").child(gameName!!).child("listPlayer").addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+        mDatabase.child("Lobby").child(gameName!!).child("listPlayer")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                if (dataSnapshot.exists()) {
+                    if (dataSnapshot.exists()) {
 
-                    val list = dataSnapshot.getValue(ArrayList<String>().javaClass)!!
+                        val list = dataSnapshot.getValue(ArrayList<String>().javaClass)!!
 
 
 
-                    list.remove(idToRemove)
+                        list.remove(idToRemove)
 
-                    Log.d("ABC", idToRemove)
+                        Log.d("ABC", idToRemove)
 
-                    mDatabase.child("Lobby").child(gameName).child("listPlayer").setValue(list)
-                    mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
+                        mDatabase.child("Lobby").child(gameName).child("listPlayer").setValue(list)
+                        mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
 
+                    }
                 }
-            }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-                // ...
-            }
-        })
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Getting Post failed, log a message
+                    Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+                    // ...
+                }
+            })
     }
-
 
 
     private fun idIntoName(idPlayer: String, holder: ViewHolder) {
@@ -121,12 +121,13 @@ class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapt
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
-                        if (i?.id ==idPlayer) {
-                            holder.pseudo.text=i.pseudo
+                        if (i?.id == idPlayer) {
+                            holder.pseudo.text = i.pseudo
                         }
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }

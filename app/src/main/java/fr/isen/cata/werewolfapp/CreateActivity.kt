@@ -95,17 +95,17 @@ class CreateActivity : AppCompatActivity() {
 
         createButton.setOnClickListener {
             val nameLobby: String = partyNameView.text.toString()
-            if(nameLobby == "") {
+            if (nameLobby == "") {
                 nameValid = false
                 Toast.makeText(this, "Rentrez un nom!!", Toast.LENGTH_LONG).show()
             }
-            for(lobby in lobbies) {
-                if(nameLobby == lobby!!.name){
+            for (lobby in lobbies) {
+                if (nameLobby == lobby!!.name) {
                     nameValid = false
                     Toast.makeText(this, "Attention ce nom existe déjà!", Toast.LENGTH_LONG).show()
                 }
             }
-            if(nameValid) {
+            if (nameValid) {
                 Log.e("lobbyyyyyyyyyyyy", "est tu là")
                 onCreateLobby()
             }

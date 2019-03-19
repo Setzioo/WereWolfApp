@@ -21,49 +21,49 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         buttonEffect(signButton)
-        returnSignUpButton.setOnClickListener{
+        returnSignUpButton.setOnClickListener {
             finish()
         }
 
-        var email:String
-        var password:String
+        var email: String
+        var password: String
 
         auth = FirebaseAuth.getInstance()
 
-        signButton.setOnClickListener{
+        signButton.setOnClickListener {
 
             email = emailContainerUp.text.toString()
             password = passwordContainerUp.text.toString()
-            if(email !="" && password !="") {
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, start HomeActivity
-                        Log.d("TAG", "createUserWithEmail:success")
+            if (email != "" && password != "") {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, start HomeActivity
+                            Log.d("TAG", "createUserWithEmail:success")
 
-                        val id: String = auth.currentUser!!.uid
-                        createUser(id)
+                            val id: String = auth.currentUser!!.uid
+                            createUser(id)
 
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
+                            val intent = Intent(this, HomeActivity::class.java)
+                            startActivity(intent)
 
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w("TAG", "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(
-                            baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("TAG", "createUserWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                baseContext, "Authentication failed.",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
+                        }
                     }
-                }
-             }
-            else {
+            } else {
                 // If sign in fails, display a message to the user.
                 Toast.makeText(
                     baseContext, "Authentication failed",
                     Toast.LENGTH_SHORT
-                ).show()}
+                ).show()
+            }
         }
 
     }
@@ -74,6 +74,7 @@ class SignUpActivity : AppCompatActivity() {
         val mDatabase = FirebaseDatabase.getInstance().reference
         mDatabase.child("Users").child(userId).setValue(userTest)
     }
+
     fun buttonEffect(button: View) {
         val color = Color.parseColor("#514e4e")
         button.setOnTouchListener { v, event ->

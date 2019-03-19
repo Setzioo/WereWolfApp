@@ -17,7 +17,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Adapter<ChasseurAdapter.ViewHolder>() {
+class ChasseurAdapter(private val players: ArrayList<PlayerModel?>) :
+    RecyclerView.Adapter<ChasseurAdapter.ViewHolder>() {
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
@@ -35,8 +36,8 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
         holder.cards.setOnClickListener {
             val mDatabase = FirebaseDatabase.getInstance().reference
 
-            for(player in players){
-                if(player!!.id == players[position]!!.id){
+            for (player in players) {
+                if (player!!.id == players[position]!!.id) {
                     mDatabase.child("Users").child(player.id).child("selected").setValue(true)
                 } else {
                     mDatabase.child("Users").child(player.id).child("selected").setValue(false)
@@ -83,7 +84,7 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
                     for (i in dataSnapshot.children) {
                         val tempPlayer = i.getValue(PlayerModel::class.java)
                         if (tempPlayer!!.id == players[position]!!.id) {
-                            if(tempPlayer.selected){
+                            if (tempPlayer.selected) {
                                 holder.pseudoButton.setBackgroundResource(R.drawable.pseudoselectedshape)
                                 holder.pseudoButton.setTextColor(Color.BLACK)
                                 victimPlayer = tempPlayer
@@ -95,6 +96,7 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }

@@ -18,12 +18,12 @@ class HomeActivity : AppCompatActivity() {
         buttonEffect(createButton)
         buttonEffect(joinButton)
         buttonEffect(rulesButton)
-        decoButton.setOnClickListener{
+        decoButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             finish()
         }
 
-        settingButton.setOnClickListener{
+        settingButton.setOnClickListener {
             val intent = Intent(this, UserSettingsActivity::class.java)
             startActivity(intent)
         }
@@ -39,6 +39,7 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, TutoActivity::class.java))
         }
     }
+
     fun buttonEffect(button: View) {
         val color = Color.parseColor("#514e4e")
         button.setOnTouchListener { v, event ->

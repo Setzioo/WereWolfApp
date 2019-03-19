@@ -18,10 +18,10 @@ class VisionFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
     private var currentPlayer: PlayerModel? = null
-    private var selectedPlayer: PlayerModel?= null
-    var gameName : String =""
-    var game : PartyModel? = null
-    var listId : MutableList<String>? = arrayListOf()
+    private var selectedPlayer: PlayerModel? = null
+    var gameName: String = ""
+    var game: PartyModel? = null
+    var listId: MutableList<String>? = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,25 +54,26 @@ class VisionFragment : Fragment() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!=null){
-                        if(game!!.listPlayer != null){
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
                     }
                 }
                 if (listId != null) {
-                    for(i in listId!!){
-                        for(u in dataSnapshot.child("Users").children){
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id) {
-                                if(user.selected){
+                            if (i == user!!.id) {
+                                if (user.selected) {
                                     selectedPlayer = user
                                     selectedPlayerPseudo.text = selectedPlayer!!.pseudo
                                     val estText = "est"
                                     messageText.text = estText
                                     selectedPlayerRole.text = selectedPlayer!!.role
                                     changeCardImage(selectedPlayer!!.role)
-                                    mDatabase.child("Users").child(selectedPlayer!!.id).child("selected").setValue(false)
+                                    mDatabase.child("Users").child(selectedPlayer!!.id).child("selected")
+                                        .setValue(false)
                                     onePlayerSelected = true
                                     beginCompteur(5)
                                 }
@@ -80,7 +81,7 @@ class VisionFragment : Fragment() {
                         }
                     }
                 }
-                if(!onePlayerSelected) {
+                if (!onePlayerSelected) {
                     val tooMuchTimeText = "Trop tard ! Vous avez pris trop de temps pour choisir!    Rendormez-vous!"
                     messageText.text = tooMuchTimeText
                     beginCompteur(5)
@@ -94,7 +95,7 @@ class VisionFragment : Fragment() {
     }
 
     fun beginCompteur(compteurMax: Long) {
-        object : CountDownTimer(compteurMax*1000, 1000) {
+        object : CountDownTimer(compteurMax * 1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 val timeLeft = "" + (millisUntilFinished / 1000)
@@ -105,7 +106,7 @@ class VisionFragment : Fragment() {
                 visionTimer.text = "0"
                 Handler().postDelayed({
                     endOfVision()
-                },1500)
+                }, 1500)
             }
         }.start()
     }
@@ -118,25 +119,25 @@ class VisionFragment : Fragment() {
     }
 
     fun changeCardImage(role: String?) {
-        if(role == "Sorcière") {
+        if (role == "Sorcière") {
             selectedPlayerCard.setImageResource(R.drawable.sorciere)
         }
-        if(role == "Villageois"){
+        if (role == "Villageois") {
             selectedPlayerCard.setImageResource(R.drawable.villageaois)
         }
-        if(role == "Loup-Garou"){
+        if (role == "Loup-Garou") {
             selectedPlayerCard.setImageResource(R.drawable.loup_garou)
         }
-        if(role == "Cupidon"){
+        if (role == "Cupidon") {
             selectedPlayerCard.setImageResource(R.drawable.cupidon)
         }
-        if(role == "Chasseur"){
+        if (role == "Chasseur") {
             selectedPlayerCard.setImageResource(R.drawable.chasseur)
         }
-        if(role == "Pipoteur"){
+        if (role == "Pipoteur") {
             selectedPlayerCard.setImageResource(R.drawable.pipoteur)
         }
-        if(role == "Ange"){
+        if (role == "Ange") {
             selectedPlayerCard.setImageResource(R.drawable.ange)
         }
     }

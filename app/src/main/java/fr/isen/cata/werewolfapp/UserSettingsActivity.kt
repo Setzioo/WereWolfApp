@@ -43,11 +43,11 @@ class UserSettingsActivity : AppCompatActivity() {
 
         getPlayerAvatar()
 
-        editPseudoButton.setOnClickListener{
+        editPseudoButton.setOnClickListener {
             editPseudo()
         }
 
-        saveButton.setOnClickListener{
+        saveButton.setOnClickListener {
 
             saveAvatar()
 
@@ -196,27 +196,24 @@ class UserSettingsActivity : AppCompatActivity() {
         startActivityForResult(cameraIntent, 2)
     }
 
-    public override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 1)
-        {
-            if (data != null)
-            {
+        if (requestCode == 1) {
+            if (data != null) {
                 val contentURI = data.data
                 val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
                 avatarView.setImageBitmap(bitmap)
             }
 
-        }
-        else if (requestCode == 2)
-        {
+        } else if (requestCode == 2) {
             val thumbnail = data!!.extras!!.get("data") as Bitmap
             avatarView!!.setImageBitmap(thumbnail)
         }
 
     }
+
     fun buttonEffect(button: View) {
         val color = Color.parseColor("#514e4e")
         button.setOnTouchListener { v, event ->

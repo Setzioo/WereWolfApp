@@ -36,6 +36,7 @@ class CharacterFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.layout_character, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         animateCards()
@@ -44,23 +45,20 @@ class CharacterFragment : Fragment() {
     }
 
 
-
-
-
     private fun animateCards() {
         val valueAnimator = ValueAnimator.ofFloat(0f, 720f)
 
         valueAnimator.addUpdateListener {
             val value = it.animatedValue as Float
 
-            Cards.rotation =value
+            Cards.rotation = value
 
         }
         val valueAnimator1 = ValueAnimator.ofFloat(0f, 1f)
 
         valueAnimator1.addUpdateListener {
             val value = it.animatedValue as Float
-            Cards.alpha=value
+            Cards.alpha = value
 
 
         }
@@ -102,7 +100,7 @@ class CharacterFragment : Fragment() {
                     Handler().postDelayed({
                         mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
                         mDatabase.child("Party").child(gameName).child("endGame").setValue(false)
-                    },5000)
+                    }, 5000)
 
                 }
             }

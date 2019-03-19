@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Adapter<LoupAdapter.ViewHolder>() {
+class LoupAdapter(private val players: ArrayList<PlayerModel?>) : RecyclerView.Adapter<LoupAdapter.ViewHolder>() {
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
@@ -58,6 +58,7 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
@@ -76,14 +77,12 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
                     for (i in dataSnapshot.children) {
                         val tempPlayer = i.getValue(PlayerModel::class.java)
 
-                        if (tempPlayer!!.id == id)
-                        {
+                        if (tempPlayer!!.id == id) {
                             tempPlayer.nbVotesLoup += 1
                             mUserReference.child(id).child("nbVotesLoup").setValue(tempPlayer.nbVotesLoup)
                         }
 
-                        if (tempPlayer.id == currentVote)
-                        {
+                        if (tempPlayer.id == currentVote) {
                             tempPlayer.nbVotesLoup -= 1
                             mUserReference.child(currentVote).child("nbVotesLoup").setValue(tempPlayer.nbVotesLoup)
                         }
@@ -94,6 +93,7 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
 
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }

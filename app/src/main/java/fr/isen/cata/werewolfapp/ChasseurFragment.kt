@@ -22,16 +22,16 @@ class ChasseurFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
     private var currentPlayer: PlayerModel? = null
-    var gameName : String =""
-    var game : PartyModel? = null
-    var listId : MutableList<String>? = arrayListOf()
+    var gameName: String = ""
+    var game: PartyModel? = null
+    var listId: MutableList<String>? = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
-        chasseurRecyclerView.layoutManager = GridLayoutManager(context!!,2)
+        chasseurRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
 
         val players: ArrayList<PlayerModel?> = ArrayList()
 
@@ -42,10 +42,10 @@ class ChasseurFragment : Fragment() {
     }
 
     fun beginCompteur(compteurMax: Long) {
-        object : CountDownTimer(compteurMax*1000, 1000) {
+        object : CountDownTimer(compteurMax * 1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                val timeLeft = "" + (millisUntilFinished / 1000+1)
+                val timeLeft = "" + (millisUntilFinished / 1000 + 1)
                 chasseurTimer.text = timeLeft
             }
 
@@ -53,7 +53,7 @@ class ChasseurFragment : Fragment() {
                 chasseurTimer.text = "0"
                 Handler().postDelayed({
                     killPlayer(adapter.victimPlayer)
-                },1500)
+                }, 1500)
             }
         }.start()
     }
@@ -80,18 +80,18 @@ class ChasseurFragment : Fragment() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!=null){
-                        if(game!!.listPlayer != null){
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
                     }
                 }
                 if (listId != null) {
-                    for(i in listId!!){
-                        for(u in dataSnapshot.child("Users").children){
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                if(user.id != currentPlayer!!.id && user.state) {
+                            if (i == user!!.id) {
+                                if (user.id != currentPlayer!!.id && user.state) {
                                     players.add(user)
                                     adapter.notifyDataSetChanged()
                                 }
@@ -113,7 +113,8 @@ class ChasseurFragment : Fragment() {
             val mDatabase = FirebaseDatabase.getInstance().reference
             mDatabase.child("Users").child(victimPlayer.id).child("state").setValue(false)
             mDatabase.child("Users").child(victimPlayer.id).child("selected").setValue(false)
-            mDatabase.child("Party").child(victimPlayer.currentGame!!).child("FinishFlags").child("ChasseurFlag").setValue(true)
+            mDatabase.child("Party").child(victimPlayer.currentGame!!).child("FinishFlags").child("ChasseurFlag")
+                .setValue(true)
             Toast.makeText(context, adapter.victimPlayer!!.pseudo + " est mort", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(context, "Trop tard, vous avez mis trop de temps...", Toast.LENGTH_LONG).show()

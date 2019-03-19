@@ -16,20 +16,21 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         buttonEffect(signInButton)
         buttonEffect(signButton)
-        signInButton.setOnClickListener{
+        signInButton.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
 
-        signButton.setOnClickListener{
+        signButton.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 
-        returnLoginButton.setOnClickListener{
+        returnLoginButton.setOnClickListener {
             finish()
         }
     }
+
     fun buttonEffect(button: View) {
         val color = Color.parseColor("#514e4e")
         button.setOnTouchListener { v, event ->

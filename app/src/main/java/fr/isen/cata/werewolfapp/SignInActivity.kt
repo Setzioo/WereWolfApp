@@ -28,29 +28,28 @@ class SignInActivity : AppCompatActivity() {
         buttonEffect(loginButton)
         loginPrefs = this.getSharedPreferences(loginFilename, 0)
 
-        if (loginPrefs!=null)
-        {
-            val instantEmail = loginPrefs!!.getString("email","")
-            val instantPassword = loginPrefs!!.getString("password","")
+        if (loginPrefs != null) {
+            val instantEmail = loginPrefs!!.getString("email", "")
+            val instantPassword = loginPrefs!!.getString("password", "")
             emailContainerIn.setText(instantEmail)
             passwordContainerIn.setText(instantPassword)
         }
 
-        returnSignInButton.setOnClickListener{
+        returnSignInButton.setOnClickListener {
             finish()
         }
 
-        var email:String
-        var password:String
+        var email: String
+        var password: String
 
         auth = FirebaseAuth.getInstance()
 
-        loginButton.setOnClickListener{
+        loginButton.setOnClickListener {
 
             email = emailContainerIn.text.toString()
             password = passwordContainerIn.text.toString()
 
-            if(email != "" && password != "") {
+            if (email != "" && password != "") {
 
                 val editor = loginPrefs!!.edit()
 
@@ -61,10 +60,9 @@ class SignInActivity : AppCompatActivity() {
                 }
 
                 logIn(email, password)
-            }
-            else
-            {
-                Toast.makeText(this, "Veuillez entrer un email valide et un mot de passe non vide", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Veuillez entrer un email valide et un mot de passe non vide", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
@@ -76,22 +74,22 @@ class SignInActivity : AppCompatActivity() {
 
     private fun logIn(email: String, password: String) {
 
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, start HomeActivity
-                        Log.d("TAG", "signInWithEmail:success")
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w("TAG", "signInWithEmail:failure", task.exception)
-                        Toast.makeText(
-                            baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, start HomeActivity
+                    Log.d("TAG", "signInWithEmail:success")
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("TAG", "signInWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            }
 
 
     }

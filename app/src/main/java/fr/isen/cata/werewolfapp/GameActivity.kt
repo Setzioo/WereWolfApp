@@ -33,13 +33,13 @@ class GameActivity : AppCompatActivity() {
     private var currentPlayer: PlayerModel? = null
     val manager = MyFragmentManager()
 
-    lateinit var currentRole : String
-    var listId : MutableList<String>? = arrayListOf()
-    var listPlayer : MutableList<PlayerModel?>? = arrayListOf()
-    var alivePlayers : MutableList<PlayerModel?>? = arrayListOf()
-    var gameName : String =""
-    var game : PartyModel? = null
-    var nbTour : Int = 0
+    lateinit var currentRole: String
+    var listId: MutableList<String>? = arrayListOf()
+    var listPlayer: MutableList<PlayerModel?>? = arrayListOf()
+    var alivePlayers: MutableList<PlayerModel?>? = arrayListOf()
+    var gameName: String = ""
+    var game: PartyModel? = null
+    var nbTour: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,6 @@ class GameActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance().reference
         mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
-
 
 
         //getParty()
@@ -93,20 +92,19 @@ class GameActivity : AppCompatActivity() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!=null){
-                        if(game!!.listPlayer != null){
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
                     }
 
 
-
                 }
                 if (listId != null) {
-                    for(i in listId!!){
-                        for(u in dataSnapshot.child("Users").children){
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
                             var user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
+                            if (i == user!!.id) {
                                 listPlayer!!.add(user)
                             }
                         }
@@ -123,61 +121,61 @@ class GameActivity : AppCompatActivity() {
     }
 
 
-    private fun isSorciere(): Boolean{
-        for(player in listPlayer!!){
-            if(player!!.role == "Sorcière"){
+    private fun isSorciere(): Boolean {
+        for (player in listPlayer!!) {
+            if (player!!.role == "Sorcière") {
                 return true
             }
         }
         return false
     }
 
-    private fun isVoyante(): Boolean{
-        for(player in listPlayer!!){
-            if(player!!.role == "Voyante"){
+    private fun isVoyante(): Boolean {
+        for (player in listPlayer!!) {
+            if (player!!.role == "Voyante") {
                 return true
             }
         }
         return false
     }
 
-    private fun isPipoteur(): Boolean{
-        for(player in listPlayer!!){
-            if(player!!.role == "Pipoteur"){
+    private fun isPipoteur(): Boolean {
+        for (player in listPlayer!!) {
+            if (player!!.role == "Pipoteur") {
                 return true
             }
         }
         return false
     }
 
-    private fun isCupidon(): Boolean{
-        for(player in listPlayer!!){
-            if(player!!.role == "Cupidon"){
+    private fun isCupidon(): Boolean {
+        for (player in listPlayer!!) {
+            if (player!!.role == "Cupidon") {
                 return true
             }
         }
         return false
     }
 
-    private fun isAnge(): Boolean{
-        for(player in listPlayer!!){
-            if(player!!.role == "Ange"){
+    private fun isAnge(): Boolean {
+        for (player in listPlayer!!) {
+            if (player!!.role == "Ange") {
                 return true
             }
         }
         return false
     }
 
-    private fun isChasseur(): Boolean{
-        for(player in listPlayer!!){
-            if(player!!.role == "Chasseur"){
+    private fun isChasseur(): Boolean {
+        for (player in listPlayer!!) {
+            if (player!!.role == "Chasseur") {
                 return true
             }
         }
         return false
     }
 
-    private fun playNight(){
+    private fun playNight() {
 
         val cupidon = isCupidon()
         val voyante = isVoyante()
@@ -185,192 +183,189 @@ class GameActivity : AppCompatActivity() {
         val pipoteur = isPipoteur()
 
         //night()
-        Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
-        if(currentPlayer!!.state){//Si vivant
+        Log.e(
+            "FUN",
+            "cupidon : " + cupidon + " voyante : " + voyante + " sorciere : " + sorciere + " pipoteur : " + pipoteur
+        )
+        if (currentPlayer!!.state) {//Si vivant
             //Log.e("FUN", "Alive")
-            if(cupidon){//Si cupidon alors voyante
-                if(!game!!.Flags!!.CupidonFlag){//tour de cupidon
+            if (cupidon) {//Si cupidon alors voyante
+                if (!game!!.Flags!!.CupidonFlag) {//tour de cupidon
                     Log.e("FUN", "Cupi joue")
                     raiseFlagCupidon()
 
-                }
-                else{//Cupidon a joué
-                    if(!game!!.Flags!!.VoyanteFlag && game!!.FinishFlags!!.CupidonFlag){//tour de la voyante
+                } else {//Cupidon a joué
+                    if (!game!!.Flags!!.VoyanteFlag && game!!.FinishFlags!!.CupidonFlag) {//tour de la voyante
                         Log.e("FUN", "Voyante joue avec cupi")
                         raiseFlagVoyante()
 
-                    }
-                    else{//la voyante a joué
-                        if(!game!!.Flags!!.LoupFlag && game!!.FinishFlags!!.VoyanteFlag){//tour des loups
+                    } else {//la voyante a joué
+                        if (!game!!.Flags!!.LoupFlag && game!!.FinishFlags!!.VoyanteFlag) {//tour des loups
                             Log.e("FUN", "loup joue avec cupi")
                             raiseFlagLoups()
-                        }
-                        else{//les loups ont joués
-                            if(sorciere && pipoteur){
-                                if(!game!!.Flags!!.SorciereFlag && game!!.FinishFlags!!.LoupFlag){//tour de la sorciere
+                        } else {//les loups ont joués
+                            if (sorciere && pipoteur) {
+                                if (!game!!.Flags!!.SorciereFlag && game!!.FinishFlags!!.LoupFlag) {//tour de la sorciere
                                     Log.e("FUN", "sorciere joue avec pipo")
                                     raiseFlagSorciere()
-                                }
-                                else{
-                                    if(!game!!.Flags!!.PipoteurFlag && game!!.FinishFlags!!.SorciereFlag){//tour du pipoteur
+                                } else {
+                                    if (!game!!.Flags!!.PipoteurFlag && game!!.FinishFlags!!.SorciereFlag) {//tour du pipoteur
                                         Log.e("FUN", "pipo joue avec sorciere")
                                         raiseFlagPipoteur()
-                                    }
-                                    else{
-                                        if(game!!.FinishFlags!!.PipoteurFlag){
+                                    } else {
+                                        if (game!!.FinishFlags!!.PipoteurFlag) {
                                             launchDay()
                                         }
                                     }
                                 }
-                            }
-                            else if(sorciere){
-                                if(!game!!.Flags!!.SorciereFlag && game!!.FinishFlags!!.LoupFlag){//tour de la sorciere
+                            } else if (sorciere) {
+                                if (!game!!.Flags!!.SorciereFlag && game!!.FinishFlags!!.LoupFlag) {//tour de la sorciere
                                     Log.e("FUN", "sorciere joue sans pipo")
                                     raiseFlagSorciere()
-                                }
-                                else{
-                                    if(game!!.FinishFlags!!.SorciereFlag){
+                                } else {
+                                    if (game!!.FinishFlags!!.SorciereFlag) {
                                         launchDay()
                                     }
                                 }
-                            }
-                            else if(pipoteur){
-                                if(!game!!.Flags!!.PipoteurFlag && game!!.FinishFlags!!.LoupFlag){//tour du pipoteur
+                            } else if (pipoteur) {
+                                if (!game!!.Flags!!.PipoteurFlag && game!!.FinishFlags!!.LoupFlag) {//tour du pipoteur
                                     Log.e("FUN", "pipo joue sans sorciere")
                                     raiseFlagPipoteur()
-                                }
-                                else{
-                                    if(game!!.FinishFlags!!.PipoteurFlag){
+                                } else {
+                                    if (game!!.FinishFlags!!.PipoteurFlag) {
                                         launchDay()
                                     }
                                 }
-                            }
-                            else{
-                                if(game!!.FinishFlags!!.LoupFlag){
+                            } else {
+                                if (game!!.FinishFlags!!.LoupFlag) {
                                     launchDay()
                                 }
                             }
                         }
                     }
                 }
-            }
-            else{//si pas de cupidon voyante? + loups
-                if(voyante){
-                    if(!game!!.Flags!!.VoyanteFlag){//Tour de la voyante
+            } else {//si pas de cupidon voyante? + loups
+                if (voyante) {
+                    if (!game!!.Flags!!.VoyanteFlag) {//Tour de la voyante
                         Log.e("FUN", "Voyante joue sans cupi")
                         raiseFlagVoyante()
-                    }
-                    else{//La voyante a joué
-                        if(!game!!.Flags!!.LoupFlag && game!!.FinishFlags!!.VoyanteFlag){
+                    } else {//La voyante a joué
+                        if (!game!!.Flags!!.LoupFlag && game!!.FinishFlags!!.VoyanteFlag) {
                             Log.e("FUN", "loup joue sans cupi")
                             raiseFlagLoups()
-                        }
-                        else{
-                            if(game!!.FinishFlags!!.LoupFlag){
+                        } else {
+                            if (game!!.FinishFlags!!.LoupFlag) {
                                 launchDay()
                             }
                         }
 
                     }
-                }
-                else{//si pas de voyante que loups
+                } else {//si pas de voyante que loups
                     Log.e("FUN", "loup joue sans voyante")
-                    if(!game!!.Flags!!.LoupFlag){//tour des loups
+                    if (!game!!.Flags!!.LoupFlag) {//tour des loups
                         raiseFlagLoups()
-                    }
-                    else{
-                        if(game!!.FinishFlags!!.LoupFlag){
+                    } else {
+                        if (game!!.FinishFlags!!.LoupFlag) {
                             launchDay()
                         }
                     }
 
                 }
-                if(game!!.FinishFlags!!.LoupFlag){
+                if (game!!.FinishFlags!!.LoupFlag) {
                     launchDay()
                 }
             }
-        }
-        else{
+        } else {
             //ecran des morts
             Toast.makeText(context, "Mort", Toast.LENGTH_LONG).show()
         }
 
     }
 
-    private fun playDay(){
-        if(!game!!.Flags!!.VoteFlag){
+    private fun playDay() {
+        if (!game!!.Flags!!.VoteFlag) {
             Log.e("FUN", "check des morts de la nuit")
             checkDead()
             Log.e("FUN", "Heure du vote")
             raiseFlagVote()
-        }
-        else if(game!!.FinishFlags!!.VoteFlag){
+        } else if (game!!.FinishFlags!!.VoteFlag) {
             Log.e("FUN", "check mort du vote")
             listenForDead()
             lowerFlagVote()
         }
     }
 
-    private fun night(){
+    private fun night() {
         manager.NightFragment(context)
     }
+
     private fun cupidonTurn() {
-        if(nbTour==0){
-            if((currentRole=="Cupidon")){
+        if (nbTour == 0) {
+            if ((currentRole == "Cupidon")) {
                 manager.CupidonFragment(context)//Passer le flag de cupidon a true
             }
         }
     }
+
     private fun voyanteTurn() {
-        if(currentRole=="Voyante") {
+        if (currentRole == "Voyante") {
             manager.VoyanteFragment(context)
         }
     }
-    private fun loupsTurn(){
-        if(currentRole=="Loup-Garou"){
+
+    private fun loupsTurn() {
+        if (currentRole == "Loup-Garou") {
             manager.LoupsFragment(context)
         }
     }
-    private fun sorciereTurn(){
-        if(currentRole=="Sorciere"){
+
+    private fun sorciereTurn() {
+        if (currentRole == "Sorciere") {
             manager.SorciereFragment(context, game!!.deathPotion, game!!.lifePotion)
         }
     }
-    private fun pipoteurTurn(){
-        if(currentRole=="Pipoteur"){
+
+    private fun pipoteurTurn() {
+        if (currentRole == "Pipoteur") {
             manager.PipoteurFragment(context)
         }
     }
 
-    private fun voteTurn(){
-        if(currentRole=="Pipoteur"){
+    private fun voteTurn() {
+        if (currentRole == "Pipoteur") {
             manager.VoteJourFragment(context)
         }
     }
 
-    private fun raiseFlagCupidon(){
+    private fun raiseFlagCupidon() {
         mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(true)
     }
-    private fun raiseFlagVoyante(){
+
+    private fun raiseFlagVoyante() {
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(true)
     }
-    private fun raiseFlagLoups(){
+
+    private fun raiseFlagLoups() {
         mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(true)
     }
-    private fun raiseFlagSorciere(){
+
+    private fun raiseFlagSorciere() {
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(true)
     }
-    private fun raiseFlagPipoteur(){
+
+    private fun raiseFlagPipoteur() {
         mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(true)
     }
-    private fun raiseFlagVote(){
+
+    private fun raiseFlagVote() {
         mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(true)
     }
-    private fun raiseFlagTour(){
+
+    private fun raiseFlagTour() {
         mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(true)
     }
 
-    private fun lowerFlag(){
+    private fun lowerFlag() {
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
@@ -383,12 +378,12 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(false)
     }
 
-    private fun lowerFlagVote(){
+    private fun lowerFlagVote() {
         mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(false)
     }
 
-    private fun gameListener(){
+    private fun gameListener() {
         val mPlayerReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
         mPlayerReference.addValueEventListener(object : ValueEventListener {
@@ -407,31 +402,24 @@ class GameActivity : AppCompatActivity() {
         })
     }
 
-    private fun listenForFlags(dataSnapshot: DataSnapshot){
-        val flags : Flagmodel? = dataSnapshot.child("Flags").getValue(Flagmodel::class.java)
-        if(flags!!.CupidonFlag){
+    private fun listenForFlags(dataSnapshot: DataSnapshot) {
+        val flags: Flagmodel? = dataSnapshot.child("Flags").getValue(Flagmodel::class.java)
+        if (flags!!.CupidonFlag) {
             cupidonTurn()
-        }
-        else if(flags.LoupFlag){
+        } else if (flags.LoupFlag) {
             loupsTurn()
-        }
-        else if(flags.PipoteurFlag){
+        } else if (flags.PipoteurFlag) {
             pipoteurTurn()
-        }
-        else if(flags.SorciereFlag){
+        } else if (flags.SorciereFlag) {
             sorciereTurn()
-        }
-        else if(flags.VoyanteFlag){
+        } else if (flags.VoyanteFlag) {
             voyanteTurn()
-        }
-        else if(flags.VoteFlag){
+        } else if (flags.VoteFlag) {
             voteTurn()
-        }
-        else if(flags.TourFlag){
+        } else if (flags.TourFlag) {
             nbTour++
             mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(false)
-        }
-        else{
+        } else {
             //night()
         }
     }
@@ -440,7 +428,7 @@ class GameActivity : AppCompatActivity() {
         var deadPlayers: MutableList<PlayerModel>? = arrayListOf()
         var isLoverDead = false
         var isHunterDead = false
-        if(nbTour == 1 && listPlayer != null){
+        if (nbTour == 1 && listPlayer != null) {
             Log.d("FUN", "init alive")
             alivePlayers = listPlayer
         }
@@ -448,7 +436,7 @@ class GameActivity : AppCompatActivity() {
             for (player in alivePlayers!!) {
                 Log.d("FUN", "qui est mort?")
                 if (!player!!.state) {//si mort
-                    Log.d("FUN", "dead night : "+player.id)
+                    Log.d("FUN", "dead night : " + player.id)
                     deadPlayers?.add(player)
                     if (player.inLove) {
                         isLoverDead = true
@@ -484,26 +472,26 @@ class GameActivity : AppCompatActivity() {
                 manager.ChasseurFragment(context)
             }
         }
-        if(alivePlayers != null){
-            for(i in alivePlayers!!){
-                Log.d("FUN", "alive : "+i!!.id)
+        if (alivePlayers != null) {
+            for (i in alivePlayers!!) {
+                Log.d("FUN", "alive : " + i!!.id)
             }
         }
-        if(deadPlayers != null){
-            for(i in deadPlayers!!){
-                Log.d("FUN", "dead : "+i!!.id)
+        if (deadPlayers != null) {
+            for (i in deadPlayers!!) {
+                Log.d("FUN", "dead : " + i!!.id)
             }
-        }
-        else{
+        } else {
             Log.d("FUN", "no dead")
         }
     }
-    private fun checkDeadAfterVote(){
+
+    private fun checkDeadAfterVote() {
         Log.e("FUN", "mort après vote")
-        var deadPlayer : String? = game!!.voteResult
-        if(deadPlayer!=null){
-            for(player in alivePlayers!!){
-                if(player!!.id == deadPlayer){
+        var deadPlayer: String? = game!!.voteResult
+        if (deadPlayer != null) {
+            for (player in alivePlayers!!) {
+                if (player!!.id == deadPlayer) {
                     mDatabase.child("Users").child(player.id).child("state").setValue(false)
                 }
             }
@@ -512,81 +500,84 @@ class GameActivity : AppCompatActivity() {
         Log.e("FUN", "vote finie")
     }
 
-    private fun listenForDead(){
+    private fun listenForDead() {
         checkDeadAfterVote()
         mDatabase.child("Party").child(gameName).child("voteResult").setValue("")
 
     }
 
-    private fun allGame(){
-        Toast.makeText(context, "role: "+currentPlayer!!.role+", state : "+currentPlayer!!.state.toString(), Toast.LENGTH_LONG).show()
-        if(game!!.nightGame){
+    private fun allGame() {
+        Toast.makeText(
+            context,
+            "role: " + currentPlayer!!.role + ", state : " + currentPlayer!!.state.toString(),
+            Toast.LENGTH_LONG
+        ).show()
+        if (game!!.nightGame) {
             playNight()
-        }
-        else{
+        } else {
             playDay()
         }
     }
 
 
-private fun getParty(){
+    private fun getParty() {
 
-    val mPartyRef = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
+        val mPartyRef = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
-    mPartyRef.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            if (dataSnapshot.exists()) {
-                game = dataSnapshot.getValue(PartyModel::class.java)
-                getPlayers()
-                if(game != null){
-                    if(!game!!.endGame){
-                        allGame()
+        mPartyRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    game = dataSnapshot.getValue(PartyModel::class.java)
+                    getPlayers()
+                    if (game != null) {
+                        if (!game!!.endGame) {
+                            allGame()
+                        }
                     }
                 }
             }
-        }
 
-        override fun onCancelled(databaseError: DatabaseError) {
-            Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-        }
-    })
-}
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
 
-    private fun launchDay(){
+    private fun launchDay() {
         Log.e("FUN", "lancement JOUR")
         raiseFlagTour()
-        Log.d("FUN", "tour : "+nbTour)
-        if(game!!.Flags!!.TourFlag){
+        Log.d("FUN", "tour : " + nbTour)
+        if (game!!.Flags!!.TourFlag) {
             lowerFlag()
             mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
         }
     }
 
-private fun getPlayers(){
-    val mUsersRef = FirebaseDatabase.getInstance().getReference("Users")
+    private fun getPlayers() {
+        val mUsersRef = FirebaseDatabase.getInstance().getReference("Users")
 
-    mUsersRef.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            if (dataSnapshot.exists()) {
-                for(i in listId!!){
-                    for(u in dataSnapshot.children){
-                        var user = u.getValue(PlayerModel::class.java)
-                        if(i == user!!.id){
-                            listPlayer!!.add(user)
+        mUsersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.children) {
+                            var user = u.getValue(PlayerModel::class.java)
+                            if (i == user!!.id) {
+                                listPlayer!!.add(user)
+                            }
                         }
                     }
                 }
+                /*for(i in listPlayer!!){
+                    Log.e("RECCUP", "player : "+i!!.pseudo)
+                }*/
             }
-            /*for(i in listPlayer!!){
-                Log.e("RECCUP", "player : "+i!!.pseudo)
-            }*/
-        }
 
-        override fun onCancelled(databaseError: DatabaseError) {
-            Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-        }
-    })
-}
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
 
 }
 
