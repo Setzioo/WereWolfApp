@@ -61,6 +61,7 @@ class LoveFragment : Fragment() {
             pseudoLove.setBackgroundResource(R.drawable.pseudoshape)
             getPlayerAvatar(lovePlayer!!)
         }
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(true)
     }
 
     private fun getLover() {
