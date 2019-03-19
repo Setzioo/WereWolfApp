@@ -198,6 +198,7 @@ class LobbyActivity : AppCompatActivity() {
                         }
                     }
                 }
+                partyNameLobby.text = currentPlayer!!.currentGame
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
