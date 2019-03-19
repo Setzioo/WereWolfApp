@@ -20,4 +20,12 @@ class PlayerModel(
     var nbVotesLoup: Int = 0
     var nbVotesJour: Int = 0
     //var isAvatar: Boolean = false
+    var currentGame : String? = null
+    var inLobby : Boolean = false
+    var deathPotion: Boolean = false
+    var lifePotion: Boolean = false
+    var inLove : Boolean = false
+    var isSelected : Boolean = false
+    var nbVotesLoup : Int = 0
+    //var isAvatar : Boolean = false
 }

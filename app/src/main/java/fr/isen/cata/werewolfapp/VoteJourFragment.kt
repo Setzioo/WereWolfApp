@@ -1,5 +1,7 @@
 package fr.isen.cata.werewolfapp
 
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -226,3 +228,4 @@ class VoteJourFragment : Fragment() {
         fun newInstance() = VoteJourFragment()
     }
 }
+
