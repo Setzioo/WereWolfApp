@@ -21,9 +21,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         buttonEffect(signButton)
-        returnSignUpButton.setOnClickListener {
-            finish()
-        }
+
 
         var email: String
         var password: String

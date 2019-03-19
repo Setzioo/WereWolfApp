@@ -14,7 +14,7 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_chasseur.*
 import kotlinx.android.synthetic.main.fragment_print_dead.*
 
-class PrintDeadFragment : Fragment() {
+class PrintDeadEndFragment : Fragment() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var adapter: PrintDeadAdapter
@@ -77,10 +77,10 @@ class PrintDeadFragment : Fragment() {
                         for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
                             if (i == user!!.id) {
-                                if (!user.state) {
-                                    players.add(user)
-                                    adapter.notifyDataSetChanged()
-                                }
+
+                                players.add(user)
+                                adapter.notifyDataSetChanged()
+
                             }
                         }
                     }

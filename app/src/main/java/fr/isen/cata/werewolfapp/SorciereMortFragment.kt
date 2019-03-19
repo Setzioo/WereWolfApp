@@ -3,6 +3,8 @@ package fr.isen.cata.werewolfapp
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
@@ -32,7 +34,8 @@ class SorciereMortFragment : Fragment() {
     var game: PartyModel? = null
     var deathPotion = true
     var listId: MutableList<String>? = arrayListOf()
-    private val compteurMax: Long = 5
+    private var compteur : CountDownTimer? = null
+    val compteurMax: Long = 10
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,6 +50,23 @@ class SorciereMortFragment : Fragment() {
 
 
         getDeathPotion()
+
+        compteur = object : CountDownTimer(compteurMax * 1000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val timeLeft = "" + (millisUntilFinished / 1000 + 1)
+                sorciereMortCompteur.text = timeLeft
+            }
+
+            override fun onFinish() {
+                val goText = "0"
+                sorciereMortCompteur.text = goText
+                Handler().postDelayed({
+                    val manager = MyFragmentManager()
+                    manager.NightFragment(context!!)
+                }, 1000)
+            }
+        }.start()
 
 
     }
@@ -87,8 +107,15 @@ class SorciereMortFragment : Fragment() {
                             getPeople(players)
 
                             nobodyText.setOnClickListener {
+                                if(compteur!=null)
+                                {
+                                    compteur!!.cancel()
+
+                                }
+
                                 val manager = MyFragmentManager()
                                 manager.NightFragment(context!!)
+
                             }
 
                         } else {
@@ -117,6 +144,12 @@ class SorciereMortFragment : Fragment() {
         val textContinue = "Continuer"
         nobodyText.text = textContinue
         nobodyText.setOnClickListener {
+            if(compteur!=null)
+            {
+                compteur!!.cancel()
+
+            }
+
             val manager = MyFragmentManager()
             manager.NightFragment(context!!)
         }

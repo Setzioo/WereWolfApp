@@ -35,9 +35,7 @@ class SignInActivity : AppCompatActivity() {
             passwordContainerIn.setText(instantPassword)
         }
 
-        returnSignInButton.setOnClickListener {
-            finish()
-        }
+
 
         var email: String
         var password: String
