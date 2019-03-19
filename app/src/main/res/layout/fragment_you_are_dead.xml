@@ -4,7 +4,8 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".YouAreDeadFragment" android:id="@+id/YouAreDeadLayout">
+                                             tools:context=".YouAreDeadFragment" android:id="@+id/YouAreDeadLayout"
+android:background="@drawable/crane_1">
     <TextView
             android:text="Vous etes mort"
             android:layout_width="wrap_content"
