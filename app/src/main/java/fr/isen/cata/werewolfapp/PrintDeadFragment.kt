@@ -24,7 +24,7 @@ class PrintDeadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.e("FUN", "Affichage des morts")
-
+        Thread.sleep(10000)
     }
 
     override fun onCreateView(

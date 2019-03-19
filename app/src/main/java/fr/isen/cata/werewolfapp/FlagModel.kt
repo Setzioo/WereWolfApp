@@ -11,7 +11,6 @@ class FlagModel{
     var DeadFlag : Boolean = false
     var ChasseurFlag : Boolean = false
     var LowerFlag : Boolean = false
-    var PrintDeadFlag : Boolean = false
-    var FinishPrintDeadFlag : Boolean = false
-
+    var LoverFlag : Boolean = false
+    var PipotedFlag : Boolean = false
 }
