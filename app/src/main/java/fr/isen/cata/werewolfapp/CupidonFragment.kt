@@ -16,7 +16,6 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_cupidon.*
 
 
-
 class CupidonFragment : Fragment() {
 
     private lateinit var mDatabase: DatabaseReference
@@ -24,9 +23,9 @@ class CupidonFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
     private var currentPlayer: PlayerModel? = null
-    var gameName : String =""
-    var game : PartyModel? = null
-    var listId : MutableList<String>? = arrayListOf()
+    var gameName: String = ""
+    var game: PartyModel? = null
+    var listId: MutableList<String>? = arrayListOf()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +34,7 @@ class CupidonFragment : Fragment() {
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
-        cupidonRecyclerView.layoutManager = GridLayoutManager(context!!,2)
+        cupidonRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
 
         val players: ArrayList<PlayerModel?> = ArrayList()
 
@@ -67,19 +66,19 @@ class CupidonFragment : Fragment() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!=null){
-                        if(game!!.listPlayer != null){
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
                     }
                 }
                 if (listId != null) {
                     players.clear()
-                    for(i in listId!!){
-                        for(u in dataSnapshot.child("Users").children){
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                if(user.state) {
+                            if (i == user!!.id) {
+                                if (user.state) {
                                     players.add(user)
                                     Log.e("CUPIDON", "joueur ajouté : " + user.pseudo)
                                     adapter.notifyDataSetChanged()
@@ -98,10 +97,10 @@ class CupidonFragment : Fragment() {
     }
 
     fun beginCompteur(compteurMax: Long) {
-        object : CountDownTimer(compteurMax*1000, 1000) {
+        object : CountDownTimer(compteurMax * 1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                val timeLeft = "" + (millisUntilFinished / 1000+1)
+                val timeLeft = "" + (millisUntilFinished / 1000 + 1)
                 cupidonTimer.text = timeLeft
             }
 
@@ -109,7 +108,7 @@ class CupidonFragment : Fragment() {
                 cupidonTimer.text = "0"
                 Handler().postDelayed({
                     lovePlayers()
-                },1500)
+                }, 1500)
             }
         }.start()
     }
@@ -122,11 +121,15 @@ class CupidonFragment : Fragment() {
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("inLove").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("inLove").setValue(false)
-            Toast.makeText(context, adapter.victimPlayer!!.pseudo + " et "+ adapter.victimPlayer2!!.pseudo +" sont amoureux!", Toast.LENGTH_LONG).show()
-        } else if(adapter.victimPlayer != null) {
+            Toast.makeText(
+                context,
+                adapter.victimPlayer!!.pseudo + " et " + adapter.victimPlayer2!!.pseudo + " sont amoureux!",
+                Toast.LENGTH_LONG
+            ).show()
+        } else if (adapter.victimPlayer != null) {
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
             Toast.makeText(context, "Qu'un seul joueur a était selectionné...", Toast.LENGTH_LONG).show()
-        } else if(adapter.victimPlayer2 != null) {
+        } else if (adapter.victimPlayer2 != null) {
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
             Toast.makeText(context, "Qu'un seul joueur a était selectionné...", Toast.LENGTH_LONG).show()
         } else {

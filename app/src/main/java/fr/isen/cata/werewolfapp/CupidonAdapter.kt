@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class CupidonAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Adapter<CupidonAdapter.ViewHolder>() {
+class CupidonAdapter(private val players: ArrayList<PlayerModel?>) : RecyclerView.Adapter<CupidonAdapter.ViewHolder>() {
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
@@ -36,22 +36,25 @@ class CupidonAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView
             val mDatabase = FirebaseDatabase.getInstance().reference
 
             if (victimPlayer != null && victimPlayer2 != null) {
-                Log.e("CUPIDON", players[position]!!.pseudo + " - " + victimPlayer!!.pseudo + " - " + victimPlayer2!!.pseudo)
+                Log.e(
+                    "CUPIDON",
+                    players[position]!!.pseudo + " - " + victimPlayer!!.pseudo + " - " + victimPlayer2!!.pseudo
+                )
             }
 
             if ((victimPlayer2 != null && players[position]!!.pseudo == victimPlayer2!!.pseudo) && (victimPlayer != null && players[position]!!.pseudo == victimPlayer!!.pseudo)) {
                 mDatabase.child("Users").child(victimPlayer!!.id).child("selected").setValue(false)
                 victimPlayer = null
                 victimPlayer2 = null
-                Log.e("CUPIDON",  players[position]!!.pseudo + "  n'est plus sélectionné")
+                Log.e("CUPIDON", players[position]!!.pseudo + "  n'est plus sélectionné")
             } else if (victimPlayer != null && players[position]!!.pseudo == victimPlayer!!.pseudo) {
                 mDatabase.child("Users").child(victimPlayer!!.id).child("selected").setValue(false)
                 victimPlayer = null
-                Log.e("CUPIDON",  players[position]!!.pseudo + "  n'est plus sélectionné")
+                Log.e("CUPIDON", players[position]!!.pseudo + "  n'est plus sélectionné")
             } else if (victimPlayer2 != null && players[position]!!.pseudo == victimPlayer2!!.pseudo) {
                 mDatabase.child("Users").child(victimPlayer2!!.id).child("selected").setValue(false)
                 victimPlayer2 = null
-                Log.e("CUPIDON",  players[position]!!.pseudo + " n'est plus sélectionné")
+                Log.e("CUPIDON", players[position]!!.pseudo + " n'est plus sélectionné")
             } else if (victimPlayer != null && victimPlayer2 != null) {
                 Log.e("CUPIDON", "---DEJA-DEUX-JOUEURS")
             } else {
@@ -99,15 +102,15 @@ class CupidonAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView
                     for (i in dataSnapshot.children) {
                         val tempPlayer = i.getValue(PlayerModel::class.java)
                         if (tempPlayer!!.id == players[position]!!.id) {
-                            if(tempPlayer.selected){
+                            if (tempPlayer.selected) {
                                 playerExist = false
-                                if(victimPlayer != null){
-                                    if(victimPlayer!!.id == tempPlayer.id){
+                                if (victimPlayer != null) {
+                                    if (victimPlayer!!.id == tempPlayer.id) {
                                         playerExist = true
                                     }
                                 }
-                                if(victimPlayer2 != null){
-                                    if(victimPlayer2!!.id == tempPlayer.id){
+                                if (victimPlayer2 != null) {
+                                    if (victimPlayer2!!.id == tempPlayer.id) {
                                         playerExist = true
                                     }
                                 }
@@ -130,6 +133,7 @@ class CupidonAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
