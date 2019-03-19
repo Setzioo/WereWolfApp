@@ -42,6 +42,7 @@ class GameActivity : AppCompatActivity() {
     var nbTour : Int = 0
     var didAngeWin = false
     var isHunterDead = false
+    var flagDead = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -380,7 +381,8 @@ class GameActivity : AppCompatActivity() {
             manager.VoteJourFragment(context)
     }
     private fun printDeadTurn(){
-        if(game!!.Flags!!.DeadFlag){
+        if(game!!.Flags!!.DeadFlag && flagDead){
+            flagDead = false
             manager.PrintDeadFragment(context)
         }
 
@@ -695,7 +697,7 @@ class GameActivity : AppCompatActivity() {
     private fun getPlayersAfterVote(){
         val id: String = auth.currentUser!!.uid
 
-
+        flagDead = true
         val mUsersRef = FirebaseDatabase.getInstance().getReference("Users")
         val user: MutableList<PlayerModel?> = arrayListOf()
         mUsersRef.addListenerForSingleValueEvent(object : ValueEventListener {
