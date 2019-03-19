@@ -55,7 +55,7 @@ class GameActivity : AppCompatActivity() {
 
 
 
-        manager.CharacterFragment(context)
+        manager.BeginningFragment(context)
 
         getPlayerInfo()
 
