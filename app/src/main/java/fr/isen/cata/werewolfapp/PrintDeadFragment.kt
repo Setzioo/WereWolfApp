@@ -41,8 +41,7 @@ class PrintDeadFragment : Fragment() {
         deadRecyclerView.adapter = adapter
 
         getDeadPlayers(players)
-        Thread.sleep(6000)
-        mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlag").setValue(false)
+
     }
 
     private fun getDeadPlayers(players: ArrayList<PlayerModel?>) {
@@ -86,7 +85,9 @@ class PrintDeadFragment : Fragment() {
                         }
                     }
                 }
+                Thread.sleep(6000)
 
+                mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(true)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

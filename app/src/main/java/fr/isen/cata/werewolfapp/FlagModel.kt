@@ -14,5 +14,7 @@ class FlagModel{
     var LoverFlag : Boolean = false
     var PipotedFlag : Boolean = false
     var PrintFlag : Boolean = false
+    var endPrint : Boolean = false
+
 
 }
