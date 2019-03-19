@@ -10,7 +10,7 @@ class TutoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tuto)
 
-        val textLoup = "• Les LOUPS-GAROUS •\n" +
+        val textLoup = "• Les loups-garous •\n" +
                 "Chaque nuit, ils égorgent un Villageois.\n" +
                 "Le jour ils se font passer pour des Villageois\n" +
                 "afin de ne pas être démasqués."
@@ -21,7 +21,7 @@ class TutoActivity : AppCompatActivity() {
         rules_role_vilageois.text = textVillageaois
 
         val textCupidon = "• Cupidon •\n" +
-                "La première nuit, il désigne 2 joueurs qui seront follement Amoureux l’un de l’autre. Si l’un d’eux meurt, l’autre meurt de chagrin immédiatement. Un Loup-Garou et un villageois peuvent être Amoureux l'un de l'autre. Ils jouent alors contre tous les autres, Loups-Garous et Villageois.Si les amoureux survivent, alors ce sont eux qui gagnentLe cupidon peut se désigner lui-même comme un des 2 Amoureux."
+                "La première nuit, il désigne 2 joueurs qui seront follement Amoureux l’un de l’autre. Si l’un d’eux meurt, l’autre meurt de chagrin immédiatement. Un Loup-Garou et un villageois peuvent être Amoureux l'un de l'autre. Ils jouent alors contre tous les autres, Loups-Garous et Villageois.Si les amoureux survivent, alors ce sont eux qui gagnent. Le cupidon peut se désigner lui-même comme un des 2 Amoureux."
         rules_role_cupidon.text = textCupidon
 
         val textSorciere = "• Sorcière •\n" +
@@ -30,7 +30,7 @@ class TutoActivity : AppCompatActivity() {
                 "une potion d’empoisonnement, utilisée la nuit pour éliminer un joueur. La Sorcière doit utiliser chaque potion 1 seule fois dans la partie. Elle peut se servir des ses 2 potions la même nuit. Le matin suivant l’usage de ce pouvoir, il pourra donc y avoir soit 0 mort, 1 mort ou 2 morts. La sorcière peut utiliser les potions à son profit, et donc se guérir elle-même."
         rules_roles_sorciere.text = textSorciere
 
-        val textPipoteur = "• Pipoteurs •\n" +
+        val textPipoteur = "• Pipoteur •\n" +
                 "Ennemi à la fois des villageois et des loups-garous, le joueur de flûte se réveille à la fin de chaque nuit et choisit chaque fois deux nouveaux joueurs qu'il va charmer."
         rules_roles_pipoteur.text = textPipoteur
 
