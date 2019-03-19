@@ -56,7 +56,7 @@ class VideoFragment : Fragment() {
                 Handler().postDelayed({
                     val manager = MyFragmentManager()
                     manager.CharacterFragment(context!!)
-                }, 1000)
+                }, 1500)
             }
         }.start()
         animateLaunchText()
