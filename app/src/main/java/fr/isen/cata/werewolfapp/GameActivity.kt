@@ -485,8 +485,8 @@ class GameActivity : AppCompatActivity() {
     private fun listenForFlags(dataSnapshot: DataSnapshot){
         val flags : FlagModel? = dataSnapshot.getValue(FlagModel::class.java)
 
-        if(!flags!!.LowerFlag){
-            if(flags.DeadFlag){
+        if(!game!!.endGame){
+            if(flags!!.DeadFlag){
                     checkDead()
             }
             else {
