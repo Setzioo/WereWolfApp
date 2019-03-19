@@ -43,21 +43,10 @@ class SorciereVieFragment : Fragment() {
 
         getLifePotion()
 
-        getWolfKill()
 
 
 
 
-        ResurrectButton.setOnClickListener {
-            mDatabase.child("Users").child(wolfKill).child("state").setValue(true)
-            mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
-            goToDeathPotion()
-        }
-
-        letHimDieButton.setOnClickListener {
-            mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
-            goToDeathPotion()
-        }
 
     }
 
@@ -86,9 +75,9 @@ class SorciereVieFragment : Fragment() {
                         lifePotion = game!!.lifePotion
 
                         if (lifePotion) {
-                            display(wolfKill)
+                            getWolfKill()
                         } else {
-
+                            displayNoPotionLife()
                         }
 
                     }
@@ -99,6 +88,25 @@ class SorciereVieFragment : Fragment() {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
+    }
+
+    private fun displayNoPotionLife() {
+        makeInvisible()
+
+        val nobodyDiedText = "Vous n'avez plus de potion de vie, attendez"
+        whoIsDeadText.text = nobodyDiedText
+    }
+
+    private fun makeInvisible() {
+        ResurrectButton.visibility = View.INVISIBLE
+        deadFace.visibility = View.INVISIBLE
+        estMortText.visibility = View.INVISIBLE
+        choixSorciereMort.visibility = View.INVISIBLE
+        val textContinue = "Continuer"
+        letHimDieButton.text = textContinue
+        letHimDieButton.setOnClickListener {
+            goToDeathPotion()
+        }
     }
 
     private fun goToDeathPotion() {
@@ -118,7 +126,27 @@ class SorciereVieFragment : Fragment() {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                     if (game != null) {
                         wolfKill = game!!.wolfKill
-                        display(wolfKill)
+                        if (wolfKill != "")
+                        {
+                            displayDeadPlayer(wolfKill)
+
+                            ResurrectButton.setOnClickListener {
+                                mDatabase.child("Users").child(wolfKill).child("state").setValue(true)
+                                mDatabase.child("Party").child(gameName).child("lifePotion").setValue(false)
+
+                                mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
+                                goToDeathPotion()
+                            }
+
+                            letHimDieButton.setOnClickListener {
+                                mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
+                                goToDeathPotion()
+                            }
+                        }
+                        else
+                        {
+                            displayNoDeath()
+                        }
                     }
                 }
             }
@@ -129,12 +157,11 @@ class SorciereVieFragment : Fragment() {
         })
     }
 
-    private fun display(wolfKill: String) {
+    private fun displayNoDeath() {
+        makeInvisible()
 
-        if (wolfKill != "") {
-            displayDeadPlayer(wolfKill)
-        }
-
+        val nobodyDiedText = "Personne n'est mort"
+        whoIsDeadText.text = nobodyDiedText
     }
 
     private fun displayDeadPlayer(idPlayer: String) {
