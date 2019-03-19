@@ -125,6 +125,11 @@ class CharacterFragment : Fragment() {
             val ruleSorciere = "Sorcière"
             characterResultText.text = ruleSorciere
         }
+        if (role == "Voyante") {
+            Cards.setImageResource(R.drawable.sorciere)
+            val ruleSorciere = "Voyante"
+            characterResultText.text = ruleSorciere
+        }
         if (role == "Villageois") {
             Cards.setImageResource(R.drawable.villageaois)
             val ruleVillageois = "Villageois"
