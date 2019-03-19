@@ -189,6 +189,7 @@ class GameActivity : AppCompatActivity() {
         val sorciere = isSorciere()
         val pipoteur = isPipoteur()
         if(game!!.Flags!!.DeadFlag){
+            Log.d("FUN", "low before night")
             lowerFlagDead()
         }
         if(game!!.Flags!!.VoteFlag){
@@ -551,6 +552,7 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
             }
+            Log.d("FUN", "c'est la Fin ?")
             if (deadPlayers != null && deadPlayers.size != 0){
                 if(nbTour == 1 && isAnge() && game!!.Flags!!.VoteFlag){
                     for(player in deadPlayers){
