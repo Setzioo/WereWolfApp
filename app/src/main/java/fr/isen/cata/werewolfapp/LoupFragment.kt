@@ -132,8 +132,8 @@ class LoupFragment : Fragment() {
 
                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(true)
 
-                val manager = MyFragmentManager()
-                manager.NightFragment(context!!)
+                //val manager = MyFragmentManager()
+                //manager.NightFragment(context!!)
 
             }
 
