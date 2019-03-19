@@ -3,7 +3,8 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="wrap_content"
-                                             android:layout_height="wrap_content">
+                                             android:layout_height="wrap_content"
+                                             android:background="@color/transparentBackground">
 
 
     <android.support.v7.widget.CardView
@@ -16,17 +17,21 @@
             app:cardUseCompatPadding="true" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:cardBackgroundColor="@color/transparentBackground"
     >
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" android:id="@+id/constraintLayout">
+                android:orientation="vertical" android:id="@+id/constraintLayout"
+                android:background="@color/transparentBackground">
 
-            <ImageView
+            <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/avatarPlayerLoup"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    app:civ_border_color="@color/blanc_casse"
+                    app:civ_border_width="4dp"
                     app:srcCompat="@drawable/icon_avatar"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/pseudoPlayerLoup"
@@ -34,23 +39,30 @@
 
             <TextView
                     android:id="@+id/pseudoPlayerLoup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
                     android:gravity="center"
-                    android:text="@string/textview"
-                    android:textSize="18sp"
-                    android:textStyle="italic|bold"
+                    android:text="@string/pseudo"
+                    android:textSize="14sp"
                     android:layout_marginTop="8dp"
+                    android:background="@drawable/pseudoshape"
+                    android:textAllCaps="false"
                     app:layout_constraintTop_toBottomOf="@+id/avatarPlayerLoup"
                     app:layout_constraintStart_toStartOf="@+id/avatarPlayerLoup" android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toEndOf="@+id/avatarPlayerLoup"/>
+                    app:layout_constraintEnd_toEndOf="@+id/avatarPlayerLoup"
+                    android:textColor="@color/colorAccent"/>
             <TextView
                     android:text="@string/textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/nbVotesLoup"
                     app:layout_constraintTop_toBottomOf="@+id/pseudoPlayerLoup"
                     app:layout_constraintEnd_toEndOf="@+id/pseudoPlayerLoup"
-                    app:layout_constraintStart_toStartOf="@+id/pseudoPlayerLoup"/>
+                    app:layout_constraintStart_toStartOf="@+id/pseudoPlayerLoup"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="5" android:textColor="@color/blanc_casse" android:textStyle="bold"
+                    android:textAlignment="center"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

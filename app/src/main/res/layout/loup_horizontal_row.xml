@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="wrap_content"
-                                             android:layout_height="wrap_content">
+                                             android:layout_height="wrap_content"
+                                             android:background="@color/transparentBackground">
 
 
     <android.support.v7.widget.CardView
@@ -16,34 +16,39 @@
             app:cardUseCompatPadding="true" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-    >
+            android:background="@color/transparentBackground"
+        >
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" android:id="@+id/constraintLayout">
+                android:orientation="vertical" android:id="@+id/constraintLayout"
+                android:background="@color/transparentBackground">
 
-            <ImageView
+            <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/wolfieFace"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
+                    app:civ_border_color="@color/blanc_casse"
+                    app:civ_border_width="4dp"
                     app:srcCompat="@drawable/icon_avatar"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/wolfieName"
-                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_chainStyle="spread_inside"/>
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_chainStyle="spread_inside"
+                    android:background="@color/transparentBackground"/>
 
             <TextView
                     android:id="@+id/wolfieName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="92dp"
+                    android:layout_height="16dp"
                     android:gravity="center"
                     android:text="@string/textview"
-                    android:textSize="12sp"
-                    android:textStyle="italic|bold"
-                    android:layout_marginTop="8dp"
+                    android:textSize="8sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/pseudoshape"
                     app:layout_constraintTop_toBottomOf="@+id/wolfieFace"
-                    app:layout_constraintStart_toStartOf="@+id/wolfieFace" android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toEndOf="@+id/wolfieFace"/>
+                    app:layout_constraintStart_toStartOf="@+id/wolfieFace"
+                    app:layout_constraintEnd_toEndOf="@+id/wolfieFace" android:textColor="@color/colorBlanc"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

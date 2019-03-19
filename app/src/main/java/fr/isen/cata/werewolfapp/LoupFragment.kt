@@ -27,7 +27,7 @@ class LoupFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
-    private val compteurMax: Long = 5
+    private val compteurMax: Long = 15
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
