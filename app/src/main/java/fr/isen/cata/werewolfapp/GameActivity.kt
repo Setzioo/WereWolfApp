@@ -428,11 +428,12 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun lowerFlag(){
-        mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
-        mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(false)
+
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(false)
 
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
