@@ -28,6 +28,8 @@ class VoyanteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("FUN", "DEBUT VOYANTE")
+
         mDatabase = FirebaseDatabase.getInstance().reference
 
         voyanteRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
@@ -59,7 +61,6 @@ class VoyanteFragment : Fragment() {
     }
 
     private fun getVillagers(players: ArrayList<PlayerModel?>) {
-
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
         auth = FirebaseAuth.getInstance()
         val id: String = auth.currentUser!!.uid
