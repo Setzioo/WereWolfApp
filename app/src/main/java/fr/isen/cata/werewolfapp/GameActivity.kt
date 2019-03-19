@@ -259,6 +259,9 @@ class GameActivity : AppCompatActivity() {
         val sorciere = isSorciere()
         val pipoteur = isPipoteur()
         if (game!!.Flags!!.DeadFlag) {
+        flagDead = true
+        if(game!!.Flags!!.DeadFlag){
+            Log.d("FUN", "low before night")
             lowerFlagDead()
         }
         if (game!!.Flags!!.VoteFlag) {
@@ -379,8 +382,12 @@ class GameActivity : AppCompatActivity() {
 
     private fun playDay() {
         if (game!!.Flags!!.ChasseurFlag && !game!!.FinishFlags!!.ChasseurFlag) {
+    private fun playDay(){
+        if(game!!.Flags!!.ChasseurFlag && !game!!.FinishFlags!!.ChasseurFlag){
             checkDead()
         } else if (!game!!.Flags!!.DeadFlag && !game!!.Flags!!.VoteFlag) {
+        }
+        if(!game!!.Flags!!.DeadFlag && !game!!.Flags!!.VoteFlag){
             raiseFlagDead()
         } else if (game!!.FinishFlags!!.VoteFlag && !game!!.Flags!!.DeadFlag) {
             Log.e("FUN", "check mort du vote")
@@ -437,7 +444,8 @@ class GameActivity : AppCompatActivity() {
         manager.VoteJourFragment(context)
     }
     private fun printDeadTurn(){
-        if(game!!.Flags!!.DeadFlag && flagDead){
+        if(game!!.Flags!!.DeadFlag && flagDead && game!!.Flags!!.PrintFlag && !game!!.Flags!!.endPrint){
+            Log.e("FUN", "ok cond")
             flagDead = false
             manager.PrintDeadFragment(context)
         }
@@ -448,6 +456,10 @@ class GameActivity : AppCompatActivity() {
         //if(currentRole=="Chasseur"){
         manager.ChasseurFragment(context)
         //}
+    private fun chasseurTurn(){
+        if(currentRole=="Chasseur"){
+            manager.ChasseurFragment(context)
+        }
     }
 
     private fun raiseFlagCupidon() {
@@ -493,6 +505,8 @@ class GameActivity : AppCompatActivity() {
     private fun raiseFlagChasseur() {
         mDatabase.child("Party").child(gameName).child("Flags").child("ChasseurFlag").setValue(true)
     }
+    private fun raiseFlagPrint(){
+        mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlag").setValue(true)
 
     private fun lowerFlag() {
         mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
@@ -500,6 +514,8 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(false)
 
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
@@ -516,8 +532,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun lowerFlagDead(){
-        Thread.sleep(2000)
         mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
+
+
+
     }
 
     private fun gameListener() {
@@ -554,10 +572,23 @@ class GameActivity : AppCompatActivity() {
 
     private fun listenForFlags(dataSnapshot: DataSnapshot){
         val flags : FlagModel? = dataSnapshot.getValue(FlagModel::class.java)
+
         game!!.Flags = flags
+
         if(!game!!.endGame){
             if(flags!!.DeadFlag){
-                    checkDead()
+                    if(flags!!.endPrint){
+                        Thread.sleep(2000)
+                        game!!.Flags!!.DeadFlag = false
+                        checkDead()
+                    }
+                    if(flags!!.PrintFlag){
+                        printDeadTurn()
+                    }
+                    else{
+                            checkDead()
+                        }
+
             }
             else {
                 if (flags.VoteFlag) {
@@ -609,10 +640,11 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
             }
-            if (deadPlayers != null && deadPlayers.size != 0){
-                if(nbTour == 1 && isAnge() && game!!.Flags!!.VoteFlag){
-                    for(player in deadPlayers){
-                        if(player.role=="Ange"){
+
+            if (deadPlayers != null && deadPlayers.size != 0) {
+                if (nbTour == 1 && isAnge() && game!!.Flags!!.VoteFlag) {
+                    for (player in deadPlayers) {
+                        if (player.role == "Ange") {
                             didAngeWin = true
                         }
                     }
@@ -634,53 +666,57 @@ class GameActivity : AppCompatActivity() {
                     aliveId?.add(player!!.id)
                 }
             }
-            //printDeadTurn()
+            //Log.e("FUN", "vote : "+game!!.Flags!!.VoteFlag+", dead : "+game!!.Flags!!.DeadFlag+", Tour : "+nbTour+", flag : "+flagDead)
 
-
-        }
-        if (alivePlayers != null) {
-            if (isItTheEnd(didAngeWin) != 0) {
-                Log.e("FUN", "FIN DE LA PARTIE : " + isItTheEnd(didAngeWin))
-                mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
-                mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
-                manager.FinJeuFragment(context)
-
+            if (!game!!.Flags!!.VoteFlag || game!!.FinishFlags!!.VoteFlag) {
+                if (!game!!.Flags!!.PrintFlag) {
+                    raiseFlagPrint()
+                }
             }
-        }
+            if (game!!.Flags!!.endPrint) {
 
-        lowerFlagDead()
-        if(isHunterDead){
-            if (!game!!.Flags!!.ChasseurFlag) {
-                //Log.d("FUN", "tour du chasseur")
-                raiseFlagChasseur()
-            } else {
-                if (!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && game!!.FinishFlags!!.ChasseurFlag) {
-                    //Log.e("FUN", "Heure du vote")
-                    raiseFlagVote()
-                } else {
-                    if (game!!.FinishFlags!!.VoteFlag) {
-                        Log.e("FUN", "Fin de jour, lancement nuit")
-                        night()
-                        mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                if(alivePlayers != null){
+                    if(isItTheEnd(didAngeWin) != 0){
+                        Log.e("FUN", "FIN DE LA PARTIE : "+ isItTheEnd(didAngeWin))
+                        mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+                        mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
+                        manager.FinJeuFragment(context)
+
                     }
                 }
-            }
-        }
-        else{
-            if(!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag){
-                Log.e("FUN", "Heure du vote")
-                raiseFlagVote()
-            } else {
-                if (game!!.FinishFlags!!.VoteFlag) {
-                    Log.e("FUN", "Fin de jour, lancement nuit")
-                    night()
-                    mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+
+                lowerFlagDead()
+                if (isHunterDead) {
+                    if (!game!!.Flags!!.ChasseurFlag) {
+                        //Log.d("FUN", "tour du chasseur")
+                        raiseFlagChasseur()
+                    } else {
+                        if (!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && game!!.FinishFlags!!.ChasseurFlag) {
+                            Log.e("FUN", "Heure du vote")
+                            raiseFlagVote()
+                        } else {
+                            if (game!!.FinishFlags!!.VoteFlag) {
+                                Log.e("FUN", "Fin de jour, lancement nuit")
+                                night()
+                                mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                            }
+                        }
+                    }
+                } else {
+                    if (!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag) {
+                        Log.e("FUN", "Heure du vote")
+                        raiseFlagVote()
+                    } else {
+                        if (game!!.FinishFlags!!.VoteFlag) {
+                            Log.e("FUN", "Fin de jour, lancement nuit")
+                            night()
+                            mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                        }
+                    }
                 }
+
             }
         }
-
-
-        //lowerFlagPrintDead()
     }
 
     private fun checkDeadAfterVote() {
@@ -829,8 +865,7 @@ class GameActivity : AppCompatActivity() {
         })
 
     }
-
-    private fun isItTheEnd(angeAlreadyWin: Boolean): Int {
+    private fun isItTheEnd(angeAlreadyWin : Boolean): Int{
         var codeGame = 0
 
         val nbPlayer = alivePlayers!!.size
