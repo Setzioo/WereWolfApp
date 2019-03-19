@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".SorciereFragment">
-
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".SorciereVieFragment" android:id="@+id/sorciereVieLayout">
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
-
-</FrameLayout>
+            android:text="Pseudo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/whoIsDeadText" android:textSize="30sp" app:layout_constraintEnd_toEndOf="@+id/deadFace"
+            app:layout_constraintStart_toStartOf="@+id/deadFace" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/deadFace" android:textStyle="bold"
+            android:textColor="@color/blanc_casse"/>
+    <TextView
+            android:text="Veux tu sauver ce joueur ?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/choixSorciereMort"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="@+id/estMortText"
+            app:layout_constraintEnd_toEndOf="@+id/estMortText" android:layout_marginTop="70dp"
+            app:layout_constraintTop_toBottomOf="@+id/estMortText" android:textColor="@color/blanc_casse"/>
+    <Button
+            android:text="Oui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ResurrectButton"
+            android:background="@drawable/buttonshape" android:textColor="@color/blanc_casse"
+            app:layout_constraintStart_toStartOf="@+id/choixSorciereMort"
+            app:layout_constraintEnd_toEndOf="@+id/choixSorciereMort" android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/choixSorciereMort" app:layout_constraintHorizontal_bias="0.608"/>
+    <Button
+            android:text="Non"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/letHimDieButton"
+            android:background="@drawable/buttonshape"
+            android:textColor="@color/blanc_casse"
+            app:layout_constraintStart_toStartOf="@+id/ResurrectButton"
+            app:layout_constraintEnd_toEndOf="@+id/ResurrectButton" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/ResurrectButton"/>
+    <ImageView
+            android:src="@drawable/icon_avatar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/deadFace" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.19"/>
+    <TextView
+            android:text="est mort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/estMortText" app:layout_constraintEnd_toEndOf="@+id/whoIsDeadText"
+            app:layout_constraintStart_toStartOf="@+id/whoIsDeadText" android:textSize="24sp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/whoIsDeadText"
+            android:textColor="@color/blanc_casse"/>
+</android.support.constraint.ConstraintLayout>

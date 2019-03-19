@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -14,20 +15,24 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_loup.*
+import kotlinx.android.synthetic.main.fragment_sorciere_mort.*
 import kotlinx.android.synthetic.main.fragment_sorciere_vie.*
 
 
-class SorciereVieFragment : Fragment() {
+class SorciereMortFragment : Fragment() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
+    private lateinit var sorciereAdapter: SorciereAdapter
+
     private var currentPlayer: PlayerModel? = null
     var gameName: String = ""
     var game: PartyModel? = null
-    var wolfKill = ""
-    var deadPlayer: PlayerModel? = null
-    var lifePotion = false
+    var deathPotion = true
+    var listId: MutableList<String>? = arrayListOf()
+    private val compteurMax: Long = 5
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,22 +40,15 @@ class SorciereVieFragment : Fragment() {
 
         Toast.makeText(context, "Sorciere", Toast.LENGTH_LONG).show()
 
-        buttonEffect(ResurrectButton)
-        buttonEffect(letHimDieButton)
-
         mDatabase = FirebaseDatabase.getInstance().reference
 
 
-        getLifePotion()
-
-
-
-
+        getDeathPotion()
 
 
     }
 
-    private fun getLifePotion() {
+    private fun getDeathPotion() {
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
         auth = FirebaseAuth.getInstance()
         val id: String = auth.currentUser!!.uid
@@ -72,12 +70,26 @@ class SorciereVieFragment : Fragment() {
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                     if (game != null) {
-                        lifePotion = game!!.lifePotion
+                        deathPotion = game!!.deathPotion
 
-                        if (lifePotion) {
-                            getWolfKill()
+                        if (deathPotion) {
+                            val players: ArrayList<PlayerModel?> = ArrayList()
+
+                            sorciereRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
+
+                            sorciereAdapter = SorciereAdapter(players)
+
+                            sorciereRecyclerView.adapter = sorciereAdapter
+
+                            getPeople(players)
+
+                            nobodyText.setOnClickListener {
+                                val manager = MyFragmentManager()
+                                manager.NightFragment(context!!)
+                            }
+
                         } else {
-                            displayNoPotionLife()
+                            displayNoPotionDeath()
                         }
 
                     }
@@ -90,31 +102,27 @@ class SorciereVieFragment : Fragment() {
         })
     }
 
-    private fun displayNoPotionLife() {
-        makeInvisible()
+    private fun displayNoPotionDeath() {
+        sorciereRecyclerView.visibility = View.INVISIBLE
+        deathPotionChoiceText.visibility = View.INVISIBLE
 
-        val nobodyDiedText = "Vous n'avez plus de potion de vie, attendez"
-        whoIsDeadText.text = nobodyDiedText
-    }
+        nobodyText.visibility = View.INVISIBLE
 
-    private fun makeInvisible() {
-        ResurrectButton.visibility = View.INVISIBLE
-        deadFace.visibility = View.INVISIBLE
-        estMortText.visibility = View.INVISIBLE
-        choixSorciereMort.visibility = View.INVISIBLE
+        val textNoPotionLeft = "Vous n'avez plus de potion de mort"
+        invisibleText.text = textNoPotionLeft
+        invisibleText.visibility = View.VISIBLE
         val textContinue = "Continuer"
-        letHimDieButton.text = textContinue
-        letHimDieButton.setOnClickListener {
-            goToDeathPotion()
+        nobodyText.text = textContinue
+        nobodyText.setOnClickListener {
+            val manager = MyFragmentManager()
+            manager.NightFragment(context!!)
         }
     }
 
-    private fun goToDeathPotion() {
-        val manager = MyFragmentManager()
-        manager.SorciereMortFragment(context!!)
-    }
 
-    private fun getWolfKill() {
+
+
+    private fun getPeople(players: ArrayList<PlayerModel?>) {
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
         auth = FirebaseAuth.getInstance()
@@ -122,30 +130,36 @@ class SorciereVieFragment : Fragment() {
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val users: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.child("Users").children) {
+                        users.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in users) {
+                        if (i?.id == id) {
+                            currentPlayer = i
+                            gameName = currentPlayer!!.currentGame!!
+                        }
+                    }
+                }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                     if (game != null) {
-                        wolfKill = game!!.wolfKill
-                        if (wolfKill != "")
-                        {
-                            displayDeadPlayer(wolfKill)
-
-                            ResurrectButton.setOnClickListener {
-                                mDatabase.child("Users").child(wolfKill).child("state").setValue(true)
-                                mDatabase.child("Party").child(gameName).child("lifePotion").setValue(false)
-
-                                mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
-                                goToDeathPotion()
-                            }
-
-                            letHimDieButton.setOnClickListener {
-                                mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
-                                goToDeathPotion()
-                            }
+                        if (game!!.listPlayer != null) {
+                            listId = game!!.listPlayer
                         }
-                        else
-                        {
-                            displayNoDeath()
+                    }
+                }
+                if (listId != null) {
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
+                            val user = u.getValue(PlayerModel::class.java)
+                            if (i == user!!.id) {
+                                if (user.id != currentPlayer!!.id && user.state) {
+                                    players.add(user)
+                                    sorciereAdapter.notifyDataSetChanged()
+                                }
+                            }
                         }
                     }
                 }
@@ -157,40 +171,6 @@ class SorciereVieFragment : Fragment() {
         })
     }
 
-    private fun displayNoDeath() {
-        makeInvisible()
-
-        val nobodyDiedText = "Personne n'est mort"
-        whoIsDeadText.text = nobodyDiedText
-    }
-
-    private fun displayDeadPlayer(idPlayer: String) {
-
-        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
-
-        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: MutableList<PlayerModel?> = arrayListOf()
-                if (dataSnapshot.exists()) {
-                    user.clear()
-                    for (i in dataSnapshot.children) {
-                        user.add(i.getValue(PlayerModel::class.java))
-                    }
-                    for (i in user) {
-                        if (i?.id == idPlayer) {
-                            deadPlayer = i
-                            getPlayerAvatar(deadPlayer!!)
-                            whoIsDeadText.text = deadPlayer!!.pseudo
-                        }
-                    }
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-            }
-        })
-    }
 
     private fun getPlayerAvatar(player: PlayerModel) {
         val storageReference = FirebaseStorage.getInstance().reference.child(player.id + "/avatar")
@@ -229,7 +209,7 @@ class SorciereVieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sorciere_vie, container, false)
+        return inflater.inflate(R.layout.fragment_sorciere_mort, container, false)
     }
 
 
@@ -246,7 +226,7 @@ class SorciereVieFragment : Fragment() {
      */
 
     companion object {
-        fun newInstance() = SorciereVieFragment()
+        fun newInstance() = SorciereMortFragment()
     }
 }
 

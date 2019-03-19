@@ -123,6 +123,11 @@ class LoupFragment : Fragment() {
 
                 if (!equality) {
                     mUserReference.child(idToKill).child("state").setValue(false)
+                    mDatabase.child("Party").child(gameName).child("wolfKill").setValue(idToKill)
+                }
+                else
+                {
+                    mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
                 }
 
                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(true)
