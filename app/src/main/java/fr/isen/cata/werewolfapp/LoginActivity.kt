@@ -26,9 +26,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        returnLoginButton.setOnClickListener {
-            finish()
-        }
+
     }
 
     fun buttonEffect(button: View) {
