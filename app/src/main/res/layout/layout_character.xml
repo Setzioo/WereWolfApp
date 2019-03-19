@@ -8,7 +8,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView7" tools:text="nom de la carte"
+            android:id="@+id/characterResultText" tools:text="nom de la carte"
             android:textAlignment="center" android:textColor="@color/colorBlanc" android:textSize="46sp"
             app:layout_constraintStart_toStartOf="@+id/Cards"
             app:layout_constraintEnd_toEndOf="@+id/Cards"

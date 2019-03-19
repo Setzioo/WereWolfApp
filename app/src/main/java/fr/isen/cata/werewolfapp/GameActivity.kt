@@ -50,6 +50,7 @@ class GameActivity : AppCompatActivity() {
     var nbTour: Int = 0
     var didAngeWin = false
     var isHunterDead = false
+    var flagDead = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +67,7 @@ class GameActivity : AppCompatActivity() {
 
 
 
-        manager.CharacterFragment(context)
+        manager.BeginningFragment(context)
 
         getPlayerInfo()
 
@@ -158,6 +159,7 @@ class GameActivity : AppCompatActivity() {
                             aliveId = listId
                         }
                     }
+
 
 
                 }
@@ -430,9 +432,9 @@ class GameActivity : AppCompatActivity() {
     private fun voteTurn() {
         manager.VoteJourFragment(context)
     }
-
-    private fun printDeadTurn() {
-        if (game!!.Flags!!.DeadFlag) {
+    private fun printDeadTurn(){
+        if(game!!.Flags!!.DeadFlag && flagDead){
+            flagDead = false
             manager.PrintDeadFragment(context)
         }
 
@@ -509,8 +511,8 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(false)
     }
 
-    private fun lowerFlagDead() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
+    private fun lowerFlagDead(){
+        Thread.sleep(2000)
         mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
     }
 
@@ -546,13 +548,14 @@ class GameActivity : AppCompatActivity() {
         })
     }
 
-    private fun listenForFlags(dataSnapshot: DataSnapshot) {
-        val flags: FlagModel? = dataSnapshot.getValue(FlagModel::class.java)
-
-        if (!flags!!.LowerFlag) {
-            if (flags.DeadFlag) {
-                checkDead()
-            } else {
+    private fun listenForFlags(dataSnapshot: DataSnapshot){
+        val flags : FlagModel? = dataSnapshot.getValue(FlagModel::class.java)
+        game!!.Flags = flags
+        if(!game!!.endGame){
+            if(flags!!.DeadFlag){
+                    checkDead()
+            }
+            else {
                 if (flags.VoteFlag) {
                     voteTurn()
                 } else if (flags.ChasseurFlag) {
@@ -627,7 +630,7 @@ class GameActivity : AppCompatActivity() {
                     aliveId?.add(player!!.id)
                 }
             }
-            printDeadTurn()
+            //printDeadTurn()
 
 
         }
@@ -642,8 +645,7 @@ class GameActivity : AppCompatActivity() {
         }
 
         lowerFlagDead()
-        Thread.sleep(1000)
-        if (isHunterDead) {
+        if(isHunterDead){
             if (!game!!.Flags!!.ChasseurFlag) {
                 //Log.d("FUN", "tour du chasseur")
                 raiseFlagChasseur()
@@ -659,9 +661,10 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
             }
-        } else {
-            if (!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag) {
-                //Log.e("FUN", "Heure du vote")
+        }
+        else{
+            if(!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag){
+                Log.e("FUN", "Heure du vote")
                 raiseFlagVote()
             } else {
                 if (game!!.FinishFlags!!.VoteFlag) {
@@ -689,6 +692,7 @@ class GameActivity : AppCompatActivity() {
             }
             getPlayersAfterVote()
         }
+
 
 
     }
@@ -743,7 +747,7 @@ class GameActivity : AppCompatActivity() {
     private fun getPlayersAfterVote() {
         val id: String = auth.currentUser!!.uid
 
-
+        flagDead = true
         val mUsersRef = FirebaseDatabase.getInstance().getReference("Users")
         val user: MutableList<PlayerModel?> = arrayListOf()
         mUsersRef.addListenerForSingleValueEvent(object : ValueEventListener {

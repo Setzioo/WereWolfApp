@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_tuto.*
+import kotlinx.android.synthetic.main.fragment_vision.*
 import kotlinx.android.synthetic.main.layout_character.*
 
 
@@ -19,7 +21,8 @@ class CharacterFragment : Fragment() {
     private lateinit var mDatabase: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
-    private lateinit var gameName: String
+    private var gameName: String? = null
+    private var ccurrentRole : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,7 @@ class CharacterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.layout_character, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,12 +101,14 @@ class CharacterFragment : Fragment() {
                     for (i in user) {
                         if (i?.id == id) {
                             currentPlayer = i
-                            gameName = currentPlayer!!.currentGame!!
+                            gameName = currentPlayer!!.currentGame
+                            ccurrentRole = currentPlayer!!.role
+                            changeCardImageCharacter(currentPlayer!!.role)
                         }
                     }
                     Handler().postDelayed({
-                        mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
-                        mDatabase.child("Party").child(gameName).child("endGame").setValue(false)
+                        mDatabase.child("Party").child(gameName!!).child("nightGame").setValue(true)
+                        mDatabase.child("Party").child(gameName!!).child("endGame").setValue(false)
                     }, 5000)
 
                 }
@@ -113,7 +119,43 @@ class CharacterFragment : Fragment() {
             }
         })
     }
-
+    fun changeCardImageCharacter(role: String?) {
+        if (role == "Sorcière") {
+            Cards.setImageResource(R.drawable.sorciere)
+            val ruleSorciere = "Sorcière"
+            characterResultText.text = ruleSorciere
+        }
+        if (role == "Villageois") {
+            Cards.setImageResource(R.drawable.villageaois)
+            val ruleVillageois = "Villageois"
+            characterResultText.text = ruleVillageois
+        }
+        if (role == "Loup-Garou") {
+            Cards.setImageResource(R.drawable.loup_garou)
+            val ruleLoupGarou = "Loup-Garou"
+            characterResultText.text = ruleLoupGarou
+        }
+        if (role == "Cupidon") {
+            Cards.setImageResource(R.drawable.cupidon)
+            val ruleCupidon = "Cupidon"
+            characterResultText.text = ruleCupidon
+        }
+        if (role == "Chasseur") {
+            Cards.setImageResource(R.drawable.chasseur)
+            val ruleChasseur = "Chasseur"
+            characterResultText.text = ruleChasseur
+        }
+        if (role == "Pipoteur") {
+            Cards.setImageResource(R.drawable.pipoteur)
+            val rulePipoteur = "Pipoteur"
+            characterResultText.text = rulePipoteur
+        }
+        if (role == "Ange") {
+            Cards.setImageResource(R.drawable.ange)
+            val ruleAnge = "Ange"
+            characterResultText.text = ruleAnge
+        }
+    }
     companion object {
         fun newInstance() = CharacterFragment()
     }
