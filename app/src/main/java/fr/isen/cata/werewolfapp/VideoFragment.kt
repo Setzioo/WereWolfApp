@@ -53,6 +53,10 @@ class VideoFragment : Fragment() {
             override fun onFinish() {
                 val goText = "GO"
                 compteur.text = goText
+                Handler().postDelayed({
+                    val manager = MyFragmentManager()
+                    manager.CharacterFragment(context!!)
+                }, 1000)
             }
         }.start()
         animateLaunchText()
@@ -72,10 +76,7 @@ class VideoFragment : Fragment() {
         valueAnimator.repeatMode = ValueAnimator.REVERSE
         valueAnimator.start()
 
-        Handler().postDelayed({
-            val manager = MyFragmentManager()
-            manager.CharacterFragment(context!!)
-        }, (compteurMax + 2) * 1000)
+
     }
 
 

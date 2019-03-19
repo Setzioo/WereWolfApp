@@ -74,6 +74,10 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        
+    }
+
     private fun setMusicListener() {
         val id: String = auth.currentUser!!.uid
 

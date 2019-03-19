@@ -22,7 +22,7 @@ class CharacterFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
     private var gameName: String? = null
-    private var ccurrentRole : String? = null
+    private var currentRole : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,7 +102,7 @@ class CharacterFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame
-                            ccurrentRole = currentPlayer!!.role
+                            currentRole = currentPlayer!!.role
                             changeCardImageCharacter(currentPlayer!!.role)
                         }
                     }
