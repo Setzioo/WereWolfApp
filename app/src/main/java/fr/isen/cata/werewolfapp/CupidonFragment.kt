@@ -1,7 +1,6 @@
 package fr.isen.cata.werewolfapp
 
-import android.content.Context
-import android.net.Uri
+
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -14,9 +13,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_chasseur.*
 import kotlinx.android.synthetic.main.fragment_cupidon.*
-import kotlinx.android.synthetic.main.fragment_video.*
+
 
 
 class CupidonFragment : Fragment() {
@@ -45,7 +43,6 @@ class CupidonFragment : Fragment() {
         cupidonRecyclerView.adapter = adapter
 
         getVillagers(players)
-
     }
 
     private fun getVillagers(players: ArrayList<PlayerModel?>) {
@@ -82,7 +79,7 @@ class CupidonFragment : Fragment() {
                         for(u in dataSnapshot.child("Users").children){
                             val user = u.getValue(PlayerModel::class.java)
                             if(i == user!!.id){
-                                if(user.id != currentPlayer!!.id && user.state) {
+                                if(user.state) {
                                     players.add(user)
                                     Log.e("CUPIDON", "joueur ajouté : " + user.pseudo)
                                     adapter.notifyDataSetChanged()
@@ -91,7 +88,7 @@ class CupidonFragment : Fragment() {
                         }
                     }
                 }
-                beginCompteur(20)
+                beginCompteur(15)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -123,15 +120,17 @@ class CupidonFragment : Fragment() {
             //mDatabase.child("Users").child(victimPlayer.id).child("state").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
+            mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("inLove").setValue(false)
+            mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("inLove").setValue(false)
             Toast.makeText(context, adapter.victimPlayer!!.pseudo + " et "+ adapter.victimPlayer2!!.pseudo +" sont amoureux!", Toast.LENGTH_LONG).show()
         } else if(adapter.victimPlayer != null) {
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
-            Toast.makeText(context, "Trop tard, vous avez mis trop de temps...", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Qu'un seul joueur a était selectionné...", Toast.LENGTH_LONG).show()
         } else if(adapter.victimPlayer2 != null) {
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
-            Toast.makeText(context, "Trop tard, vous avez mis trop de temps...", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Qu'un seul joueur a était selectionné...", Toast.LENGTH_LONG).show()
         } else {
-            Toast.makeText(context, "Trop tard, vous avez mis trop de temps...", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Aucun joueur selectionné", Toast.LENGTH_LONG).show()
         }
 
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
