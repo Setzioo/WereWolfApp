@@ -29,4 +29,5 @@
     <string name="observer">Observer</string>
     <string name="est">est</string>
     <string name="selectionnez_un_joueur">Selectionnez un joueur</string>
+    <string name="selectionner_deux_joueurs">Selectionner deux joueurs</string>
 </resources>

@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -19,16 +18,16 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Adapter<ChasseurAdapter.ViewHolder>() {
+class CupidonAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Adapter<CupidonAdapter.ViewHolder>() {
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
     var victimPlayer: PlayerModel? = null
+    var victimPlayer2: PlayerModel? = null
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
-        //holder.pseudo.text = players[position]!!
         getPlayerAvatar(holder, players[position]!!)
         holder.pseudoButton.text = players[position]!!.pseudo
 
@@ -36,19 +35,28 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
 
         holder.cards.setOnClickListener {
             val mDatabase = FirebaseDatabase.getInstance().reference
-
-            for(player in players){
-                if(player!!.id == players[position]!!.id){
-                    mDatabase.child("Users").child(player.id).child("selected").setValue(true)
-                } else {
-                    mDatabase.child("Users").child(player.id).child("selected").setValue(false)
+            when {
+                victimPlayer != null && players[position]!!.id == victimPlayer!!.id -> {
+                    mDatabase.child("Users").child(victimPlayer!!.id).child("selected").setValue(false)
+                    victimPlayer = null
+                    Log.e("CUPIDON",  players[position]!!.pseudo + "  n'est plus sélectionné")
+                }
+                victimPlayer2 != null && players[position]!!.id == victimPlayer2!!.id -> {
+                    mDatabase.child("Users").child(victimPlayer2!!.id).child("selected").setValue(false)
+                    victimPlayer2 = null
+                    Log.e("CUPIDON",  players[position]!!.pseudo + " n'est plus sélectionné")
+                }
+                victimPlayer != null && victimPlayer2 != null -> Log.e("CUPIDON", "---DEJA-DEUX-JOUEURS")
+                victimPlayer == null || victimPlayer2 == null -> {
+                    mDatabase.child("Users").child(players[position]!!.id).child("selected").setValue(true)
+                    Log.e("CUPIDON",  players[position]!!.pseudo + " selectionné !")
                 }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.chasseur_vote_view_row, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.cupidon_vote_view_row, parent, false)
         return ViewHolder(v)
     }
 
@@ -57,9 +65,9 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var avatar: ImageView = itemView.findViewById(R.id.avatarPlayerChasseur)
-        var pseudoButton: Button = itemView.findViewById(R.id.pseudoPlayerChasseur)
-        var cards: CardView = itemView.findViewById(R.id.chasseurCard)
+        var avatar: ImageView = itemView.findViewById(R.id.avatarPlayerCupidon)
+        var pseudoButton: Button = itemView.findViewById(R.id.pseudoPlayerCupidon)
+        var cards: CardView = itemView.findViewById(R.id.cupidonCard)
     }
 
     private fun getPlayerAvatar(holder: ViewHolder, player: PlayerModel) {
@@ -77,7 +85,6 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
 
     private fun getSelectedChange(holder: ViewHolder, position: Int) {
         val mUserReference = mDatabase.child("Users")
-        //val playersSelected: ArrayList<PlayerModel?> = ArrayList()
 
         mUserReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -86,9 +93,27 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>): RecyclerVie
                         val tempPlayer = i.getValue(PlayerModel::class.java)
                         if (tempPlayer!!.id == players[position]!!.id) {
                             if(tempPlayer.selected){
-                                holder.pseudoButton.setBackgroundResource(R.drawable.pseudoselectedshape)
-                                holder.pseudoButton.setTextColor(Color.BLACK)
-                                victimPlayer = tempPlayer
+                                when {
+                                    victimPlayer == null && victimPlayer2 != tempPlayer -> {
+                                        victimPlayer = tempPlayer
+                                        holder.pseudoButton.setBackgroundResource(R.drawable.pseudoselectedshape)
+                                        holder.pseudoButton.setTextColor(Color.BLACK)
+                                    }
+                                    victimPlayer2 == null && victimPlayer != tempPlayer -> {
+                                        victimPlayer2 = tempPlayer
+                                        holder.pseudoButton.setBackgroundResource(R.drawable.pseudoselectedshape)
+                                        holder.pseudoButton.setTextColor(Color.BLACK)
+                                    }
+                                    tempPlayer == victimPlayer2 || tempPlayer == victimPlayer -> {
+                                        holder.pseudoButton.setBackgroundResource(R.drawable.pseudoselectedshape)
+                                        holder.pseudoButton.setTextColor(Color.BLACK)
+                                    }
+                                    else -> {
+                                        holder.pseudoButton.setBackgroundResource(R.drawable.pseudoshape)
+                                        holder.pseudoButton.setTextColor(Color.WHITE)
+                                    }
+                                }
+
                             } else {
                                 holder.pseudoButton.setBackgroundResource(R.drawable.pseudoshape)
                                 holder.pseudoButton.setTextColor(Color.WHITE)
