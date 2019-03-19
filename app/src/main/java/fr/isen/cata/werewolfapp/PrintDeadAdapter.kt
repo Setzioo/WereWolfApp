@@ -1,3 +1,5 @@
+package fr.isen.cata.werewolfapp
+
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
-import fr.isen.cata.werewolfapp.PlayerModel
-import fr.isen.cata.werewolfapp.R
 
 class PrintDeadAdapter(private val players: ArrayList<PlayerModel?>) :
     RecyclerView.Adapter<PrintDeadAdapter.ViewHolder>() {
@@ -23,6 +23,7 @@ class PrintDeadAdapter(private val players: ArrayList<PlayerModel?>) :
         //holder.pseudo.text = players[position]!!
         getPlayerAvatar(holder, players[position]!!)
         holder.pseudoButton.text = players[position]!!.pseudo
+        holder.roleButton.text = players[position]!!.role
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,6 +38,7 @@ class PrintDeadAdapter(private val players: ArrayList<PlayerModel?>) :
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var avatar: ImageView = itemView.findViewById(R.id.avatarPlayerDead)
         var pseudoButton: Button = itemView.findViewById(R.id.pseudoPlayerDead)
+        var roleButton: Button = itemView.findViewById(R.id.rolePlayerDead)
     }
 
     private fun getPlayerAvatar(holder: ViewHolder, player: PlayerModel) {

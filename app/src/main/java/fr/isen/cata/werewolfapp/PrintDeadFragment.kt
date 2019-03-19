@@ -25,6 +25,7 @@ class PrintDeadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.e("FUN", "Affichage des morts")
+        Log.e("LANCE", "Print dead")
         Thread.sleep(10000)
 
         mDatabase = FirebaseDatabase.getInstance().reference
