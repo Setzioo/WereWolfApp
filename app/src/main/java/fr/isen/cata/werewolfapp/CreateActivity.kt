@@ -68,11 +68,33 @@ class CreateActivity : AppCompatActivity() {
                 }
             }
 
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
 
+
+
+
+
+        val partys: ArrayList<PartyModel?> = ArrayList()
+
+        val mPartyReference = FirebaseDatabase.getInstance().getReference("Party")
+
+        mPartyReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                partys.clear()
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.children) {
+                        partys.add(i.getValue(PartyModel::class.java))
+                    }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
         nbPlayerView.text = nbPlayer.toString()
 
         addButton.setOnClickListener {
@@ -103,6 +125,12 @@ class CreateActivity : AppCompatActivity() {
                 if (nameLobby == lobby!!.name) {
                     nameValid = false
                     Toast.makeText(this, "Attention ce nom existe déjà!", Toast.LENGTH_LONG).show()
+                }
+            }
+            for (party in partys) {
+                if (nameLobby == party!!.name) {
+                    nameValid = false
+                    Toast.makeText(this, "Attention ce nom existe déjà, la partie est en cours!", Toast.LENGTH_LONG).show()
                 }
             }
             if (nameValid) {
