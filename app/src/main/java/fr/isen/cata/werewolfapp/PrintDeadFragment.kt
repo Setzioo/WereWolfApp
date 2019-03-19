@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
+import android.widget.Toast
 import kotlinx.android.synthetic.main.layout_character.*
 
 
@@ -24,7 +25,8 @@ class PrintDeadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.e("FUN", "Affichage des morts")
-        Thread.sleep(10000)
+        Toast.makeText(context, "Affichage des morts", Toast.LENGTH_LONG).show()
+        Thread.sleep(5000)
     }
 
     override fun onCreateView(

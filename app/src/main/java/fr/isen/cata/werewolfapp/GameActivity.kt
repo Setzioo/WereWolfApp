@@ -485,8 +485,6 @@ class GameActivity : AppCompatActivity() {
     private fun listenForFlags(dataSnapshot: DataSnapshot){
         val flags : FlagModel? = dataSnapshot.getValue(FlagModel::class.java)
 
-        Thread.sleep(1000)
-
         if(!flags!!.LowerFlag){
             if(flags.DeadFlag){
                     checkDead()
@@ -590,6 +588,7 @@ class GameActivity : AppCompatActivity() {
         }
 
         lowerFlagDead()
+        Thread.sleep(1000)
         if(isHunterDead){
             if (!game!!.Flags!!.ChasseurFlag) {
                 //Log.d("FUN", "tour du chasseur")
