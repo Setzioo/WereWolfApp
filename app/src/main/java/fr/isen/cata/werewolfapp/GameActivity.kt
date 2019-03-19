@@ -382,6 +382,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun playDay(){
+        Log.e("FUN","PLAY DAAAAAAY")
         if(game!!.Flags!!.ChasseurFlag && !game!!.FinishFlags!!.ChasseurFlag){
             checkDead()
         } else if (!game!!.Flags!!.DeadFlag && !game!!.Flags!!.VoteFlag) {
