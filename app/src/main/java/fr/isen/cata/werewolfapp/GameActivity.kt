@@ -321,7 +321,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun sorciereTurn() {
         if (currentRole == "Sorciere") {
-            manager.SorciereFragment(context, game!!.deathPotion, game!!.lifePotion)
+            manager.SorciereVieFragment(context, game!!.deathPotion, game!!.lifePotion)
         }
     }
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 
-class SorciereFragment : Fragment() {
+class SorciereVieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,7 +21,7 @@ class SorciereFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sorciere, container, false)
+        return inflater.inflate(R.layout.fragment_sorciere_vie, container, false)
     }
 
 
@@ -38,7 +38,7 @@ class SorciereFragment : Fragment() {
      */
 
     companion object {
-        fun newInstance() = SorciereFragment()
+        fun newInstance() = SorciereVieFragment()
     }
 }
 

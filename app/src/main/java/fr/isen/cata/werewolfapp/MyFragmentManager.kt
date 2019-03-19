@@ -83,10 +83,10 @@ class MyFragmentManager {
             .commitAllowingStateLoss()
     }
 
-    fun SorciereFragment(context: Context, deathPotion: Boolean, lifePotion: Boolean) {
+    fun SorciereVieFragment(context: Context, deathPotion: Boolean, lifePotion: Boolean) {
         val fragment: Fragment?
 
-        fragment = SorciereFragment.newInstance()
+        fragment = SorciereVieFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
             .commitAllowingStateLoss()
