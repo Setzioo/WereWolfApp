@@ -29,7 +29,6 @@ class PrintDeadFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.e("FUN", "Affichage des morts")
         Log.e("LANCE", "Print dead")
-        Thread.sleep(10000)
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
@@ -42,6 +41,7 @@ class PrintDeadFragment : Fragment() {
 
         getDeadPlayers(players)
 
+        Thread.sleep(10000)
     }
 
     private fun getDeadPlayers(players: ArrayList<PlayerModel?>) {
