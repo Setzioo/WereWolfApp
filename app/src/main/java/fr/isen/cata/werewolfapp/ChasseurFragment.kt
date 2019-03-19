@@ -29,6 +29,9 @@ class ChasseurFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("LANCE","Chasseur")
+
+
         mDatabase = FirebaseDatabase.getInstance().reference
 
         chasseurRecyclerView.layoutManager = GridLayoutManager(context!!, 2)

@@ -28,6 +28,9 @@ class VoyanteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("LANCE","Voyante")
+
+
         Log.e("FUN", "DEBUT VOYANTE")
 
         mDatabase = FirebaseDatabase.getInstance().reference

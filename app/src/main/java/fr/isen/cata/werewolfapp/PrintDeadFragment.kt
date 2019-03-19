@@ -24,6 +24,9 @@ class PrintDeadFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.e("LANCE","Print Dead")
+
         Log.e("FUN", "Affichage des morts")
         Toast.makeText(context, "Affichage des morts", Toast.LENGTH_LONG).show()
         Thread.sleep(5000)

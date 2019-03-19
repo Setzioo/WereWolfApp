@@ -30,6 +30,9 @@ class CupidonFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.e("LANCE","Cupidon")
+
         Toast.makeText(context, "Cupidon", Toast.LENGTH_LONG).show()
 
         mDatabase = FirebaseDatabase.getInstance().reference

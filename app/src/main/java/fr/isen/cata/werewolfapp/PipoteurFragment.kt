@@ -29,6 +29,9 @@ class PipoteurFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.e("LANCE","Pipoteur")
+
         Toast.makeText(context, "Pipoteur", Toast.LENGTH_LONG).show()
 
         mDatabase = FirebaseDatabase.getInstance().reference

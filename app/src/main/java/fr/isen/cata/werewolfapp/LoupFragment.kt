@@ -32,6 +32,9 @@ class LoupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("LANCE","Loup")
+
+
         mDatabase = FirebaseDatabase.getInstance().reference
         Log.e("FUN", "LOUP")
         Toast.makeText(context, "Loups", Toast.LENGTH_LONG).show()

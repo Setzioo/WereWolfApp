@@ -33,6 +33,9 @@ class VoteJourFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("LANCE","Vote Jour")
+
+
         mDatabase = FirebaseDatabase.getInstance().reference
         Log.e("FUN", "Vote Jour")
         Toast.makeText(context, "Vote Jour", Toast.LENGTH_LONG).show()

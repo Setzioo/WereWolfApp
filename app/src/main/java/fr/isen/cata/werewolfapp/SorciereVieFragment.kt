@@ -33,6 +33,9 @@ class SorciereVieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("LANCE","Sorciere Vie")
+
+
         Toast.makeText(context, "Sorciere", Toast.LENGTH_LONG).show()
 
         buttonEffect(ResurrectButton)

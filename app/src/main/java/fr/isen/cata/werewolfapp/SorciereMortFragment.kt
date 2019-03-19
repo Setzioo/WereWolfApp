@@ -38,6 +38,9 @@ class SorciereMortFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("LANCE","Sorciere Mort")
+
+
         Toast.makeText(context, "Sorciere", Toast.LENGTH_LONG).show()
 
         mDatabase = FirebaseDatabase.getInstance().reference

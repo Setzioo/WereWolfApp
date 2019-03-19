@@ -26,6 +26,9 @@ class VisionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("LANCE","Vision")
+
+
         mDatabase = FirebaseDatabase.getInstance().reference
 
         findSelectedPlayer()
