@@ -5,5 +5,4 @@ class LobbyModel(_masterId: String = "0", _name: String = "", _nbPlayer: Int = 0
     var name: String = _name
     var nbPlayer: Int = _nbPlayer
     var listPlayer: MutableList<String>? = _listPlayer
-    var startGame: Boolean = _startGame
     }

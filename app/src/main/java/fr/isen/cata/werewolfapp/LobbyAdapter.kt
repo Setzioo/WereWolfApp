@@ -1,6 +1,5 @@
 package fr.isen.cata.werewolfapp
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -12,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -104,7 +102,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
         })
     }
     fun buttonEffect(button: View) {
-        var color = Color.parseColor("#228B22")
+        val color = Color.parseColor("#228B22")
         button.setOnTouchListener { v, event ->
 
             when (event.action) {
@@ -122,7 +120,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>): RecyclerView.Ad
         }
     }
     fun buttonEffectWrong(button: View) {
-        var color = Color.parseColor("#DB1702")
+        val color = Color.parseColor("#DB1702")
         button.setOnTouchListener { v, event ->
 
             when (event.action) {

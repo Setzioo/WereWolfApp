@@ -1,6 +1,5 @@
 package fr.isen.cata.werewolfapp
 
-import android.graphics.Color
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -30,7 +29,8 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
         getPlayerAvatar(holder, players[position]!!)
         holder.pseudo.text = players[position]!!.pseudo
         val nbVotesString = players[position]!!.nbVotesLoup.toString()
-        holder.nbVotes.text = "$nbVotesString votes"
+        val votesString = "$nbVotesString votes"
+        holder.nbVotes.text = votesString
 
         holder.card.setOnClickListener {
             val id = players[position]!!.id
@@ -52,7 +52,8 @@ class LoupAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
                         val tempPlayer = i.getValue(PlayerModel::class.java)
                         if (tempPlayer!!.id == players[position]!!.id) {
                             val nbVotesString = tempPlayer.nbVotesLoup.toString()
-                            holder.nbVotes.text = "$nbVotesString votes"
+                            val votesString = "$nbVotesString votes"
+                            holder.nbVotes.text = votesString
                         }
                     }
                 }

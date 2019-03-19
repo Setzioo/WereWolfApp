@@ -1,7 +1,5 @@
 package fr.isen.cata.werewolfapp
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -11,10 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_vision.*
 import kotlinx.android.synthetic.main.fragment_voyante.*
 
 

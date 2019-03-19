@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -85,7 +84,7 @@ class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapt
 
                 if (dataSnapshot.exists()) {
 
-                    val list = dataSnapshot.value as ArrayList<String>
+                    val list = dataSnapshot.getValue(ArrayList<String>().javaClass)!!
 
 
 
@@ -93,7 +92,7 @@ class PlayerAdapter(private val players: ArrayList<String?>): RecyclerView.Adapt
 
                     Log.d("ABC", idToRemove)
 
-                    mDatabase.child("Lobby").child(gameName!!).child("listPlayer").setValue(list)
+                    mDatabase.child("Lobby").child(gameName).child("listPlayer").setValue(list)
                     mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
 
                 }

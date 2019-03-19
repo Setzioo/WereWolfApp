@@ -1,7 +1,5 @@
 package fr.isen.cata.werewolfapp
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -15,7 +13,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_chasseur.*
-import kotlinx.android.synthetic.main.fragment_voyante.*
 
 
 class ChasseurFragment : Fragment() {

@@ -3,8 +3,8 @@ package fr.isen.cata.werewolfapp
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -75,7 +75,7 @@ class SignUpActivity : AppCompatActivity() {
         mDatabase.child("Users").child(userId).setValue(userTest)
     }
     fun buttonEffect(button: View) {
-        var color = Color.parseColor("#514e4e")
+        val color = Color.parseColor("#514e4e")
         button.setOnTouchListener { v, event ->
 
             when (event.action) {

@@ -1,8 +1,6 @@
 package fr.isen.cata.werewolfapp
 
 import android.animation.ValueAnimator
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -11,11 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.VideoView
-import kotlinx.android.synthetic.main.activity_launcher.*
 import kotlinx.android.synthetic.main.fragment_video.*
-import java.io.FileDescriptor
-import java.io.PrintWriter
 
 
 class VideoFragment : Fragment() {
@@ -29,14 +23,16 @@ class VideoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_video, container, false)
-        animateLaunchText()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val path = "android.resource://" + activity?.packageName + "/" + R.raw.coutdown
+        animateLaunchText()
 /*
+        val path = "android.resource://" + activity?.packageName + "/" + R.raw.coutdown
+
         videoView.setVideoURI(Uri.parse(path))
         videoView.start()
         videoView.setOnCompletionListener {
@@ -46,11 +42,13 @@ class VideoFragment : Fragment() {
         object : CountDownTimer(compteurMax*1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                compteur.text = "" + (millisUntilFinished / 1000+1)
+                val timeLeft = "" + (millisUntilFinished / 1000+1)
+                compteur.text = timeLeft
             }
 
             override fun onFinish() {
-                compteur.text = "GO"
+                val goText = "GO"
+                compteur.text = goText
             }
         }.start()
         animateLaunchText()

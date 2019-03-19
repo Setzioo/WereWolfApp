@@ -8,10 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_loup.*
 import kotlinx.android.synthetic.main.fragment_vision.*
 
 class VisionFragment : Fragment() {
@@ -38,7 +36,7 @@ class VisionFragment : Fragment() {
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
         auth = FirebaseAuth.getInstance()
         val id: String = auth.currentUser!!.uid
-        var onePlayerSelected: Boolean = false
+        var onePlayerSelected = false
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -70,7 +68,8 @@ class VisionFragment : Fragment() {
                                 if(user.selected){
                                     selectedPlayer = user
                                     selectedPlayerPseudo.text = selectedPlayer!!.pseudo
-                                    messageText.text = "est"
+                                    val estText = "est"
+                                    messageText.text = estText
                                     selectedPlayerRole.text = selectedPlayer!!.role
                                     changeCardImage(selectedPlayer!!.role)
                                     mDatabase.child("Users").child(selectedPlayer!!.id).child("selected").setValue(false)
@@ -82,7 +81,8 @@ class VisionFragment : Fragment() {
                     }
                 }
                 if(!onePlayerSelected) {
-                    messageText.text = "Trop tard ! Vous avez pris trop de temps pour choisir!    Rendormez-vous!"
+                    val tooMuchTimeText = "Trop tard ! Vous avez pris trop de temps pour choisir!    Rendormez-vous!"
+                    messageText.text = tooMuchTimeText
                     beginCompteur(5)
                 }
             }

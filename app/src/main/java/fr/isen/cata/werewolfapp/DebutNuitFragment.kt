@@ -8,7 +8,6 @@ import android.view.ViewGroup
 
 
 class DebutNuitFragment : Fragment() {
-    private val context=this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

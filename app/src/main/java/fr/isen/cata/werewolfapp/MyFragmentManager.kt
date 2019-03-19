@@ -4,10 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v7.app.AppCompatActivity
 
 class MyFragmentManager {
@@ -87,19 +84,18 @@ class MyFragmentManager {
     fun SorciereFragment(context: Context, deathPotion : Boolean, lifePotion : Boolean){
         val fragment: Fragment?
 
-        fun DebutNuitFragment(context: Context) {
-            val fragment: Fragment?
-
-            fragment = DebutNuitFragment.newInstance()
-            (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, fragment)
-                .commit()
-        }
-
         fragment = SorciereFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
             .commitAllowingStateLoss()
+    }
+    fun DebutNuitFragment(context: Context) {
+        val fragment: Fragment?
+
+        fragment = DebutNuitFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commit()
     }
     fun PipoteurFragment(context: Context){
         val fragment: Fragment?

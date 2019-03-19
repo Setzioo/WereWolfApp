@@ -103,7 +103,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     fun buttonEffect(button: View) {
-        var color = Color.parseColor("#514e4e")
+        val color = Color.parseColor("#514e4e")
         button.setOnTouchListener { v, event ->
 
             when (event.action) {
