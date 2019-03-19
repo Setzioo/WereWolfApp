@@ -268,7 +268,7 @@ class GameActivity : AppCompatActivity() {
                 lowerFlagVote()
             }
 
-            //Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
+            Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
             if (currentPlayer!!.state) {//Si vivant
                 //Log.e("FUN", "Alive")
                 if (cupidon) {//Si cupidon alors voyante
