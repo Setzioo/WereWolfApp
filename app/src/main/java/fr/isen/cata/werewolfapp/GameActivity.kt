@@ -575,7 +575,7 @@ class GameActivity : AppCompatActivity() {
                     aliveId?.add(player!!.id)
                 }
             }
-            printDeadTurn()
+            //printDeadTurn()
 
 
         }

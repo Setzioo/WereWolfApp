@@ -1,6 +1,8 @@
 package fr.isen.cata.werewolfapp
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_chasseur.*
 import kotlinx.android.synthetic.main.fragment_print_dead.*
 
 class PrintDeadFragment : Fragment() {
