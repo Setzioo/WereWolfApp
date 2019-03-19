@@ -32,8 +32,8 @@ class VoteJourFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mDatabase = FirebaseDatabase.getInstance().reference
-        Log.e("FUN", "LOUP")
-        Toast.makeText(context, "Loups", Toast.LENGTH_LONG).show()
+        Log.e("FUN", "Vote Jour")
+        Toast.makeText(context, "Vote Jour", Toast.LENGTH_LONG).show()
 
         voteRecyclerView.layoutManager = GridLayoutManager(context!!,2)
 
@@ -58,17 +58,83 @@ class VoteJourFragment : Fragment() {
                 jourTiming.text = "0"
                 Handler().postDelayed({
                     Log.e("VOTE JOUR","findu vote")
+                    endOfVote()
                 },1500)
             }
         }.start()
 
 
-
-
-
     }
 
+    private fun endOfVote() {
 
+        val mUserReference = FirebaseDatabase.getInstance().getReference("")
+        auth = FirebaseAuth.getInstance()
+        val id: String = auth.currentUser!!.uid
+
+        var idToKill = ""
+        var equality = false
+        var nbVotesMax = 0
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val users: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.child("Users").children) {
+                        users.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in users) {
+                        if (i?.id == id) {
+                            currentPlayer = i
+                            gameName = currentPlayer!!.currentGame!!
+                        }
+                    }
+                }
+                if (dataSnapshot.exists()) {
+                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                    if(game!=null){
+                        if(game!!.listPlayer != null){
+                            listId = game!!.listPlayer
+                        }
+                    }
+                }
+                if (listId != null) {
+                    for(i in listId!!){
+                        for(u in dataSnapshot.child("Users").children){
+                            val user = u.getValue(PlayerModel::class.java)
+                            if(i == user!!.id){
+                                if(user.nbVotesJour > nbVotesMax)
+                                {
+                                    nbVotesMax = user.nbVotesJour
+                                    equality = false
+                                    idToKill = user.id
+                                }
+                                else if (user.nbVotesJour == nbVotesMax)
+                                {
+                                    equality = true
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(!equality)
+                {
+                    mUserReference.child(idToKill).child("state").setValue(false)
+                }
+
+                mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(true)
+
+                val manager = MyFragmentManager()
+                manager.DayFragment(context!!)
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
 
 
     private fun getPeople(players: ArrayList<PlayerModel?>) {
@@ -128,7 +194,7 @@ class VoteJourFragment : Fragment() {
                 if (dataSnapshot.exists()) {
                     for (i in dataSnapshot.children) {
                         val tempPlayer = i.getValue(PlayerModel::class.java)
-                        mDatabase.child("Users").child(tempPlayer!!.id).child("nbVotesLoup").setValue(0)
+                        mDatabase.child("Users").child(tempPlayer!!.id).child("nbVotesJour").setValue(0)
                     }
                 }
             }

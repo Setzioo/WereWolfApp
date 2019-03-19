@@ -125,4 +125,12 @@ class MyFragmentManager {
             .replace(R.id.fragment, fragment)
             .commitAllowingStateLoss()
     }
+    fun DayFragment(context: Context){
+        val fragment: Fragment?
+
+        fragment = DayFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
 }

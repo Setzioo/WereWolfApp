@@ -1,6 +1,5 @@
 package fr.isen.cata.werewolfapp
 
-import android.graphics.Color
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -30,7 +29,8 @@ class JourAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
         getPlayerAvatar(holder, players[position]!!)
         holder.pseudo.text = players[position]!!.pseudo
         val nbVotesString = players[position]!!.nbVotesJour.toString()
-        holder.nbVotes.text = "$nbVotesString votes"
+        val votesString = "$nbVotesString votes"
+        holder.nbVotes.text = votesString
 
         holder.card.setOnClickListener {
             val id = players[position]!!.id
@@ -52,7 +52,8 @@ class JourAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
                         val tempPlayer = i.getValue(PlayerModel::class.java)
                         if (tempPlayer!!.id == players[position]!!.id) {
                             val nbVotesString = tempPlayer.nbVotesJour.toString()
-                            holder.nbVotes.text = "$nbVotesString votes"
+                            val votesString = "$nbVotesString votes"
+                            holder.nbVotes.text = votesString
                         }
                     }
                 }
@@ -129,35 +130,6 @@ class JourAdapter(private val players: ArrayList<PlayerModel?>): RecyclerView.Ad
             // Handle any errors
         }
     }
-
-    /*
-    private fun idIntoPlayerModel(idPlayer: String, holder: LoupAdapter.ViewHolder) {
-
-        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
-
-        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: MutableList<PlayerModel?> = arrayListOf()
-                if (dataSnapshot.exists()) {
-                    user.clear()
-                    for (i in dataSnapshot.children) {
-                        user.add(i.getValue(PlayerModel::class.java))
-                    }
-                    for (i in user) {
-                        if (i?.id ==idPlayer) {
-                            playerInModel = i
-                            getPlayerAvatar(holder, playerInModel!!)
-                            holder.pseudo.text = playerInModel!!.pseudo
-                        }
-                    }
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-            }
-        })
-    }
-    */
 
 }
 
