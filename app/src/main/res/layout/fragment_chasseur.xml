@@ -5,7 +5,7 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              tools:context=".ChasseurFragment"
-                                             android:background="@drawable/background3">
+                                             android:background="@drawable/background_chasseur_motif">
     <TextView
             android:text="@string/_10"
             android:layout_width="62dp"
