@@ -1,8 +1,11 @@
 package fr.isen.cata.werewolfapp
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -26,42 +29,60 @@ class SignUpActivity : AppCompatActivity() {
         var email: String
         var password: String
 
+        val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnected == true
+
         auth = FirebaseAuth.getInstance()
 
         signButton.setOnClickListener {
 
-            email = emailContainerUp.text.toString()
-            password = passwordContainerUp.text.toString()
-            if (email != "" && password != "") {
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, start HomeActivity
-                            Log.d("TAG", "createUserWithEmail:success")
+            if(isConnected)
+            {
+                email = emailContainerUp.text.toString()
+                password = passwordContainerUp.text.toString()
+                if (email != "" && password != "") {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                // Sign in success, start HomeActivity
+                                Log.d("TAG", "createUserWithEmail:success")
 
-                            val id: String = auth.currentUser!!.uid
-                            createUser(id)
+                                val id: String = auth.currentUser!!.uid
+                                createUser(id)
 
-                            val intent = Intent(this, HomeActivity::class.java)
-                            startActivity(intent)
+                                val intent = Intent(this, HomeActivity::class.java)
+                                startActivity(intent)
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("TAG", "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                baseContext, "Authentication failed.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("TAG", "createUserWithEmail:failure", task.exception)
+                                Toast.makeText(
+                                    baseContext, "Authentication failed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
+                            }
                         }
-                    }
-            } else {
-                // If sign in fails, display a message to the user.
-                Toast.makeText(
-                    baseContext, "Authentication failed",
-                    Toast.LENGTH_SHORT
-                ).show()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Toast.makeText(
+                        baseContext, "Authentication failed",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
+            else
+            {
+                Toast.makeText(
+                    this,
+                    "Vous n'avez pas de connexion",
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+            }
+
+
         }
 
     }

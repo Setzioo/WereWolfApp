@@ -67,7 +67,7 @@ class GameActivity : AppCompatActivity() {
 
 
 
-        manager.SorciereVieFragment(context)
+        manager.BeginningFragment(context)
 
         getPlayerInfo()
 

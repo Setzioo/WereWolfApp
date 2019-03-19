@@ -1,9 +1,12 @@
 package fr.isen.cata.werewolfapp
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -24,6 +27,12 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+
+        val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnected == true
+
+
         rememberMeCheckBox.isChecked = true
         buttonEffect(loginButton)
         loginPrefs = this.getSharedPreferences(loginFilename, 0)
@@ -36,7 +45,6 @@ class SignInActivity : AppCompatActivity() {
         }
 
 
-
         var email: String
         var password: String
 
@@ -44,24 +52,40 @@ class SignInActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener {
 
-            email = emailContainerIn.text.toString()
-            password = passwordContainerIn.text.toString()
+            if (isConnected) {
+                email = emailContainerIn.text.toString()
+                password = passwordContainerIn.text.toString()
 
-            if (email != "" && password != "") {
+                if (email != "" && password != "") {
 
-                val editor = loginPrefs!!.edit()
+                    val editor = loginPrefs!!.edit()
 
-                if (rememberMeCheckBox.isChecked) {
-                    saveLoginPreferences(email, password, editor)
+                    if (rememberMeCheckBox.isChecked) {
+                        saveLoginPreferences(email, password, editor)
+                    } else {
+                        clearLoginPreferences(editor)
+                    }
+
+                    logIn(email, password)
                 } else {
-                    clearLoginPreferences(editor)
+                    Toast.makeText(
+                        this,
+                        "Veuillez entrer un email valide et un mot de passe non vide",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
                 }
-
-                logIn(email, password)
-            } else {
-                Toast.makeText(this, "Veuillez entrer un email valide et un mot de passe non vide", Toast.LENGTH_LONG)
+            }
+            else{
+                Toast.makeText(
+                    this,
+                    "Vous n'avez pas de connexion",
+                    Toast.LENGTH_LONG
+                )
                     .show()
             }
+
+
         }
     }
 
