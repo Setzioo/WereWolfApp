@@ -329,10 +329,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun playDay(){
-        if(game!!.Flags!!.ChasseurFlag && !game!!.FinishFlags!!.ChasseurFlag){
+        /*if(game!!.Flags!!.ChasseurFlag && !game!!.FinishFlags!!.ChasseurFlag){
             checkDead()
-        }
-        else if(!game!!.Flags!!.DeadFlag && !game!!.Flags!!.VoteFlag){
+        }*/
+        if(!game!!.Flags!!.DeadFlag && !game!!.Flags!!.VoteFlag){
             raiseFlagDead()
         }
         else if(game!!.FinishFlags!!.VoteFlag && !game!!.Flags!!.DeadFlag ){
@@ -488,7 +488,6 @@ class GameActivity : AppCompatActivity() {
 
     private fun listenForFlags(dataSnapshot: DataSnapshot){
         val flags : FlagModel? = dataSnapshot.getValue(FlagModel::class.java)
-        game!!.Flags = flags
         if(!game!!.endGame){
             if(flags!!.DeadFlag){
                     checkDead()
@@ -552,7 +551,7 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
             }
-            Log.d("FUN", "c'est la Fin ?")
+
             if (deadPlayers != null && deadPlayers.size != 0){
                 if(nbTour == 1 && isAnge() && game!!.Flags!!.VoteFlag){
                     for(player in deadPlayers){
@@ -582,15 +581,16 @@ class GameActivity : AppCompatActivity() {
 
 
         }
-        if(alivePlayers != null){
+        /*if(alivePlayers != null){
             if(isItTheEnd(didAngeWin) != 0){
                 Log.e("FUN", "FIN DE LA PARTIE : "+ isItTheEnd(didAngeWin))
                 mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
                 mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
                 manager.FinJeuFragment(context)
 
-            }
-        }
+            }*/
+
+
 
         lowerFlagDead()
         if(isHunterDead){
@@ -600,7 +600,7 @@ class GameActivity : AppCompatActivity() {
             }
             else{
                 if(!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && game!!.FinishFlags!!.ChasseurFlag){
-                    //Log.e("FUN", "Heure du vote")
+                    Log.e("FUN", "Heure du vote")
                     raiseFlagVote()
                 }
                 else{
@@ -613,6 +613,7 @@ class GameActivity : AppCompatActivity() {
             }
         }
         else{
+            Log.e("FUN", "vote : "+game!!.Flags!!.VoteFlag+", dead : "+game!!.Flags!!.DeadFlag+", Tour : "+nbTour)
             if(!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag){
                 Log.e("FUN", "Heure du vote")
                 raiseFlagVote()
