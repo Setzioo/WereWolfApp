@@ -13,4 +13,6 @@ class FlagModel{
     var LowerFlag : Boolean = false
     var LoverFlag : Boolean = false
     var PipotedFlag : Boolean = false
+    var PrintFlag : Boolean = false
+
 }
