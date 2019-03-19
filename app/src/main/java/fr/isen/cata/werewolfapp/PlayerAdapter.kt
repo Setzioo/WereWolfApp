@@ -1,11 +1,13 @@
 package fr.isen.cata.werewolfapp
 
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -15,16 +17,23 @@ class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adap
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
+    private var currentLobby: LobbyModel? = null
+    private var masterPlayerId: String? = null
+    private var gameName: String? = null
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
         //holder.pseudo.text = players[position]!!
         idIntoName(players[position]!!, holder)
+
+        getCurrentGame(holder, position)
+
         holder.kickButton.setOnClickListener {
 
             changeDatabase(players[position]!!)
             players.removeAt(position)
             notifyDataSetChanged()
+
         }
     }
 
@@ -40,6 +49,53 @@ class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adap
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var pseudo: TextView = itemView.findViewById(R.id.lobbyPseudoText)
         var kickButton: Button = itemView.findViewById(R.id.kickButton)
+        var masterImage: ImageView = itemView.findViewById(R.id.imageMaster)
+    }
+
+    private fun getCurrentGame(holder: PlayerAdapter.ViewHolder, position: Int) {
+
+        var mUserReference = FirebaseDatabase.getInstance().getReference("")
+        val id: String = auth.currentUser!!.uid
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val users: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    Log.e("FUN", "test 2")
+                    for (i in dataSnapshot.child("Users").children) {
+                        users.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in users) {
+                        if (i?.id == id) {
+                            currentPlayer = i
+                            gameName = currentPlayer!!.currentGame!!
+                            Log.e("FUN", currentPlayer!!.id)
+                        }
+                    }
+                }
+                if (dataSnapshot.exists()) {
+                    Log.e("FUN", "test 3")
+                    currentLobby = dataSnapshot.child("Lobby").child(gameName!!).getValue(LobbyModel::class.java)
+                    masterPlayerId = currentLobby!!.masterId
+                    Log.e("FUN", masterPlayerId)
+                    if(players[position] == masterPlayerId) {
+                        holder.kickButton.setTextColor(Color.WHITE)
+                        holder.kickButton.setBackgroundResource(R.drawable.buttonshapelocked)
+                        holder.kickButton.isEnabled = false
+                        holder.masterImage.setImageResource(R.drawable.wolf_moon)
+                    }
+                    if(id != masterPlayerId){
+                        holder.kickButton.setTextColor(Color.WHITE)
+                        holder.kickButton.setBackgroundResource(R.drawable.buttonshapelocked)
+                        holder.kickButton.isEnabled = false
+                    }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+
     }
 
     private fun changeDatabase(idToRemove: String) {
@@ -58,9 +114,7 @@ class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adap
                     for (i in user) {
                         if (i?.id == id) {
                             currentPlayer = i
-
                             updateList(idToRemove)
-
                         }
                     }
                 }
@@ -124,7 +178,6 @@ class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adap
                     }
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
