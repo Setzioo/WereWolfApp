@@ -74,7 +74,7 @@ class LoupFragment : Fragment() {
 
     private fun endOfWolfiesTurn() {
 
-        val mUserReference = FirebaseDatabase.getInstance().getReference("")
+        val mDatabaseReference = FirebaseDatabase.getInstance().getReference("")
         auth = FirebaseAuth.getInstance()
         val id: String = auth.currentUser!!.uid
 
@@ -82,7 +82,7 @@ class LoupFragment : Fragment() {
         var equality = false
         var nbVotesMax = 0
 
-        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+        mDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val users: MutableList<PlayerModel?> = arrayListOf()
                 if (dataSnapshot.exists()) {
@@ -122,7 +122,7 @@ class LoupFragment : Fragment() {
                 }
 
                 if (!equality) {
-                    mUserReference.child(idToKill).child("state").setValue(false)
+                    mDatabaseReference.child(idToKill).child("Users").child("state").setValue(false)
                     mDatabase.child("Party").child(gameName).child("wolfKill").setValue(idToKill)
                 }
                 else
