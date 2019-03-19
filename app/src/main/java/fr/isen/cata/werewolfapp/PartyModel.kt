@@ -14,10 +14,11 @@ class PartyModel(
     var startGame: Boolean = _startGame
     var Flags: Flagmodel? = null
     var FinishFlags: Flagmodel? = null
-    var deathPotion: Boolean = false
-    var lifePotion: Boolean = false
+    var deathPotion: Boolean = true
+    var lifePotion: Boolean = true
     var voteResult: String = ""//id of the dead
     var listAlive: MutableList<String>? = _listPlayer
     var nightGame: Boolean = false
     var endGame: Boolean = false
+    var wolfKill: String = ""
 }

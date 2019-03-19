@@ -53,10 +53,10 @@ class GameActivity : AppCompatActivity() {
         //getParty()
         //getPlayers()
 
-        manager.BeginningFragment(context)
+        manager.SorciereVieFragment(context)
         nbTour = 1
 
-        getPlayerInfo()
+        //getPlayerInfo()
 
 
     }
@@ -321,7 +321,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun sorciereTurn() {
         if (currentRole == "Sorciere") {
-            manager.SorciereVieFragment(context, game!!.deathPotion, game!!.lifePotion)
+            manager.SorciereVieFragment(context)
         }
     }
 
