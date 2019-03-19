@@ -102,5 +102,4 @@ class ChasseurAdapter(private val players: ArrayList<PlayerModel?>) :
             }
         })
     }
-
 }
