@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.layout_character.*
 
 
 class CharacterFragment : Fragment() {
-private val context=this
+    private val context=this
     private lateinit var mDatabase: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
@@ -47,10 +47,6 @@ private val context=this
 
 
     }
-
-
-
-
 
     private fun animateCards() {
         val valueAnimator = ValueAnimator.ofFloat(0f, 720f)
@@ -87,7 +83,7 @@ private val context=this
 
     private fun getCurrentPlayer() {
 
-        //val id: String = auth.currentUser!!.uid
+        val id: String = auth.currentUser!!.uid
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
 
@@ -99,11 +95,7 @@ private val context=this
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
-                        /*if (i?.id == id) {
-                            currentPlayer = i
-                            gameName = currentPlayer!!.currentGame!!
-                        }*/
-                        if(i!!.id=="f5lJpGohtZhC4ZygEGK4sywc3yz1"){
+                        if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
                         }
