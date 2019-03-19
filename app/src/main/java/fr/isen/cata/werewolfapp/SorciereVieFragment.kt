@@ -3,6 +3,8 @@ package fr.isen.cata.werewolfapp
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +17,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_sorciere_vie.*
+import kotlinx.android.synthetic.main.fragment_video.*
 
 
 class SorciereVieFragment : Fragment() {
@@ -28,6 +31,9 @@ class SorciereVieFragment : Fragment() {
     var wolfKill = ""
     var deadPlayer: PlayerModel? = null
     var lifePotion = false
+    private var compteur : CountDownTimer? = null
+    val compteurMax: Long = 10
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,8 +49,26 @@ class SorciereVieFragment : Fragment() {
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
-
         getLifePotion()
+
+        compteur = object : CountDownTimer(compteurMax * 1000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val timeLeft = "" + (millisUntilFinished / 1000 + 1)
+                sorciereVieCompteur.text = timeLeft
+            }
+
+            override fun onFinish() {
+                val goText = "0"
+                sorciereVieCompteur.text = goText
+                Handler().postDelayed({
+                    val manager = MyFragmentManager()
+                    manager.SorciereMortFragment(context!!)
+                }, 1000)
+            }
+        }.start()
+
+
 
 
 
@@ -113,6 +137,11 @@ class SorciereVieFragment : Fragment() {
     }
 
     private fun goToDeathPotion() {
+        if(compteur!=null)
+        {
+            compteur!!.cancel()
+
+        }
         val manager = MyFragmentManager()
         manager.SorciereMortFragment(context!!)
     }
