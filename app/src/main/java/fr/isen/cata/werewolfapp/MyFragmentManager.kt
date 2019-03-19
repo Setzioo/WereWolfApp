@@ -145,4 +145,13 @@ class MyFragmentManager {
             .replace(R.id.fragment, fragment)
             .commitAllowingStateLoss()
     }
+
+    fun PipotedFragment(context: Context) {
+        val fragment: Fragment?
+
+        fragment = PipotedFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
 }

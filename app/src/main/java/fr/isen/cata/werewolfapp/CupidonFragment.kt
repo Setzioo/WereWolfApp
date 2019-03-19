@@ -128,10 +128,10 @@ class CupidonFragment : Fragment() {
             ).show()
         } else if (adapter.victimPlayer != null) {
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
-            Toast.makeText(context, "Qu'un seul joueur a était selectionné...", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Qu'un seul joueur a été selectionné...", Toast.LENGTH_LONG).show()
         } else if (adapter.victimPlayer2 != null) {
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
-            Toast.makeText(context, "Qu'un seul joueur a était selectionné...", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Qu'un seul joueur a été selectionné...", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(context, "Aucun joueur selectionné", Toast.LENGTH_LONG).show()
         }
