@@ -136,4 +136,13 @@ class MyFragmentManager {
             .replace(R.id.fragment, fragment)
             .commitAllowingStateLoss()
     }
+
+    fun LoveFragment(context: Context) {
+        val fragment: Fragment?
+
+        fragment = LoveFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
 }
