@@ -30,6 +30,7 @@ class PrintDeadFragment : Fragment() {
         Log.e("FUN", "Affichage des morts")
         Log.e("LANCE", "Print dead")
 
+
         mDatabase = FirebaseDatabase.getInstance().reference
 
         deadRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
@@ -41,7 +42,6 @@ class PrintDeadFragment : Fragment() {
 
         getDeadPlayers(players)
 
-        Thread.sleep(10000)
     }
 
     private fun getDeadPlayers(players: ArrayList<PlayerModel?>) {
@@ -85,6 +85,9 @@ class PrintDeadFragment : Fragment() {
                         }
                     }
                 }
+                Thread.sleep(6000)
+
+                mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(true)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

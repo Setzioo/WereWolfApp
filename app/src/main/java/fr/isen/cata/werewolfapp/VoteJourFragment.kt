@@ -126,8 +126,8 @@ class VoteJourFragment : Fragment() {
 
                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(true)
 
-                val manager = MyFragmentManager()
-                manager.DayFragment(context!!)
+                /*val manager = MyFragmentManager()
+                manager.DayFragment(context!!)*/
 
             }
 
