@@ -72,7 +72,7 @@ class LobbyActivity : AppCompatActivity() {
                                         if (dataSnapshot.exists()) {
 
                                             val list =
-                                                dataSnapshot.child("listPlayer").getValue(ArrayList<String>().javaClass)
+                                                dataSnapshot.child("listPlayer").getValue(object : GenericTypeIndicator<ArrayList<String>>() {})
 
                                             removeIdFromLobby(currentPlayer!!, list!!, gameName)
                                         }

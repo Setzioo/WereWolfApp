@@ -6,7 +6,7 @@
                                              tools:context=".VideoFragment"
                                              android:background="@drawable/background3">
     <TextView
-            android:text="1"
+            android:text="@string/_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/compteur" app:layout_constraintStart_toStartOf="parent"

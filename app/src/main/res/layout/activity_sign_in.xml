@@ -61,7 +61,7 @@
             app:layout_constraintVertical_bias="0.0" android:scaleType="fitCenter"
             android:contentDescription="@string/bouton_retour"/>
     <CheckBox
-            android:text="Se souvenir de moi"
+            android:text="@string/se_souvenir_de_moi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rememberMeCheckBox"

@@ -23,7 +23,6 @@
     <string name="hello_blank_fragment">yoh</string>
     <string name="touchez_pour_commencer">Touchez pour commencer</string>
     <string name="close_your_eyes">Close Your Eyes</string>
-    <string name="pseudo">Pseudo</string>
     <string name="sauvegarder">Sauvegarder</string>
     <string name="tirer">Tirer</string>
     <string name="observer">Observer</string>
@@ -32,4 +31,14 @@
         • Pour les Loups-garous : éliminer les Villageois
     </string>
     <string name="selectionnez_un_joueur">Selectionnez un joueur</string>
+    <string name="cr_er">Créer</string>
+    <string name="se_souvenir_de_moi">Se souvenir de moi</string>
+    <string name="r_gles">Règles</string>
+    <string name="le_gagnant_n_est">Le gagnant est ...</string>
+    <string name="coucou">coucou</string>
+    <string name="_10">10</string>
+    <string name="nom_de_la_carte">nom de la carte</string>
+    <string name="votre_carte_n_est">Votre carte est ...</string>
+    <string name="textview">TextView</string>
+    <string name="pseudo">Pseudo</string>
 </resources>

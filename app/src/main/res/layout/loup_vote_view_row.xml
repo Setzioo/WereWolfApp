@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="TextView"
+                    android:text="@string/textview"
                     android:textSize="18sp"
                     android:textStyle="italic|bold"
                     android:layout_marginTop="8dp"
@@ -45,7 +45,7 @@
                     app:layout_constraintStart_toStartOf="@+id/avatarPlayerLoup" android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="@+id/avatarPlayerLoup"/>
             <TextView
-                    android:text="TextView"
+                    android:text="@string/textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/nbVotesLoup"
                     app:layout_constraintTop_toBottomOf="@+id/pseudoPlayerLoup"

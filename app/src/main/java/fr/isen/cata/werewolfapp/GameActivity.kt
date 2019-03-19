@@ -478,8 +478,8 @@ class GameActivity : AppCompatActivity() {
             }
         }
         if (deadPlayers != null) {
-            for (i in deadPlayers!!) {
-                Log.d("FUN", "dead : " + i!!.id)
+            for (i in deadPlayers) {
+                Log.d("FUN", "dead : " + i.id)
             }
         } else {
             Log.d("FUN", "no dead")

@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
 
@@ -85,11 +82,11 @@ class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adap
 
                     if (dataSnapshot.exists()) {
 
-                        val list = dataSnapshot.getValue(ArrayList<String>().javaClass)!!
+                        val list = dataSnapshot.getValue(object : GenericTypeIndicator<ArrayList<String>>() {})
 
 
 
-                        list.remove(idToRemove)
+                        list!!.remove(idToRemove)
 
                         Log.d("ABC", idToRemove)
 

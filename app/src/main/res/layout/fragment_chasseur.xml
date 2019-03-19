@@ -7,7 +7,7 @@
                                              tools:context=".ChasseurFragment"
                                              android:background="@drawable/background3">
     <TextView
-            android:text="10"
+            android:text="@string/_10"
             android:layout_width="62dp"
             android:layout_height="53dp"
             android:id="@+id/chasseurTimer" android:textSize="36sp"

@@ -20,7 +20,7 @@
                 <TextView
                         android:layout_width="424dp"
                         android:layout_height="66dp" android:id="@+id/rules_title" android:textStyle="bold"
-                        android:text="Règles" android:textSize="36sp" android:textColor="@color/blanc_casse"
+                        android:text="@string/r_gles" android:textSize="36sp" android:textColor="@color/blanc_casse"
                         android:textAlignment="center" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
                         app:layout_constraintBottom_toTopOf="@+id/rules_title_resume"/>
@@ -43,7 +43,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/rules_role_loup" android:layout_marginBottom="32dp"
                         android:textStyle="bold"/>
                 <TextView
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/rules_role_loup"
                         android:textColor="@color/blanc_casse" android:textSize="18sp" android:textAlignment="center"
@@ -53,7 +53,7 @@
                         android:layout_marginBottom="24dp"
                         app:layout_constraintHorizontal_bias="0.0"/>
                 <TextView
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/rules_role_vilageois"
                         android:textColor="@color/blanc_casse" android:textSize="18sp" android:textAlignment="center"
@@ -61,7 +61,7 @@
                         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginBottom="24dp"/>
                 <TextView
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/rules_role_cupidon"
                         android:textColor="@color/blanc_casse" android:textSize="18sp" android:textAlignment="center"
@@ -70,7 +70,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/rules_role_chasseur"
                         android:layout_marginBottom="24dp"/>
                 <TextView
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/rules_role_chasseur"
                         android:textColor="@color/blanc_casse" android:textSize="18sp" android:textAlignment="center"
@@ -79,7 +79,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/rules_role_voyante"
                         android:layout_marginBottom="24dp"/>
                 <TextView
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/rules_role_voyante"
                         android:textColor="@color/blanc_casse" android:textSize="18sp" android:textAlignment="center"
@@ -88,7 +88,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/rules_roles_sorciere"
                         app:layout_constraintHorizontal_bias="1.0" android:layout_marginBottom="24dp"/>
                 <TextView
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/rules_roles_sorciere"
                         android:textColor="@color/blanc_casse" android:textSize="18sp" android:textAlignment="center"
@@ -96,7 +96,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toTopOf="@+id/rules_roles_ange" android:layout_marginBottom="24dp"/>
                 <TextView
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/rules_roles_ange"
                         android:textColor="@color/blanc_casse" android:textSize="18sp" android:textAlignment="center"
@@ -105,7 +105,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/rules_roles_pipoteur"
                         android:layout_marginBottom="24dp"/>
                 <TextView
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/rules_roles_pipoteur"
                         android:textColor="@color/blanc_casse" android:textSize="18sp" android:textAlignment="center"
