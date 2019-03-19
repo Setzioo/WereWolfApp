@@ -194,7 +194,6 @@ class GameActivity : AppCompatActivity() {
             lowerFlagVote()
         }
 
-        night()
         //Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
         if(currentPlayer!!.state){//Si vivant
             //Log.e("FUN", "Alive")
@@ -448,6 +447,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun lowerFlagDead(){
+        mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
     }
 
