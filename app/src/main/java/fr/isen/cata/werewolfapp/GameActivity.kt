@@ -41,6 +41,7 @@ class GameActivity : AppCompatActivity() {
     var gameName : String =""
     var game : PartyModel? = null
     var nbTour : Int = 0
+    var didAngeWin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +53,6 @@ class GameActivity : AppCompatActivity() {
 
 
 
-        //getParty()
-        //getPlayers()
 
         manager.CharacterFragment(context)
 
@@ -106,9 +105,9 @@ class GameActivity : AppCompatActivity() {
                 if (listId != null) {
                     for(i in listId!!){
                         for(u in dataSnapshot.child("Users").children){
-                            var user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                listPlayer!!.add(user)
+                            val users = u.getValue(PlayerModel::class.java)
+                            if(i == users!!.id){
+                                listPlayer!!.add(users)
                             }
                         }
                     }
@@ -182,15 +181,6 @@ class GameActivity : AppCompatActivity() {
     private fun isAnge(): Boolean{
         for(player in listPlayer!!){
             if(player!!.role == "Ange"){
-                return true
-            }
-        }
-        return false
-    }
-
-    private fun isChasseur(): Boolean{
-        for(player in listPlayer!!){
-            if(player!!.role == "Chasseur"){
                 return true
             }
         }
@@ -329,7 +319,7 @@ class GameActivity : AppCompatActivity() {
             raiseFlagDead()
         }
 
-        else if(game!!.FinishFlags!!.VoteFlag && !game!!.Flags!!.DeadFlag){
+        else if(game!!.FinishFlags!!.VoteFlag && !game!!.Flags!!.DeadFlag ){
             Log.e("FUN", "check mort du vote")
             checkDeadAfterVote()
 
@@ -370,6 +360,9 @@ class GameActivity : AppCompatActivity() {
     private fun voteTurn(){
             manager.VoteJourFragment(context)
     }
+    private fun printDeadTurn(){
+        manager.PrintDeadFragment(context)
+    }
 
 
     private fun raiseFlagCupidon(){
@@ -396,6 +389,9 @@ class GameActivity : AppCompatActivity() {
     private fun raiseFlagDead(){
         mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(true)
     }
+    private fun raiseFlagPrintDead(){
+        mDatabase.child("Party").child(gameName).child("Flags").child("PrintDeadFlag").setValue(true)
+    }
 
     private fun lowerFlag(){
         mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
@@ -403,12 +399,6 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
-
-
-
-
-
-
 
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
@@ -428,6 +418,12 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
     }
 
+    private fun lowerFlagPrintDead(){
+        mDatabase.child("Party").child(gameName).child("Flags").child("PrintDeadFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintDeadFlag").setValue(false)
+
+    }
+
     private fun gameListener(){
         val mPlayerReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
@@ -435,7 +431,6 @@ class GameActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     getParty()
-
                 }
             }
 
@@ -459,26 +454,34 @@ class GameActivity : AppCompatActivity() {
             }
         })
     }
+
     private fun listenForFlags(dataSnapshot: DataSnapshot){
-        val flags : Flagmodel? = dataSnapshot.getValue(Flagmodel::class.java)
+        val flags : FlagModel? = dataSnapshot.getValue(FlagModel::class.java)
+
         if(!flags!!.LowerFlag){
-            if(flags!!.DeadFlag){
-                checkDead()
+            if(flags.DeadFlag){
+                    checkDead()
             }
             else {
                 if (flags.VoteFlag) {
                     voteTurn()
-                } else if (flags.TourFlag) {
+                }
+                else if (flags.TourFlag) {
                     nbTour++
-                } else if (flags.PipoteurFlag) {
+                }
+                else if (flags.PipoteurFlag) {
                     pipoteurTurn()
-                } else if (flags.SorciereFlag) {
+                }
+                else if (flags.SorciereFlag) {
                     sorciereTurn()
-                } else if (flags.LoupFlag) {
+                }
+                else if (flags.LoupFlag) {
                     loupsTurn()
-                } else if (flags.VoyanteFlag) {
+                }
+                else if (flags.VoyanteFlag) {
                     voyanteTurn()
-                } else if (flags.CupidonFlag) {
+                }
+                else if (flags.CupidonFlag) {
                     cupidonTurn()
                 }
             }
@@ -487,14 +490,12 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun checkDead() {
-        Log.e("FUN", "check des morts")
         var deadPlayers: MutableList<PlayerModel>? = arrayListOf()
         var isLoverDead = false
         var isHunterDead = false
-        var didAngeWin = false
-        //Log.d("FUN", "tour : "+nbTour.toString())
 
         if (alivePlayers != null) {
+            Log.e("FUN", "check des morts")
             for (player in alivePlayers!!) {
 
                 if (!player!!.state) {//si mort
@@ -528,12 +529,9 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
                 Log.d("FUN", "mise à mort")
+
                 alivePlayers!!.removeAll(deadPlayers)
 
-            }
-            if (isHunterDead && !game!!.Flags!!.ChasseurFlag) {
-                Log.d("FUN", "tour du chasseur")
-                manager.ChasseurFragment(context)
             }
             aliveId = arrayListOf()
             if(alivePlayers != null){
@@ -541,19 +539,29 @@ class GameActivity : AppCompatActivity() {
                     aliveId?.add(player!!.id)
                 }
             }
-            lowerFlagDead()
+            printDeadTurn()
+            Handler().postDelayed({
+                if (isHunterDead && !game!!.Flags!!.ChasseurFlag) {
+                    Log.d("FUN", "tour du chasseur")
+                    manager.ChasseurFragment(context)
+                }
+            },10000)
 
 
-        }/*
+
+        }
         if(alivePlayers != null){
             if(isItTheEnd(didAngeWin) != 0){
                 Log.e("FUN", "FIN DE LA PARTIE : "+ isItTheEnd(didAngeWin))
-                manager.FinJeuFragmentFragment(context, isItTheEnd(didAngeWin), alivePlayers!!)
+                mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+                mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
+                manager.FinJeuFragment(context)
+
             }
-        }*/
+        }
 
         lowerFlagDead()
-        if(isHunterDead && !game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && !game!!.FinishFlags!!.ChasseurFlag){
+        if(isHunterDead && !game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && game!!.FinishFlags!!.ChasseurFlag){
             Log.e("FUN", "Heure du vote")
             raiseFlagVote()
         }
@@ -561,13 +569,14 @@ class GameActivity : AppCompatActivity() {
             Log.e("FUN", "Heure du vote sans chasseur")
             raiseFlagVote()
         }
-        else if(game!!.FinishFlags!!.VoteFlag){
+        if(game!!.FinishFlags!!.VoteFlag){
             Log.e("FUN", "Fin de jour, lancement nuit")
+            night()
             mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
         }
+        //lowerFlagPrintDead()
     }
     private fun checkDeadAfterVote(){
-        Log.e("FUN", "mort après vote")
         mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
         var deadPlayer : String? = game!!.voteResult
         if(deadPlayer!=null){
@@ -581,14 +590,12 @@ class GameActivity : AppCompatActivity() {
             getPlayersAfterVote()
         }
 
-        Log.e("FUN", "Fin du vote")
-
 
 
     }
 
     private fun allGame(){
-        Log.d("FUN", "tour : "+nbTour.toString())
+        //Log.d("FUN", "tour : "+nbTour.toString())
         Toast.makeText(context, "role: "+currentPlayer!!.role+", state : "+currentPlayer!!.state.toString(), Toast.LENGTH_LONG).show()
         if(game!!.nightGame){
             playNight()
@@ -610,6 +617,7 @@ class GameActivity : AppCompatActivity() {
                     game = dataSnapshot.getValue(PartyModel::class.java)
                     if(game != null){
                         if(!game!!.endGame){
+                            mDatabase.child("Party").child(gameName).child("startGame").setValue(false)
                             getPlayers()
                         }
                     }
@@ -645,9 +653,9 @@ class GameActivity : AppCompatActivity() {
                     alivePlayers = arrayListOf()
                     for(i in aliveId!!){
                         for(u in dataSnapshot.children){
-                            var user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                alivePlayers!!.add(user)
+                            val users = u.getValue(PlayerModel::class.java)
+                            if(i == users!!.id){
+                                alivePlayers!!.add(users)
                             }
                         }
                     }
@@ -689,9 +697,9 @@ class GameActivity : AppCompatActivity() {
                     alivePlayers = arrayListOf()
                     for(i in aliveId!!){
                         for(u in dataSnapshot.children){
-                            var user = u.getValue(PlayerModel::class.java)
-                            if(i == user!!.id){
-                                alivePlayers!!.add(user)
+                            val users = u.getValue(PlayerModel::class.java)
+                            if(i == users!!.id){
+                                alivePlayers!!.add(users)
                             }
                         }
                     }
@@ -723,7 +731,7 @@ class GameActivity : AppCompatActivity() {
         })
 
     }
-/*
+
     private fun isItTheEnd(angeAlreadyWin : Boolean): Int{
         var codeGame = 0
 
@@ -751,11 +759,9 @@ class GameActivity : AppCompatActivity() {
         }
         if(nbLoup==nbPlayer){
             codeGame = 5
-            mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
         }
         else if(nbVillageois==nbPlayer){
             codeGame = 3
-            mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
         }
         if(pipoteur){
 
@@ -767,7 +773,6 @@ class GameActivity : AppCompatActivity() {
             }
             if(nbPipo == nbPlayer){
                 codeGame = 2
-                mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
             }
         }
         if(amoureux){
@@ -775,7 +780,6 @@ class GameActivity : AppCompatActivity() {
                 for(player in alivePlayers!!){
                     if(player!!.inLove){
                         codeGame = 1
-                        mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
 
                     }
                 }
@@ -785,6 +789,6 @@ class GameActivity : AppCompatActivity() {
             codeGame = 4
         }
         return codeGame
-    }*/
+    }
 }
 

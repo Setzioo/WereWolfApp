@@ -116,7 +116,21 @@ class MyFragmentManager {
             .commitAllowingStateLoss()
     }
 
-    fun FinJeuFragmentFragment(context: Context, victoryCode : Int, lastplayer : MutableList<PlayerModel?>){
+    fun FinJeuFragment(context: Context){
+        val fragment: Fragment?
 
+        fragment = FinJeuFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+
+    fun PrintDeadFragment(context: Context){
+        val fragment: Fragment?
+
+        fragment = PrintDeadFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
     }
 }

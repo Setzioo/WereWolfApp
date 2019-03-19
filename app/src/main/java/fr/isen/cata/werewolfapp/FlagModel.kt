@@ -1,6 +1,6 @@
 package fr.isen.cata.werewolfapp
 
-class Flagmodel{
+class FlagModel{
     var LoupFlag : Boolean = false
     var VoyanteFlag : Boolean = false
     var CupidonFlag : Boolean = false
@@ -11,6 +11,7 @@ class Flagmodel{
     var DeadFlag : Boolean = false
     var ChasseurFlag : Boolean = false
     var LowerFlag : Boolean = false
-
+    var PrintDeadFlag : Boolean = false
+    var FinishPrintDeadFlag : Boolean = false
 
 }
