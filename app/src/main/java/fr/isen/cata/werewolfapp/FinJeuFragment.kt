@@ -162,7 +162,6 @@ class FinJeuFragment : Fragment() {
                 backgroundFin.setBackgroundResource(R.drawable.victoire_loup_garou)
             }
         }
-        Thread.sleep(10000)
     }
 
     override fun onCreateView(
