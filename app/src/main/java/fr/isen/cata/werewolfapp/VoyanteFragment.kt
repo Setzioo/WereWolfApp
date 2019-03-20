@@ -51,11 +51,11 @@ class VoyanteFragment : Fragment() {
 
             override fun onTick(millisUntilFinished: Long) {
                 timeLeft = "" + (millisUntilFinished / 1000 + 1).toString()
-                voyanteTimer.text = timeLeft
+                //voyanteTimer.text = timeLeft
             }
 
             override fun onFinish() {
-                voyanteTimer.text = "0"
+                //voyanteTimer.text = "0"
                 Handler().postDelayed({
                     val manager = MyFragmentManager()
                     manager.VisionFragment(context!!)
