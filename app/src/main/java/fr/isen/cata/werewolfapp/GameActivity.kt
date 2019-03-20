@@ -40,6 +40,7 @@ class GameActivity : AppCompatActivity() {
     var gameStarted = false
 
     var listRole: MutableList<String>? = arrayListOf()
+    var listRoleAlive: MutableList<String>? = arrayListOf()
 
     var musicPlayer: MediaPlayer? = null
     var soundPlayer: MediaPlayer? = null
@@ -112,6 +113,7 @@ class GameActivity : AppCompatActivity() {
                     if (nbTour == 0 && listPlayer != null && !game!!.Flags!!.DeadNightFlag) {
                         Log.d("FUN", "init alive")
                         alivePlayers = listPlayer
+
                         Log.e("ALIVE", "size in Info : " + alivePlayers!!.size.toString())
 
                         if (listPlayer != null) {
@@ -793,7 +795,7 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if (listRole!!.contains("Pipoteur")) {
+                        if (listRoleAlive!!.contains("Pipoteur")) {
                             raiseFlagPipoted()
                         } else {
                             if(soundPlayer != null)
@@ -901,15 +903,19 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if(soundPlayer != null)
+                        if (listRoleAlive!!.contains("Sorciere"))
                         {
-                            soundPlayer!!.stop()
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.sorciere_endort)
+                            soundPlayer!!.start()
+                            soundPlayer!!.setOnCompletionListener {
+                                raiseFlagPipoteur()
+                            }
                         }
-                        soundPlayer = MediaPlayer.create(context, R.raw.sorciere_endort)
-                        soundPlayer!!.start()
-                        soundPlayer!!.setOnCompletionListener {
-                            raiseFlagPipoteur()
-                        }
+
                     }
                 }
             }
@@ -938,14 +944,17 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if(soundPlayer != null)
-                        {
-                            soundPlayer!!.stop()
-                        }
-                        soundPlayer = MediaPlayer.create(context, R.raw.voyante_endort)
-                        soundPlayer!!.start()
-                        soundPlayer!!.setOnCompletionListener {
-                            raiseFlagLoups()
+
+                        if (listRoleAlive!!.contains("Sorciere")) {
+
+                            if (soundPlayer != null) {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.voyante_endort)
+                            soundPlayer!!.start()
+                            soundPlayer!!.setOnCompletionListener {
+                                raiseFlagLoups()
+                            }
                         }
                     }
                 }
@@ -1195,6 +1204,7 @@ class GameActivity : AppCompatActivity() {
                             for (u in listPlayer!!) {
                                 if (i == u!!.id) {
                                     alivePlayers!!.add(u)
+                                    listRoleAlive!!.add(u.role!!)
                                 }
                             }
 

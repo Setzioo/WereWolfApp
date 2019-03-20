@@ -35,6 +35,7 @@ class LoupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Log.e("LANCE","Loup")
+        Log.e("LANCE","Loup")
 
 
         mDatabase = FirebaseDatabase.getInstance().reference
