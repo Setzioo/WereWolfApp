@@ -119,8 +119,6 @@ class VisionFragment : Fragment() {
             mDatabase.child("Party").child(currentPlayer!!.currentGame!!).child("FinishFlags").child("VoyanteFlag")
                 .setValue(true)
         }
-        val manager = MyFragmentManager()
-        manager.NightFragment(context!!)
     }
 
     fun changeCardImage(role: String?) {
