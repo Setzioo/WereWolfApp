@@ -991,33 +991,32 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun gameListener() {
-        val mPlayerReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
+        val mPlayerReference = FirebaseDatabase.getInstance().reference
 
         mPlayerReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val tempListPlayer : MutableList<PlayerModel>? = arrayListOf()
+                val listPlayer : MutableList<PlayerModel>? = arrayListOf()
                 if (dataSnapshot.exists()) {
-                    game = dataSnapshot.getValue(PartyModel::class.java)
+                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
 
 
                 }
                 if (listId != null) {
-                    tempListPlayer!!.clear()
+                    listPlayer!!.clear()
                     for (i in listId!!) {
                         for (u in dataSnapshot.child("Users").children) {
                             val users = u.getValue(PlayerModel::class.java)
                             if (i == users!!.id) {
-                                tempListPlayer!!.add(users)
+                                listPlayer!!.add(users)
                             }
                         }
                     }
                     Log.e("ALIVE","size before clear: " + alivePlayers!!.size.toString())
                     Log.e("ALIVE","size aliveId: " + aliveId!!.size.toString())
 
-                    alivePlayers!!.clear()
-                    if (aliveId != null && tempListPlayer != null) {
+                    if (aliveId != null && listPlayer != null) {
                         for (i in aliveId!!) {
-                            for (u in tempListPlayer!!) {
+                            for (u in listPlayer!!) {
                                 if (i == u!!.id) {
                                     alivePlayers!!.add(u)
                                 }
