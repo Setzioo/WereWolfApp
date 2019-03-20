@@ -625,7 +625,7 @@ class LobbyActivity : AppCompatActivity() {
                 Sorciere(deathPotion = true, lifePotion = true),
                 Pipoteur()
             )
-            else -> arrayListOf(LoupGarou(), Villageois())
+            else -> arrayListOf(LoupGarou(), Villageois(), Voyante())
         }
         list.shuffle()
         return list
