@@ -125,6 +125,8 @@ class GameActivityTest : AppCompatActivity() {
                 setOnlyFlagListener()
                 setOnlyFinishFlagListener()
 
+
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -281,6 +283,13 @@ class GameActivityTest : AppCompatActivity() {
         mPartyReference.child("VoyanteFlag").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    if(game!!.nightGame)
+                    {
+                        if (listRole!!.contains("Voyante"))
+                        {
+                            voyanteTurn()
+                        }
+                    }
 
                 }
             }
@@ -289,6 +298,7 @@ class GameActivityTest : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
+
         mPartyReference.child("endPrint").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -300,6 +310,18 @@ class GameActivityTest : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
+        mDatabase.child("Party").child(gameName).child("nightGame").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val bool = dataSnapshot.value as Boolean
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "No Flag", databaseError.toException())
+            }
+        })
+
     }
 
     private fun setOnlyFinishFlagListener() {
