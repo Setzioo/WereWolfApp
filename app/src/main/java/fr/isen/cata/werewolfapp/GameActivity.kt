@@ -169,8 +169,11 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Cupidon")) {
                             cupidonTurn()
                         } else {
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
+                            }
 
-                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
                         }
                     }
                 }
@@ -186,7 +189,10 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         checkForDead()
-                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadNightFlag").setValue(true)
+                        if(currentPlayer!!.id == game!!.masterId)
+                        {
+                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadNightFlag").setValue(true)
+                        }
                     }
                 }
             }
@@ -201,7 +207,10 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         checkForDead()
-                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadVoteFlag").setValue(true)
+                        if(currentPlayer!!.id == game!!.masterId)
+                        {
+                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadVoteFlag").setValue(true)
+                        }
                     }
                 }
             }
@@ -216,7 +225,10 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         checkForDead()
-                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadChasseurFlag").setValue(true)
+                        if(currentPlayer!!.id == game!!.masterId)
+                        {
+                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadChasseurFlag").setValue(true)
+                        }
                     }
                 }
             }
@@ -233,8 +245,11 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Loup-Garou")) {
                             loupsTurn()
                         } else {
-                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag")
-                                .setValue(true)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag")
+                                    .setValue(true)                            }
+
                         }
                     }
                 }
@@ -252,8 +267,11 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Cupidon")) {
                             loverTurn()
                         } else {
-                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag")
-                                .setValue(true)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag")
+                                    .setValue(true)                            }
+
                         }
                     }
                 }
@@ -272,8 +290,11 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Pipoteur")) {
                             pipotedTurn()
                         } else {
-                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag")
-                                .setValue(true)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag").setValue(true)
+                            }
+
                         }
 
                     }
@@ -292,8 +313,11 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Pipoteur")) {
                             pipoteurTurn()
                         } else {
-                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag")
-                                .setValue(true)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(true)
+                            }
+
                         }
                     }
                 }
@@ -353,8 +377,11 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Sorciere")) {
                             sorciereTurn()
                         } else {
-                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag")
-                                .setValue(true)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(true)
+                            }
+
                         }
 
                     }
@@ -370,9 +397,13 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        mDatabase.child("Party").child(gameName).child("Flags").child("ChasseurFlag").setValue(false)
-                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag")
-                            .setValue(false)
+                        if(currentPlayer!!.id == game!!.masterId)
+                        {
+                            mDatabase.child("Party").child(gameName).child("Flags").child("ChasseurFlag").setValue(false)
+                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag")
+                                .setValue(false)
+                        }
+
 
                         voteTurn()
                     }
@@ -391,8 +422,12 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Voyante")) {
                             voyanteTurn()
                         } else {
-                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag")
-                                .setValue(true)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag")
+                                    .setValue(true)
+                            }
+
                         }
                     }
 
@@ -564,8 +599,12 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        mDatabase.child("Party").child(gameName).child("nightGame")
-                            .setValue(false)
+                        if(currentPlayer!!.id == game!!.masterId)
+                        {
+                            mDatabase.child("Party").child(gameName).child("nightGame")
+                                .setValue(false)
+                        }
+
                     }
                 }
             }
@@ -582,8 +621,12 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Pipoteur")) {
                             raiseFlagPipoted()
                         } else {
-                            mDatabase.child("Party").child(gameName).child("nightGame")
-                                .setValue(false)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("nightGame")
+                                    .setValue(false)
+                            }
+
                         }
                     }
                 }
@@ -599,8 +642,12 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (isItTheEnd(didAngeWin) != 0) {
-                            mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
-                            mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
+                                mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+                            }
+
                         } else {
                             raiseFlagChasseur()
                         }
@@ -618,11 +665,18 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (isItTheEnd(didAngeWin) != 0) {
-                            mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
-                            mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
+                                mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+                            }
+
                         } else {
                             if (game!!.Flags!!.VoteFlag) {
-                                mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                                if(currentPlayer!!.id == game!!.masterId)
+                                {
+                                    mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                                }
                             } else {
                                 raiseFlagVote()
                             }
@@ -642,8 +696,12 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (isItTheEnd(didAngeWin) != 0) {
-                            mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
-                            mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+                            if(currentPlayer!!.id == game!!.masterId)
+                            {
+                                mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
+                                mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
+                            }
+
                         } else {
                             raiseFlagChasseur()
                         }
@@ -789,92 +847,138 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun raiseFlagCupidon() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagLover() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("LoverFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("LoverFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagVoyante() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagLoups() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagSorciere() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagPipoteur() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagPipoted() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("PipotedFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("PipotedFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagVote() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagDeadNight() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("DeadNightFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("DeadNightFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagDeadChasseur() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("DeadChasseurFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("DeadChasseurFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagChasseur() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("ChasseurFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("ChasseurFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagPrintNight() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("PrintNightFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("PrintNightFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagPrintVote() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("PrintVoteFlag").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("PrintVoteFlag").setValue(true)
+        }
     }
 
     private fun raiseFlagPrintChasseur() {
-        mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlagChasseur").setValue(true)
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlagChasseur").setValue(true)
+        }
     }
 
     private fun lowerFlags() {
+        if(currentPlayer!!.id == game!!.masterId)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("DeadNightFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("DeadVoteFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("DeadChasseurFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("ChasseurFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("LoverFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("PipotedFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("PrintNightFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("PrintChasseurFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("Flags").child("PrintVoteFlag").setValue(false)
 
-        mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("DeadNightFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("DeadVoteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("DeadChasseurFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("ChasseurFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("LoverFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("PipotedFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("PrintNightFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("PrintChasseurFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("PrintVoteFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadNightFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadVoteFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadChasseurFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintNightFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintChasseurFlag").setValue(false)
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintVoteFlag").setValue(false)
+        }
 
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadNightFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadVoteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadChasseurFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintNightFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintChasseurFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintVoteFlag").setValue(false)
+
 
     }
 
