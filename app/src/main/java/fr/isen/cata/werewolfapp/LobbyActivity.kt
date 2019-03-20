@@ -491,8 +491,8 @@ class LobbyActivity : AppCompatActivity() {
         val list = when (nbPlayer) {
             4 -> arrayListOf(
                 LoupGarou(),
-                Chasseur(), Cupidon(),
-                Voyante()
+                Pipoteur(), Ange(),
+                Sorciere(true, true)
             )
 
             5 -> arrayListOf(
