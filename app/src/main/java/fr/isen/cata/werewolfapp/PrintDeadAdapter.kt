@@ -24,6 +24,9 @@ class PrintDeadAdapter(private val players: ArrayList<PlayerModel?>) :
         getPlayerAvatar(holder, players[position]!!)
         holder.pseudoButton.text = players[position]!!.pseudo
         holder.roleButton.text = players[position]!!.role
+        if(players[position]!!.charmed){
+            holder.heartIcon.setImageResource(R.drawable.coeur_amoureux)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,6 +42,7 @@ class PrintDeadAdapter(private val players: ArrayList<PlayerModel?>) :
         var avatar: ImageView = itemView.findViewById(R.id.avatarPlayerDead)
         var pseudoButton: Button = itemView.findViewById(R.id.pseudoPlayerDead)
         var roleButton: Button = itemView.findViewById(R.id.rolePlayerDead)
+        var heartIcon: ImageView = itemView.findViewById(R.id.loveIcon)
     }
 
     private fun getPlayerAvatar(holder: ViewHolder, player: PlayerModel) {
