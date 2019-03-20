@@ -204,7 +204,7 @@ class GameActivity : AppCompatActivity() {
         val pipoteurAlive : Boolean?
         if(voyante){
             voyanteAlive = isVoyanteAlive()
-            if(!voyanteAlive){
+            if(!voyanteAlive && !game!!.Flags!!.VoyanteFlag){
                 mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
                 previousLowerFlag = true
                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(true)
