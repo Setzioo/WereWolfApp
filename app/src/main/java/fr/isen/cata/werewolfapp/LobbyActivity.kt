@@ -27,7 +27,7 @@ class LobbyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
-        buttonEffect(startGame)
+
         startGame.setOnClickListener {
             startGame()
         }
@@ -389,11 +389,12 @@ class LobbyActivity : AppCompatActivity() {
                             playerList.add(user.value as String)
                         }
                         if (nbPlayerAsked == nbPlayerReady) {
-
+                            buttonEffect(startGame)
                             attributeRole(lobby, playerList)
                             mDatabase.child("Lobby").child(currentPlayer!!.currentGame!!).child("startGame")
                                 .setValue(true)
                         } else {
+                            buttonEffectWrong(startGame)
                             Toast.makeText(context, "Pas assez de joueurs, veuillez attendre", Toast.LENGTH_LONG).show()
                         }
                     }
@@ -650,4 +651,23 @@ class LobbyActivity : AppCompatActivity() {
             false
         }
     }
+    fun buttonEffectWrong(button: View) {
+        val color = Color.parseColor("#DB1702")
+        button.setOnTouchListener { v, event ->
+
+            when (event.action) {
+
+                MotionEvent.ACTION_DOWN -> {
+                    v.background.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+                    v.invalidate()
+                }
+                MotionEvent.ACTION_UP -> {
+                    v.background.clearColorFilter()
+                    v.invalidate()
+                }
+            }
+            false
+        }
+    }
+
 }
