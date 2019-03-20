@@ -671,9 +671,15 @@ class GameActivity : AppCompatActivity() {
 
                 if (alivePlayers != null) {
                     if (isItTheEnd(didAngeWin) != 0) {
-                        Log.e("FUN", "FIN DE LA PARTIE : " + isItTheEnd(didAngeWin))
+                        mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
+                        previousLowerFlag = true
+                        lowerFlagVote()
+                        mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
                         mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
                         mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
+                        Log.e("FUN", "FIN DE LA PARTIE : " + isItTheEnd(didAngeWin))
+
+
                         manager.FinJeuFragment(context)
 
                     }
