@@ -102,9 +102,13 @@ class GameActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    if (nbTour == 0 && listPlayer != null && !game!!.Flags!!.VoteFlag) {
+                    Log.e("ALIVE", "nbTour : $nbTour")
+
+                    if (nbTour == 0 && alivePlayers==null) {
                         Log.d("FUN", "init alive")
                         alivePlayers = listPlayer
+                        Log.e("ALIVE","size in Info : " + alivePlayers!!.size.toString())
+
                         if (listPlayer != null) {
                             for (i in listPlayer!!) {
                                 listRole!!.add(i!!.role!!)
@@ -1005,6 +1009,9 @@ class GameActivity : AppCompatActivity() {
                             }
                         }
                     }
+                    Log.e("ALIVE","size before clear: " + alivePlayers!!.size.toString())
+                    Log.e("ALIVE","size aliveId: " + aliveId!!.size.toString())
+
                     alivePlayers!!.clear()
                     if (aliveId != null && listPlayer != null) {
                         for (i in aliveId!!) {
