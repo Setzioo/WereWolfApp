@@ -1014,6 +1014,8 @@ class GameActivity : AppCompatActivity() {
                     Log.e("ALIVE","size before clear: " + alivePlayers!!.size.toString())
                     Log.e("ALIVE","size aliveId: " + aliveId!!.size.toString())
 
+                    alivePlayers!!.clear()
+
                     if (aliveId != null && listPlayer != null) {
                         for (i in aliveId!!) {
                             for (u in listPlayer!!) {
