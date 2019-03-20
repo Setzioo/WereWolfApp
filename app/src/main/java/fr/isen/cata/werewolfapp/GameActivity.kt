@@ -1,6 +1,7 @@
 package fr.isen.cata.werewolfapp
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.WindowManager
@@ -169,7 +170,9 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Cupidon")) {
                             cupidonTurn()
                         } else {
-                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag")
+                            Handler().postDelayed({
+                                mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag")
+                            }, 1000)
                         }
                     }
                 }
@@ -465,13 +468,19 @@ class GameActivity : AppCompatActivity() {
                     if (bool) {
                         lowerFlags()
                         if (!game!!.Flags!!.CupidonFlag) {
-                            raiseFlagCupidon()
+                            Handler().postDelayed({
+                                raiseFlagCupidon()
+                            }, 1000)
                         } else {
-                            raiseFlagVoyante()
+                            Handler().postDelayed({
+                                raiseFlagVoyante()
+                            }, 1000)
                         }
                     } else {
                         nbTour++
-                        raiseFlagDeadNight()
+                        Handler().postDelayed({
+                            raiseFlagDeadNight()
+                        }, 1000)
                     }
 
                 }
