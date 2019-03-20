@@ -88,6 +88,7 @@ class FinJeuFragment : Fragment() {
                                 when(winnerNumber) {
                                     1-> {
                                         if(user.inLove){
+
                                             players.add(user)
                                             adapter.notifyDataSetChanged()
                                         }

@@ -91,6 +91,8 @@ class ResultFragment : Fragment() {
                     Log.e("end", "effacer partie")
                     mDatabase.child("Party").child(gameName).removeValue()
                     val intent = Intent(context, HomeActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
                 }, 6000)
             }

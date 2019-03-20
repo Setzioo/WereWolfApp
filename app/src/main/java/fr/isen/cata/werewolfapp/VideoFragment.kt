@@ -32,8 +32,8 @@ class VideoFragment : Fragment() {
 
         Log.e("LANCE","Video")
 
-
         //animateLaunchText()
+
 /*
         val path = "android.resource://" + activity?.packageName + "/" + R.raw.coutdown
 
@@ -59,7 +59,7 @@ class VideoFragment : Fragment() {
                 }, 1500)
             }
         }.start()
-        animateLaunchText()
+
     }
 
     private fun animateLaunchText() {
