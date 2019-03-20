@@ -154,8 +154,11 @@ class GameActivity : AppCompatActivity() {
                                         {
                                             soundPlayer!!.stop()
                                         }
-                                        soundPlayer = MediaPlayer.create(context, R.raw.chasseur_mort)
-                                        chasseurTurn()
+                                        soundPlayer = MediaPlayer.create(context, R.raw.chasseur_mort_modif)
+                                        soundPlayer!!.setOnCompletionListener {
+                                            chasseurTurn()
+
+                                        }
                                         randomFlag = true
                                     }
                                 }
@@ -184,7 +187,14 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Cupidon")) {
-                            cupidonTurn()
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.cupidon_reveil)
+                            soundPlayer!!.setOnCompletionListener {
+                                cupidonTurn()
+                            }
                         } else {
                             if (currentPlayer!!.id == game!!.masterId) {
                                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag")
@@ -260,7 +270,14 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Loup-Garou")) {
-                            loupsTurn()
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.loup_reveil)
+                            soundPlayer!!.setOnCompletionListener {
+                                loupsTurn()
+                            }
                         } else {
                             if (currentPlayer!!.id == game!!.masterId) {
                                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag")
@@ -282,7 +299,14 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Cupidon")) {
-                            loverTurn()
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.village_reveil)
+                            soundPlayer!!.setOnCompletionListener {
+                                loverTurn()
+                            }
                         } else {
                             if (currentPlayer!!.id == game!!.masterId) {
                                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag")
@@ -305,7 +329,14 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Pipoteur")) {
-                            pipotedTurn()
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.village_reveil)
+                            soundPlayer!!.setOnCompletionListener {
+                                pipotedTurn()
+                            }
                         } else {
                             if (currentPlayer!!.id == game!!.masterId) {
                                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag")
@@ -329,7 +360,14 @@ class GameActivity : AppCompatActivity() {
                     Log.e("PIPO", bool.toString())
                     if (bool) {
                         if (listRole!!.contains("Pipoteur")) {
-                            pipoteurTurn()
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.pipoteur_reveil)
+                            soundPlayer!!.setOnCompletionListener {
+                                pipoteurTurn()
+                            }
                         } else {
                             Log.e("PIPO", "Mec c'est censé aller")
 
@@ -396,7 +434,14 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Sorciere")) {
-                            sorciereTurn()
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.sorciere_reveil)
+                            soundPlayer!!.setOnCompletionListener {
+                                sorciereTurn()
+                            }
                         } else {
                             if (currentPlayer!!.id == game!!.masterId) {
                                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag")
@@ -441,7 +486,14 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Voyante")) {
-                            voyanteTurn()
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.voyante_reveil)
+                            soundPlayer!!.setOnCompletionListener {
+                                voyanteTurn()
+                            }
                         } else {
                             if (currentPlayer!!.id == game!!.masterId) {
                                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag")
@@ -557,7 +609,14 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Cupidon")) {
-                            raiseFlagLover()
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
+                            }
+                            soundPlayer = MediaPlayer.create(context, R.raw.cupidon_endort)
+                            soundPlayer!!.setOnCompletionListener {
+                                raiseFlagLover()
+                            }
                         } else {
                             raiseFlagVoyante()
                         }
@@ -616,7 +675,14 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        raiseFlagSorciere()
+                        if(soundPlayer != null)
+                        {
+                            soundPlayer!!.stop()
+                        }
+                        soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
+                        soundPlayer!!.setOnCompletionListener {
+                            raiseFlagSorciere()
+                        }
                     }
                 }
             }
@@ -630,7 +696,14 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        raiseFlagVoyante()
+                        if(soundPlayer != null)
+                        {
+                            soundPlayer!!.stop()
+                        }
+                        soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
+                        soundPlayer!!.setOnCompletionListener {
+                            raiseFlagVoyante()
+                        }
                     }
                 }
             }
@@ -658,10 +731,19 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if (currentPlayer!!.id == game!!.masterId) {
-                            mDatabase.child("Party").child(gameName).child("nightGame")
-                                .setValue(false)
+                        if(soundPlayer != null)
+                        {
+                            soundPlayer!!.stop()
                         }
+                        soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
+                        soundPlayer!!.setOnCompletionListener {
+                            if (currentPlayer!!.id == game!!.masterId) {
+
+                                mDatabase.child("Party").child(gameName).child("nightGame")
+                                    .setValue(false)
+                            }
+                        }
+
 
                     }
                 }
@@ -679,10 +761,18 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Pipoteur")) {
                             raiseFlagPipoted()
                         } else {
-                            if (currentPlayer!!.id == game!!.masterId) {
-                                mDatabase.child("Party").child(gameName).child("nightGame")
-                                    .setValue(false)
+                            if(soundPlayer != null)
+                            {
+                                soundPlayer!!.stop()
                             }
+                            soundPlayer = MediaPlayer.create(context, R.raw.pipoteur_endort)
+                            soundPlayer!!.setOnCompletionListener {
+                                if (currentPlayer!!.id == game!!.masterId) {
+                                    mDatabase.child("Party").child(gameName).child("nightGame")
+                                        .setValue(false)
+                                }
+                            }
+
 
                         }
                     }
@@ -775,7 +865,14 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        raiseFlagPipoteur()
+                        if(soundPlayer != null)
+                        {
+                            soundPlayer!!.stop()
+                        }
+                        soundPlayer = MediaPlayer.create(context, R.raw.sorciere_endort)
+                        soundPlayer!!.setOnCompletionListener {
+                            raiseFlagPipoteur()
+                        }
                     }
                 }
             }
@@ -804,7 +901,14 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        raiseFlagLoups()
+                        if(soundPlayer != null)
+                        {
+                            soundPlayer!!.stop()
+                        }
+                        soundPlayer = MediaPlayer.create(context, R.raw.voyante_endort)
+                        soundPlayer!!.setOnCompletionListener {
+                            raiseFlagLoups()
+                        }
                     }
                 }
             }
