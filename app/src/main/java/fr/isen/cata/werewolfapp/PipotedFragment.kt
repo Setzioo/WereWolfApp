@@ -82,6 +82,9 @@ class PipotedFragment : Fragment() {
                         }
                     }
                 }
+                if (dataSnapshot.exists()) {
+                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                }
                 displayPipoted()
                 beginCompteur(5)
             }
