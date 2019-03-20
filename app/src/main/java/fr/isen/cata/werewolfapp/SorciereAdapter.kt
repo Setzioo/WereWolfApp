@@ -41,8 +41,6 @@ class SorciereAdapter(private val players: ArrayList<PlayerModel?>) :
         mDatabase.child("Users").child(id).child("state").setValue(false)
         mDatabase.child("Party").child(gameName).child("deathPotion").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(true)
-        val manager = MyFragmentManager()
-        manager.NightFragment(holder.card.context)
     }
 
 

@@ -1,6 +1,8 @@
 package fr.isen.cata.werewolfapp
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -8,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
@@ -30,6 +33,8 @@ class ResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.e("FUN", "Affichage des morts")
         Log.e("LANCE", "Print dead")
+
+        buttonEffect(goToHome)
 
         val titre = "Fin"
         deadTextView.text = titre
@@ -104,6 +109,25 @@ class ResultFragment : Fragment() {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
+    }
+
+    fun buttonEffect(button: View) {
+        val color = Color.parseColor("#514e4e")
+        button.setOnTouchListener { v, event ->
+
+            when (event.action) {
+
+                MotionEvent.ACTION_DOWN -> {
+                    v.background.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+                    v.invalidate()
+                }
+                MotionEvent.ACTION_UP -> {
+                    v.background.clearColorFilter()
+                    v.invalidate()
+                }
+            }
+            false
+        }
     }
 
     override fun onCreateView(
