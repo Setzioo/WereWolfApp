@@ -104,12 +104,12 @@ class VisionFragment : Fragment() {
         object : CountDownTimer(compteurMax * 1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                val timeLeft = "" + (millisUntilFinished / 1000)
-                visionTimer.text = timeLeft
+                //val timeLeft = "" + (millisUntilFinished / 1000)
+                //visionTimer.text = timeLeft
             }
 
             override fun onFinish() {
-                visionTimer.text = "0"
+                //visionTimer.text = "0"
                 Handler().postDelayed({
                     mDatabase.child("Party").child(gameName).child("pileOfTurn").setValue(pileOfTurn)
                 }, 1500)
