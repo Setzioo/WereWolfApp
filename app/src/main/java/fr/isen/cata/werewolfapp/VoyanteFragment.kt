@@ -45,6 +45,7 @@ class VoyanteFragment : Fragment() {
         getVillagers(players)
     }
 
+
     fun beginCompteur(compteurMax: Long) {
         object : CountDownTimer(compteurMax * 1000, 1000) {
 
