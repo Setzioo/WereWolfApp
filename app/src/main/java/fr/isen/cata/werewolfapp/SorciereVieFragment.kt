@@ -31,15 +31,16 @@ class SorciereVieFragment : Fragment() {
     var wolfKill = ""
     var deadPlayer: PlayerModel? = null
     var lifePotion = false
-    private var compteur : CountDownTimer? = null
+    private var compteur: CountDownTimer? = null
     val compteurMax: Long = 10
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("LANCE","Sorciere Vie")
+        Log.e("LANCE", "Sorciere Vie")
+
+
 
 
         Toast.makeText(context, "Sorciere", Toast.LENGTH_LONG).show()
@@ -50,27 +51,6 @@ class SorciereVieFragment : Fragment() {
         mDatabase = FirebaseDatabase.getInstance().reference
 
         getLifePotion()
-
-        compteur = object : CountDownTimer(compteurMax * 1000, 1000) {
-
-            override fun onTick(millisUntilFinished: Long) {
-                val timeLeft = "" + (millisUntilFinished / 1000 + 1)
-                sorciereVieCompteur.text = timeLeft
-            }
-
-            override fun onFinish() {
-                val goText = "0"
-                sorciereVieCompteur.text = goText
-                Handler().postDelayed({
-                    val manager = MyFragmentManager()
-                    manager.SorciereMortFragment(context!!)
-                }, 1000)
-            }
-        }.start()
-
-
-
-
 
 
 
@@ -101,12 +81,48 @@ class SorciereVieFragment : Fragment() {
                     if (game != null) {
                         lifePotion = game!!.lifePotion
 
-                        if (lifePotion) {
-                            getWolfKill()
-                        } else {
-                            displayNoPotionLife()
-                        }
+                        if (currentPlayer!!.state && currentPlayer!!.role == "Sorciere") {
 
+                            compteur = object : CountDownTimer(compteurMax * 1000, 1000) {
+
+                                override fun onTick(millisUntilFinished: Long) {
+                                    val timeLeft = "" + (millisUntilFinished / 1000 + 1)
+                                    sorciereVieCompteur.text = timeLeft
+                                }
+
+                                override fun onFinish() {
+                                    val goText = "0"
+                                    sorciereVieCompteur.text = goText
+                                    Handler().postDelayed({
+                                        val manager = MyFragmentManager()
+                                        manager.SorciereMortFragment(context!!)
+                                    }, 1000)
+                                }
+                            }.start()
+
+                            if (lifePotion) {
+                                getWolfKill()
+                            } else {
+                                displayNoPotionLife()
+                            }
+
+                        }
+                        else
+                        {
+                            estMortText.visibility = View.INVISIBLE
+                            choixSorciereMort.visibility = View.INVISIBLE
+                            ResurrectButton.visibility = View.INVISIBLE
+                            letHimDieButton.visibility = View.INVISIBLE
+                            deadFace.visibility = View.INVISIBLE
+                            sorciereVieCompteur.visibility = View.INVISIBLE
+                            val noSorciereText = "La sorcière est en train de jouer ..."
+                            estMortText.text = noSorciereText
+
+
+
+
+
+                        }
                     }
                 }
             }
@@ -137,8 +153,7 @@ class SorciereVieFragment : Fragment() {
     }
 
     private fun goToDeathPotion() {
-        if(compteur!=null)
-        {
+        if (compteur != null) {
             compteur!!.cancel()
 
         }
@@ -158,8 +173,7 @@ class SorciereVieFragment : Fragment() {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                     if (game != null) {
                         wolfKill = game!!.wolfKill
-                        if (wolfKill != "")
-                        {
+                        if (wolfKill != "") {
                             displayDeadPlayer(wolfKill)
 
                             ResurrectButton.setOnClickListener {
@@ -174,9 +188,7 @@ class SorciereVieFragment : Fragment() {
                                 mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
                                 goToDeathPotion()
                             }
-                        }
-                        else
-                        {
+                        } else {
                             displayNoDeath()
                         }
                     }
