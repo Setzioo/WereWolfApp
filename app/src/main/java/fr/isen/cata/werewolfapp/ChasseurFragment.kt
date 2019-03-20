@@ -51,7 +51,7 @@ class ChasseurFragment : Fragment() {
             override fun onFinish() {
                 chasseurTimer.text = "0"
                 Handler().postDelayed({
-                    if(isAlivePlayer && isChasseurPlayer) {
+                    if(isChasseurPlayer) {
                         killPlayer(adapter.victimPlayer)
                     }
                 }, 1500)
@@ -85,7 +85,7 @@ class ChasseurFragment : Fragment() {
                         }
                     }
                 }
-                if(isAlivePlayer && isChasseurPlayer){
+                if(isChasseurPlayer){
                     if (dataSnapshot.exists()) {
                         game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                         if (game != null) {
