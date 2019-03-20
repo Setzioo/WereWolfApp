@@ -1,14 +1,7 @@
 package fr.isen.cata.werewolfapp
 
-import android.content.Context
-import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Vibrator
-import android.support.v4.app.Fragment
-import android.widget.VideoView
-import android.support.v4.os.HandlerCompat.postDelayed
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
@@ -206,9 +199,9 @@ class GameActivity : AppCompatActivity() {
         val voyante = isVoyante()
         val sorciere = isSorciere()
         val pipoteur = isPipoteur()
-        var voyanteAlive =false
-        var sorciereAlive = false
-        var pipoteurAlive = false
+        var voyanteAlive : Boolean?
+        var sorciereAlive : Boolean?
+        var pipoteurAlive : Boolean?
         if(voyante){
             voyanteAlive = isVoyanteAlive()
             if(!voyanteAlive){
@@ -570,11 +563,11 @@ class GameActivity : AppCompatActivity() {
 
                 if (!game!!.endGame) {
                     if (flags!!.DeadFlag) {
-                        if (flags!!.endPrint) {
+                        if (flags.endPrint) {
                             game!!.Flags!!.DeadFlag = false
                             checkDead()
                         }
-                        if (flags!!.PrintFlag) {
+                        if (flags.PrintFlag) {
                             printDeadTurn()
                         } else {
                             checkDead()
@@ -619,7 +612,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun checkDead() {
-        var deadPlayers: MutableList<PlayerModel>? = arrayListOf()
+        val deadPlayers: MutableList<PlayerModel>? = arrayListOf()
         var isLoverDead = false
 
         if (alivePlayers != null) {
