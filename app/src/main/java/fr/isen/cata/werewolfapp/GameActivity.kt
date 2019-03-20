@@ -500,55 +500,45 @@ class GameActivity : AppCompatActivity() {
         val flags : FlagModel? = dataSnapshot.getValue(FlagModel::class.java)
 
         game!!.Flags = flags
+        if(!game!!.Flags!!.LowerFlag) {
+            if (!game!!.endGame) {
+                if (flags!!.DeadFlag) {
+                    if (flags!!.endPrint) {
+                        Thread.sleep(2000)
+                        game!!.Flags!!.DeadFlag = false
+                        checkDead()
+                    }
+                    if (flags!!.PrintFlag) {
+                        printDeadTurn()
+                    } else {
+                        checkDead()
+                    }
 
-        if(!game!!.endGame){
-            if(flags!!.DeadFlag){
-                if(flags!!.endPrint){
-                    Thread.sleep(2000)
-                    game!!.Flags!!.DeadFlag = false
-                    checkDead()
-                }
-                if(flags!!.PrintFlag){
-                    printDeadTurn()
-                }
-                else{
-                    checkDead()
+                } else {
+                    if (flags.VoteFlag) {
+                        voteTurn()
+                    } else if (flags.ChasseurFlag) {
+                        chasseurTurn()
+                    } else if (flags.TourFlag) {
+                        nbTour++
+                    } else if (flags.PipotedFlag) {
+                        pipotedTurn()
+                    } else if (flags.PipoteurFlag) {
+                        pipoteurTurn()
+                    } else if (flags.SorciereFlag) {
+                        sorciereTurn()
+                    } else if (flags.LoupFlag) {
+                        loupsTurn()
+                    } else if (flags.VoyanteFlag) {
+                        voyanteTurn()
+                    } else if (flags.CupidonFlag) {
+                        loverTurn()
+                    } else if (flags.CupidonFlag) {
+                        cupidonTurn()
+                    }
                 }
 
             }
-            else {
-                if (flags.VoteFlag) {
-                    voteTurn()
-                }
-                else if(flags.ChasseurFlag){
-                    chasseurTurn()
-                }
-                else if (flags.TourFlag) {
-                    nbTour++
-                }
-                else if(flags.PipotedFlag){
-                    pipotedTurn()
-                }
-                else if (flags.PipoteurFlag) {
-                    pipoteurTurn()
-                }
-                else if (flags.SorciereFlag) {
-                    sorciereTurn()
-                }
-                else if (flags.LoupFlag) {
-                    loupsTurn()
-                }
-                else if (flags.VoyanteFlag) {
-                    voyanteTurn()
-                }
-                else if (flags.CupidonFlag) {
-                    loverTurn()
-                }
-                else if (flags.CupidonFlag) {
-                    cupidonTurn()
-                }
-            }
-
         }
     }
 
@@ -628,29 +618,43 @@ class GameActivity : AppCompatActivity() {
                     } else {
                         if (!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && game!!.FinishFlags!!.ChasseurFlag) {
                             Log.e("FUN", "Heure du vote")
+                            mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
+                            mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(false)
+                            mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlag").setValue(true)
+                            mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
                             raiseFlagVote()
-                        } else {
-                            if (game!!.FinishFlags!!.VoteFlag) {
-                                Log.e("FUN", "Fin de jour, lancement nuit")
-                                night()
-                                mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
-                            }
-                        }
-                    }
-                } else {
-                    if (!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag) {
-                        Log.e("FUN", "Heure du vote")
-                        raiseFlagVote()
-                    } else {
-                        if (game!!.FinishFlags!!.VoteFlag) {
-                            Log.e("FUN", "Fin de jour, lancement nuit")
-                            night()
-                            mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
                         }
                     }
                 }
-
+                else {
+                    if (!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag) {
+                        Log.e("FUN", "Heure du vote")
+                        mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
+                        mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(false)
+                        mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlag").setValue(true)
+                        mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
+                        raiseFlagVote()
+                    }
+                    }
             }
+            if(isHunterDead){
+                if (game!!.FinishFlags!!.VoteFlag) {
+                    Log.e("FUN", "Fin de jour, lancement nuit")
+                    night()
+                    mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                }
+            }
+            else{
+                if (game!!.FinishFlags!!.VoteFlag) {
+                    Log.e("FUN", "Fin de jour, lancement nuit")
+                    night()
+                    mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                }
+            }
+
+
+
+
         }
     }
     private fun checkDeadAfterVote(){
