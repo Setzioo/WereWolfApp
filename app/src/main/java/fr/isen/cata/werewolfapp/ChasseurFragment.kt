@@ -36,7 +36,6 @@ class ChasseurFragment : Fragment() {
 
 
         mDatabase = FirebaseDatabase.getInstance().reference
-
         getVillagers(players)
     }
 

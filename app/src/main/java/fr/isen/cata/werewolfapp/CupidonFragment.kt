@@ -26,6 +26,8 @@ class CupidonFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
+    var isCupidonPlayer: Boolean = false
+    val players: ArrayList<PlayerModel?> = ArrayList()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,13 +38,6 @@ class CupidonFragment : Fragment() {
         Toast.makeText(context, "Cupidon", Toast.LENGTH_LONG).show()
 
         mDatabase = FirebaseDatabase.getInstance().reference
-
-        cupidonRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
-
-        val players: ArrayList<PlayerModel?> = ArrayList()
-
-        adapter = CupidonAdapter(players)
-        cupidonRecyclerView.adapter = adapter
 
         getVillagers(players)
     }
@@ -64,33 +59,42 @@ class CupidonFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                        }
-                    }
-                }
-                if (dataSnapshot.exists()) {
-                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if (game != null) {
-                        if (game!!.listPlayer != null) {
-                            listId = game!!.listPlayer
-                        }
-                    }
-                }
-                if (listId != null) {
-                    players.clear()
-                    for (i in listId!!) {
-                        for (u in dataSnapshot.child("Users").children) {
-                            val user = u.getValue(PlayerModel::class.java)
-                            if (i == user!!.id) {
-                                if (user.state) {
-                                    players.add(user)
-                                    Log.e("CUPIDON", "joueur ajouté : " + user.pseudo)
-                                    adapter.notifyDataSetChanged()
-                                }
+                            if(currentPlayer!!.role == "Cupidon"){
+                                isCupidonPlayer = true
                             }
                         }
                     }
                 }
-                beginCompteur(15)
+                if(isCupidonPlayer){
+                    if (dataSnapshot.exists()) {
+                        game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                        if (game != null) {
+                            if (game!!.listPlayer != null) {
+                                listId = game!!.listPlayer
+                            }
+                        }
+                    }
+                    if (listId != null) {
+                        players.clear()
+                        for (i in listId!!) {
+                            for (u in dataSnapshot.child("Users").children) {
+                                val user = u.getValue(PlayerModel::class.java)
+                                if (i == user!!.id) {
+                                    if (user.state) {
+                                        players.add(user)
+                                        cupidonRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
+                                        adapter = CupidonAdapter(players)
+                                        cupidonRecyclerView.adapter = adapter
+                                        adapter.notifyDataSetChanged()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    cupidonTextView.text = "Cupidon fait son choix..."
+                }
+                beginCompteur(10)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -110,7 +114,9 @@ class CupidonFragment : Fragment() {
             override fun onFinish() {
                 cupidonTimer.text = "0"
                 Handler().postDelayed({
-                    lovePlayers()
+                    if(isCupidonPlayer){
+                        lovePlayers()
+                    }
                 }, 1500)
             }
         }.start()
@@ -138,12 +144,7 @@ class CupidonFragment : Fragment() {
         } else {
             Toast.makeText(context, "Aucun joueur selectionné", Toast.LENGTH_LONG).show()
         }
-
-        if(game!!.masterId == currentPlayer!!.id) {
-            mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
-        }
-        val manager = MyFragmentManager()
-        manager.NightFragment(context!!)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
