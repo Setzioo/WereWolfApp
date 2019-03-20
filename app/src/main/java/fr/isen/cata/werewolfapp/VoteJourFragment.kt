@@ -124,7 +124,10 @@ class VoteJourFragment : Fragment() {
                     mUserReference.child(idToKill).child("state").setValue(false)
                 }
 
-                mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(true)
+                if(currentPlayer!!.id == game!!.masterId)
+                {
+                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(true)
+                }
 
                 /*val manager = MyFragmentManager()
                 manager.DayFragment(context!!)*/
