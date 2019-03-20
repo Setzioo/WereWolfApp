@@ -48,16 +48,10 @@ class GameActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
         mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
 
-
-
-
-        manager.BeginningFragment(context)
-
-        getPlayerInfo()
-
-
     }
 
+
+    /*
     private fun getPlayerInfo() {
 
         val id: String = auth.currentUser!!.uid
@@ -121,7 +115,7 @@ class GameActivity : AppCompatActivity() {
             }
         })
     }
-
+*/
 
     private fun isSorciere(): Boolean {
         for (player in listPlayer!!) {
@@ -193,6 +187,7 @@ class GameActivity : AppCompatActivity() {
         return false
     }
 
+    /*
     private fun playNight() {
 
         val cupidon = isCupidon()
@@ -362,7 +357,9 @@ class GameActivity : AppCompatActivity() {
             Toast.makeText(context, "Mort", Toast.LENGTH_LONG).show()
         }
 
-    }
+    }*/
+
+    /*
 
     private fun playDay() {
         /*if(game!!.Flags!!.ChasseurFlag && !game!!.FinishFlags!!.ChasseurFlag){
@@ -376,6 +373,7 @@ class GameActivity : AppCompatActivity() {
 
         }
     }
+    */
 
     private fun night() {
         manager.NightFragment(context)
@@ -439,6 +437,8 @@ class GameActivity : AppCompatActivity() {
             manager.ChasseurFragment(context)
         }
     }
+
+
 
     private fun raiseFlagCupidon() {
         mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(true)
@@ -521,6 +521,8 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+
+    /*
     private fun gameListener() {
         val mPlayerReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
@@ -536,7 +538,10 @@ class GameActivity : AppCompatActivity() {
             }
         })
     }
+*/
 
+
+    /*
     private fun flagListener() {
         val mPartyReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName).child("Flags")
         mPartyReference.addValueEventListener(object : ValueEventListener {
@@ -551,7 +556,9 @@ class GameActivity : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
-    }
+    }*/
+
+    /*
 
     private fun listenForFlags(dataSnapshot: DataSnapshot) {
         val flags: FlagModel? = dataSnapshot.getValue(FlagModel::class.java)
@@ -610,7 +617,9 @@ class GameActivity : AppCompatActivity() {
         }
 
     }
+*/
 
+    /*
     private fun checkDead() {
         val deadPlayers: MutableList<PlayerModel>? = arrayListOf()
         var isLoverDead = false
@@ -729,7 +738,9 @@ class GameActivity : AppCompatActivity() {
 
         }
     }
+*/
 
+    /*
     private fun checkDeadAfterVote() {
         mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
         var deadPlayer: String? = game!!.voteResult
@@ -756,7 +767,10 @@ class GameActivity : AppCompatActivity() {
             playDay()
         }
     }
+*/
 
+
+    /*
 
     private fun getParty() {
 
@@ -932,5 +946,7 @@ class GameActivity : AppCompatActivity() {
         }
         return codeGame
     }
+
+    */
 }
 
