@@ -95,6 +95,7 @@ class PipoteurFragment : Fragment() {
                         }
                     }
                 } else {
+                    pipoteurTextView.text = ""
                     noPipoteurMessage.text = "Le Pipoteur est en train de pipoter..."
                 }
                 beginCompteur(10)
