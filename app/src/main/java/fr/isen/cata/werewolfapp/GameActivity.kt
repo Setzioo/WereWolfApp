@@ -65,11 +65,11 @@ class GameActivity : AppCompatActivity() {
 
         setMusicListener()
 
-
+        getPlayerInfo()
 
         manager.BeginningFragment(context)
 
-        getPlayerInfo()
+
 
 
     }
@@ -133,6 +133,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun getPlayerInfo() {
+
+        Log.e("FUN","getPlayerInfo")
 
         val id: String = auth.currentUser!!.uid
 
@@ -253,6 +255,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun playNight() {
+
+        Log.e("FUN","playNight")
+
 
         val cupidon = isCupidon()
         val voyante = isVoyante()
@@ -533,6 +538,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun gameListener() {
+
+        Log.e("FUN","gameListener")
+
         val mPlayerReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
         mPlayerReference.addValueEventListener(object : ValueEventListener {
@@ -732,6 +740,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun allGame() {
+
+        Log.e("FUN","allGame")
+
         //Log.d("FUN", "tour : "+nbTour.toString())
         if (game!!.nightGame) {
             playNight()
@@ -743,6 +754,9 @@ class GameActivity : AppCompatActivity() {
 
 
     private fun getParty() {
+
+        Log.e("FUN","getParty")
+
 
         val mPartyRef = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
 
@@ -820,6 +834,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun getPlayers() {
+
+        Log.e("FUN","getPlayers")
+
         val id: String = auth.currentUser!!.uid
 
 
