@@ -1,5 +1,6 @@
 package fr.isen.cata.werewolfapp
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -39,6 +40,10 @@ class GameActivity : AppCompatActivity() {
     var gameStarted = false
 
     var listRole: MutableList<String>? = arrayListOf()
+
+    var musicPlayer: MediaPlayer? = null
+    var soundPlayer: MediaPlayer? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,6 +150,11 @@ class GameActivity : AppCompatActivity() {
                             if (deadPlayers != null) {
                                 for (i in deadPlayers!!) {
                                     if (i!!.role == "Chasseur") {
+                                        if(soundPlayer != null)
+                                        {
+                                            soundPlayer!!.stop()
+                                        }
+                                        soundPlayer = MediaPlayer.create(context, R.raw.chasseur_mort)
                                         chasseurTurn()
                                         randomFlag = true
                                     }
@@ -456,6 +466,12 @@ class GameActivity : AppCompatActivity() {
                         val bool = dataSnapshot.value as Boolean
                         Log.e("NIGHTGAME", bool.toString())
                         if (bool) {
+                            if(musicPlayer != null)
+                            {
+                                musicPlayer!!.stop()
+                            }
+                            musicPlayer = MediaPlayer.create(context, R.raw.musique_nuit)
+
                             lowerFlags()
                             if (!game!!.Flags!!.CupidonFlag) {
                                 raiseFlagCupidon()
@@ -463,6 +479,11 @@ class GameActivity : AppCompatActivity() {
                                 raiseFlagVoyante()
                             }
                         } else {
+                            if(musicPlayer != null)
+                            {
+                                musicPlayer!!.stop()
+                            }
+                            musicPlayer = MediaPlayer.create(context, R.raw.village_reveil_7min)
                             nbTour++
                             raiseFlagDeadNight()
                         }
