@@ -14,7 +14,6 @@ class GameActivity : AppCompatActivity() {
     private lateinit var mLobbyReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var context = this
-    private var previousLowerFlag = false
     /* Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
 
         Ordre de jeu la nuit:
@@ -37,8 +36,8 @@ class GameActivity : AppCompatActivity() {
     var game: PartyModel? = null
     var nbTour: Int = 0
     var didAngeWin = false
-    var isHunterDead = false
-    var flagDead = true
+    var gameStarted = false
+
     var listRole: MutableList<String>? = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -407,18 +406,29 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("nightGame").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    val bool = dataSnapshot.value as Boolean
-                    if (bool) {
-                        lowerFlags()
-                        if (!game!!.Flags!!.CupidonFlag) {
-                            raiseFlagCupidon()
+
+                    if(gameStarted)
+                    {
+                        val bool = dataSnapshot.value as Boolean
+                        Log.e("NIGHTGAME",bool.toString())
+                        if (bool) {
+                            lowerFlags()
+                            if (!game!!.Flags!!.CupidonFlag) {
+                                raiseFlagCupidon()
+                            } else {
+                                raiseFlagVoyante()
+                            }
                         } else {
-                            raiseFlagVoyante()
+                            nbTour++
+                            raiseFlagDeadNight()
                         }
-                    } else {
-                        nbTour++
-                        raiseFlagDeadNight()
                     }
+                    else
+                    {
+                        gameStarted = true
+                    }
+
+
 
                 }
             }
@@ -427,21 +437,7 @@ class GameActivity : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
-        mDatabase.child("Party").child(gameName).child("startGame").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    val bool = dataSnapshot.value as Boolean
-                    if (bool) {
-                        raiseFlagCupidon()
-                    }
 
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
-            }
-        })
 
     }
 
