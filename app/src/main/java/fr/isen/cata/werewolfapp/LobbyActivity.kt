@@ -468,6 +468,8 @@ class LobbyActivity : AppCompatActivity() {
                         mDatabase.child("Users").child(it?.id.toString()).child("role").setValue(it?.role)
                         mDatabase.child("Users").child(it?.id.toString()).child("charmed").setValue(false)
                         mDatabase.child("Users").child(it?.id.toString()).child("state").setValue(true)
+                        mDatabase.child("Users").child(it?.id.toString()).child("inLove").setValue(false)
+
                         if (it?.role == "Sorcière") {
                             mDatabase.child("Users").child(it.id).child("deathPotion").setValue(true)
                             mDatabase.child("Users").child(it.id).child("lifePotion").setValue(true)
