@@ -915,6 +915,9 @@ class GameActivity : AppCompatActivity() {
                                 raiseFlagPipoteur()
                             }
                         }
+                        else {
+                            raiseFlagPipoteur()
+                        }
 
                     }
                 }
@@ -955,6 +958,10 @@ class GameActivity : AppCompatActivity() {
                             soundPlayer!!.setOnCompletionListener {
                                 raiseFlagLoups()
                             }
+                        }
+                        else
+                        {
+                            raiseFlagLoups()
                         }
                     }
                 }
