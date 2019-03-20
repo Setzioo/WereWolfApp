@@ -1,32 +1,137 @@
 package fr.isen.cata.werewolfapp
 
-
+import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_chasseur.*
+import kotlinx.android.synthetic.main.fragment_print_dead.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class ResultFragment : Fragment() {
+
+    private lateinit var mDatabase: DatabaseReference
+    private lateinit var adapter: PrintDeadAdapter
+    private lateinit var auth: FirebaseAuth
+
+    private var currentPlayer: PlayerModel? = null
+    var gameName: String = ""
+    var game: PartyModel? = null
+    var listId: MutableList<String>? = arrayListOf()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.e("FUN", "Affichage des morts")
+        Log.e("LANCE", "Print dead")
+
+        val titre = "Fin"
+        deadTextView.text = titre
+        mDatabase = FirebaseDatabase.getInstance().reference
+
+        deadRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
+
+        val players: ArrayList<PlayerModel?> = ArrayList()
+
+        adapter = PrintDeadAdapter(players)
+        deadRecyclerView.adapter = adapter
+
+        getDeadPlayers(players)
+
+    }
+
+    private fun getDeadPlayers(players: ArrayList<PlayerModel?>) {
+
+        val mUserReference = FirebaseDatabase.getInstance().getReference("")
+        auth = FirebaseAuth.getInstance()
+        val id: String = auth.currentUser!!.uid
+
+        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val users: MutableList<PlayerModel?> = arrayListOf()
+                if (dataSnapshot.exists()) {
+                    for (i in dataSnapshot.child("Users").children) {
+                        users.add(i.getValue(PlayerModel::class.java))
+                    }
+                    for (i in users) {
+                        if (i?.id == id) {
+                            currentPlayer = i
+                            gameName = currentPlayer!!.currentGame!!
+                        }
+                    }
+                }
+                if (dataSnapshot.exists()) {
+                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
+                            listId = game!!.listPlayer
+                        }
+                    }
+                }
+                if (listId != null) {
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
+                            val user = u.getValue(PlayerModel::class.java)
+                            if (i == user!!.id) {
+                                    players.add(user)
+                                    adapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+
+                Handler().postDelayed({
+
+                    Log.e("end", "effacer partie")
+                    mDatabase.child("Party").child(gameName).removeValue()
+                    val intent = Intent(context, HomeActivity::class.java)
+                    startActivity(intent)
+                }, 6000)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return TextView(activity).apply {
-            setText(R.string.hello_blank_fragment)
-        }
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_print_dead, container, false)
+
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     *
+     *
+     * See the Android Training lesson [Communicating with Other Fragments]
+     * (http://developer.android.com/training/basics/fragments/communicating.html)
+     * for more information.
+     */
+
+    companion object {
+        fun newInstance() = ResultFragment()
+    }
+
+    private fun deleteParty(){
+
+    }
 }
