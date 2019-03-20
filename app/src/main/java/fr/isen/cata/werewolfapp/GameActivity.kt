@@ -155,6 +155,7 @@ class GameActivity : AppCompatActivity() {
                                             soundPlayer!!.stop()
                                         }
                                         soundPlayer = MediaPlayer.create(context, R.raw.chasseur_mort_modif)
+                                        soundPlayer!!.start()
                                         soundPlayer!!.setOnCompletionListener {
                                             chasseurTurn()
 
@@ -192,6 +193,7 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.cupidon_reveil)
+                            soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
                                 cupidonTurn()
                             }
@@ -275,6 +277,7 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.loup_reveil)
+                            soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
                                 loupsTurn()
                             }
@@ -304,6 +307,7 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.village_reveil)
+                            soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
                                 loverTurn()
                             }
@@ -334,6 +338,7 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.village_reveil)
+                            soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
                                 pipotedTurn()
                             }
@@ -365,6 +370,7 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.pipoteur_reveil)
+                            soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
                                 pipoteurTurn()
                             }
@@ -439,6 +445,7 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.sorciere_reveil)
+                            soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
                                 sorciereTurn()
                             }
@@ -491,6 +498,7 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.voyante_reveil)
+                            soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
                                 voyanteTurn()
                             }
@@ -523,6 +531,7 @@ class GameActivity : AppCompatActivity() {
                                 musicPlayer!!.stop()
                             }
                             musicPlayer = MediaPlayer.create(context, R.raw.musique_nuit)
+                            musicPlayer!!.start()
 
                             lowerFlags()
                             if (!game!!.Flags!!.CupidonFlag) {
@@ -536,6 +545,8 @@ class GameActivity : AppCompatActivity() {
                                 musicPlayer!!.stop()
                             }
                             musicPlayer = MediaPlayer.create(context, R.raw.village_reveil_7min)
+                            musicPlayer!!.start()
+
                             nbTour++
                             raiseFlagDeadNight()
                         }
@@ -634,6 +645,7 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.cupidon_endort)
+                            soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
                                 raiseFlagLover()
                             }
@@ -700,6 +712,7 @@ class GameActivity : AppCompatActivity() {
                             soundPlayer!!.stop()
                         }
                         soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
+                        soundPlayer!!.start()
                         soundPlayer!!.setOnCompletionListener {
                             raiseFlagSorciere()
                         }
@@ -721,6 +734,7 @@ class GameActivity : AppCompatActivity() {
                             soundPlayer!!.stop()
                         }
                         soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
+                        soundPlayer!!.start()
                         soundPlayer!!.setOnCompletionListener {
                             raiseFlagVoyante()
                         }
@@ -756,6 +770,7 @@ class GameActivity : AppCompatActivity() {
                             soundPlayer!!.stop()
                         }
                         soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
+                        soundPlayer!!.start()
                         soundPlayer!!.setOnCompletionListener {
                             if (currentPlayer!!.id == game!!.masterId) {
 
@@ -786,6 +801,7 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.pipoteur_endort)
+                            soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
                                 if (currentPlayer!!.id == game!!.masterId) {
                                     mDatabase.child("Party").child(gameName).child("nightGame")
@@ -890,6 +906,7 @@ class GameActivity : AppCompatActivity() {
                             soundPlayer!!.stop()
                         }
                         soundPlayer = MediaPlayer.create(context, R.raw.sorciere_endort)
+                        soundPlayer!!.start()
                         soundPlayer!!.setOnCompletionListener {
                             raiseFlagPipoteur()
                         }
@@ -926,6 +943,7 @@ class GameActivity : AppCompatActivity() {
                             soundPlayer!!.stop()
                         }
                         soundPlayer = MediaPlayer.create(context, R.raw.voyante_endort)
+                        soundPlayer!!.start()
                         soundPlayer!!.setOnCompletionListener {
                             raiseFlagLoups()
                         }
