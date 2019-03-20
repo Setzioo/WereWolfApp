@@ -41,4 +41,17 @@
             android:shadowDy="2"
             android:shadowRadius="5"
             android:layout_marginTop="16dp"/>
+    <TextView
+            android:layout_width="246dp"
+            android:layout_height="233dp"
+            android:id="@+id/noWolfMessage" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:textStyle="bold" android:textAlignment="center"
+            android:textColor="@color/blanc_casse" android:textSize="34sp"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="5"/>
 </android.support.constraint.ConstraintLayout>
