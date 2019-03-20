@@ -107,18 +107,18 @@ class LoupFragment : Fragment() {
                         }
                     }
                 }
-                if(isAlivePlayer && isLoupPlayer) {
-                    if (dataSnapshot.exists()) {
-                        game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                        if(game!!.masterId == currentPlayer!!.id){
-                            isMasterPlayer = true
-                        }
-                        if (game != null) {
-                            if (game!!.listPlayer != null) {
-                                listId = game!!.listPlayer
-                            }
+                if (dataSnapshot.exists()) {
+                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                    if(game!!.masterId == currentPlayer!!.id){
+                        isMasterPlayer = true
+                    }
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
+                            listId = game!!.listPlayer
                         }
                     }
+                }
+                if(isAlivePlayer && isLoupPlayer) {
                     if (listId != null) {
                         for (i in listId!!) {
                             for (u in dataSnapshot.child("Users").children) {
