@@ -245,7 +245,7 @@ class GameActivity : AppCompatActivity() {
         flagDead = true
         if (game!!.Flags!!.DeadFlag) {
             Log.d("FUN", "low before night")
-            lowerFlagDead()
+           lowerFlagDead()
         }
         if (game!!.Flags!!.VoteFlag) {
             lowerFlagVote()
