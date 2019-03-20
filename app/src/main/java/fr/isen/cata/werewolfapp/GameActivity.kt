@@ -78,7 +78,6 @@ class GameActivity : AppCompatActivity() {
                             currentRole = currentPlayer!!.role!!
 
                             gameListener()
-                            flagListener()
 
                         }
 
@@ -86,6 +85,9 @@ class GameActivity : AppCompatActivity() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+
+                    flagListener()
+
                     if (game != null) {
                         if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
