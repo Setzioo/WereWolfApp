@@ -35,12 +35,9 @@ class VoyanteFragment : Fragment() {
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
-        voyanteRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
-
         val players: ArrayList<PlayerModel?> = ArrayList()
 
-        adapter = VoyanteAdapter(players)
-        voyanteRecyclerView.adapter = adapter
+
 
         getVillagers(players)
     }
@@ -90,19 +87,32 @@ class VoyanteFragment : Fragment() {
                         }
                     }
                 }
-                if (listId != null) {
-                    for (i in listId!!) {
-                        for (u in dataSnapshot.child("Users").children) {
-                            val user = u.getValue(PlayerModel::class.java)
-                            if (i == user!!.id) {
-                                if (user.id != currentPlayer!!.id && user.state) {
-                                    players.add(user)
-                                    adapter.notifyDataSetChanged()
+
+                if(currentPlayer!!.state)
+                {
+                    voyanteRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
+
+                    adapter = VoyanteAdapter(players)
+                    voyanteRecyclerView.adapter = adapter
+
+                    if (listId != null) {
+                        for (i in listId!!) {
+                            for (u in dataSnapshot.child("Users").children) {
+                                val user = u.getValue(PlayerModel::class.java)
+                                if (i == user!!.id) {
+                                    if (user.id != currentPlayer!!.id && user.state) {
+                                        players.add(user)
+
+                                        adapter.notifyDataSetChanged()
+                                    }
                                 }
                             }
                         }
                     }
                 }
+
+
+
                 beginCompteur(10)
             }
 

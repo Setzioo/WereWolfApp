@@ -77,6 +77,9 @@ class GameActivity : AppCompatActivity() {
                             gameName = currentPlayer!!.currentGame!!
                             currentRole = currentPlayer!!.role!!
 
+                            gameListener()
+                            flagListener()
+
                         }
 
                     }
@@ -111,8 +114,6 @@ class GameActivity : AppCompatActivity() {
                         }
                     }
                 }
-                gameListener()
-                flagListener()
 
             }
 
