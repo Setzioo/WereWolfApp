@@ -65,9 +65,11 @@ class GameActivity : AppCompatActivity() {
 
         setMusicListener()
 
-        getPlayerInfo()
 
         manager.BeginningFragment(context)
+
+        getPlayerInfo()
+
 
 
 
