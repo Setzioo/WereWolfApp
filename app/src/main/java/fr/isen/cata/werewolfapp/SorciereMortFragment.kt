@@ -34,7 +34,7 @@ class SorciereMortFragment : Fragment() {
     var game: PartyModel? = null
     var deathPotion = true
     var listId: MutableList<String>? = arrayListOf()
-    private var compteur : CountDownTimer? = null
+    var compteur : CountDownTimer? = null
     val compteurMax: Long = 10
 
 

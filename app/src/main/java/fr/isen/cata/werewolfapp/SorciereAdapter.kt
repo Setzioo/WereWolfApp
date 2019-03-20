@@ -1,5 +1,6 @@
 package fr.isen.cata.werewolfapp
 
+import android.os.CountDownTimer
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -32,12 +33,15 @@ class SorciereAdapter(private val players: ArrayList<PlayerModel?>) :
 
         holder.card.setOnClickListener {
             val id = players[position]!!.id
+            SorciereMortFragment().compteur!!.cancel()
             useDeathPotion(id, holder)
         }
 
     }
 
     private fun useDeathPotion(id: String, holder: ViewHolder) {
+
+
         mDatabase.child("Users").child(id).child("state").setValue(false)
         mDatabase.child("Party").child(gameName).child("deathPotion").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(true)
