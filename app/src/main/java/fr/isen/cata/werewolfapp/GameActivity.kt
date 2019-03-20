@@ -544,14 +544,9 @@ class GameActivity : AppCompatActivity() {
 
                 }
             }
-            else{
-                previousLowerFlag = false
-            }
-        }
-        else{
-            previousLowerFlag = true
 
         }
+
     }
 
     private fun checkDead() {
@@ -631,9 +626,12 @@ class GameActivity : AppCompatActivity() {
                         if (!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag && game!!.FinishFlags!!.ChasseurFlag) {
                             Log.e("FUN", "Heure du vote")
                             mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
+                            previousLowerFlag = true
                             mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(false)
                             mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlag").setValue(true)
                             mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
+                            previousLowerFlag = false
+
                             raiseFlagVote()
                         }
                     }
@@ -641,9 +639,13 @@ class GameActivity : AppCompatActivity() {
                     if (!game!!.Flags!!.VoteFlag && !game!!.Flags!!.DeadFlag) {
                         Log.e("FUN", "Heure du vote")
                         mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
+                        previousLowerFlag = true
+
                         mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(false)
                         mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlag").setValue(true)
                         mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
+                        previousLowerFlag = false
+
                         raiseFlagVote()
                     }
                 }
