@@ -121,7 +121,7 @@ class VoteJourFragment : Fragment() {
                 }
 
                 if (!equality) {
-                    mUserReference.child(idToKill).child("state").setValue(false)
+                    mUserReference.child("Users").child(idToKill).child("state").setValue(false)
                 }
 
                 if(currentPlayer!!.id == game!!.masterId)
