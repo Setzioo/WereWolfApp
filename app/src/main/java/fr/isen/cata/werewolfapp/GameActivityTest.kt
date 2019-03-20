@@ -45,6 +45,7 @@ class GameActivityTest : AppCompatActivity() {
     var didAngeWin = false
     var isHunterDead = false
     var flagDead = true
+    var listRole: MutableList<String>? = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,7 +114,7 @@ class GameActivityTest : AppCompatActivity() {
                         alivePlayers = listPlayer
                         if (alivePlayers != null) {
                             for (i in alivePlayers!!) {
-                                //Log.d("FUN", "alive : "+i!!.id)
+                                listRole!!.add(i!!.role!!)
                             }
                         }
                     }
@@ -768,9 +769,34 @@ class GameActivityTest : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.getValue(PartyModel::class.java)
+                    if (game != null) {
+                        if (game!!.listPlayer != null) {
+                            listId = game!!.listPlayer
+                            aliveId = listId
+                        }
+                    }
+
 
                 }
-            }
+                if (listId != null) {
+                    listPlayer!!.clear()
+                    for (i in listId!!) {
+                        for (u in dataSnapshot.child("Users").children) {
+                            val users = u.getValue(PlayerModel::class.java)
+                            if (i == users!!.id) {
+                                listPlayer!!.add(users)
+                            }
+                        }
+                    }
+                        alivePlayers = listPlayer
+                        if (alivePlayers != null) {
+                            listRole!!.clear()
+                            for (i in alivePlayers!!) {
+                                listRole!!.add(i!!.role!!)
+                            }
+                        }
+                    }
+                }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "No Flag", databaseError.toException())
