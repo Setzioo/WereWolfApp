@@ -54,7 +54,7 @@
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".GameActivityTest"
+                android:name=".GameActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
