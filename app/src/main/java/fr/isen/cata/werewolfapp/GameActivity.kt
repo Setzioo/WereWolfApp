@@ -814,11 +814,7 @@ class GameActivity : AppCompatActivity() {
                         soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
                         soundPlayer!!.start()
                         soundPlayer!!.setOnCompletionListener {
-                            if (currentPlayer!!.id == game!!.masterId) {
-
-                                mDatabase.child("Party").child(gameName).child("nightGame")
-                                    .setValue(false)
-                            }
+                            raiseFlagLoups()
                         }
 
 
@@ -846,8 +842,7 @@ class GameActivity : AppCompatActivity() {
                             }
                         } else {
                             if (currentPlayer!!.id == game!!.masterId) {
-                                mDatabase.child("Party").child(gameName).child("nightGame")
-                                    .setValue(false)
+                                raiseFlagLoups()
                             }
                         }
                     }
@@ -954,10 +949,18 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer = MediaPlayer.create(context, R.raw.sorciere_endort)
                                 soundPlayer!!.start()
                                 soundPlayer!!.setOnCompletionListener {
-                                    raiseFlagPipoteur()
+                                    if (currentPlayer!!.id == game!!.masterId) {
+
+                                        mDatabase.child("Party").child(gameName).child("nightGame")
+                                            .setValue(false)
+                                    }
                                 }
                             } else {
-                                raiseFlagPipoteur()
+                                if (currentPlayer!!.id == game!!.masterId) {
+
+                                    mDatabase.child("Party").child(gameName).child("nightGame")
+                                        .setValue(false)
+                                }
                             }
 
                         }
@@ -999,10 +1002,10 @@ class GameActivity : AppCompatActivity() {
                                 soundPlayer = MediaPlayer.create(context, R.raw.voyante_endort)
                                 soundPlayer!!.start()
                                 soundPlayer!!.setOnCompletionListener {
-                                    raiseFlagLoups()
+                                    raiseFlagPipoteur()
                                 }
                             } else {
-                                raiseFlagLoups()
+                                raiseFlagPipoteur()
                             }
                         }
                     }
