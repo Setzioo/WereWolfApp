@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_create.*
 
 class CreateActivity : AppCompatActivity() {
 
-    private var nbPlayer = 1
+    private var nbPlayer = 4
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
     private var nameValid: Boolean = true
@@ -107,7 +107,7 @@ class CreateActivity : AppCompatActivity() {
         }
 
         removeButton.setOnClickListener {
-            if (nbPlayer > 5) {
+            if (nbPlayer > 4) {
                 nbPlayer -= 1
             } else {
                 Toast.makeText(this, "minimum 4 joueurs!", Toast.LENGTH_LONG).show()
