@@ -100,12 +100,12 @@ class VisionFragment : Fragment() {
                             beginCompteur(5)
                         }
                     } else {
-                        val noVoyanteMessage = "La voyante est    en train de jouer..."
+                        val noVoyanteMessage = "La voyante est en train de jouer..."
                         messageText.text = noVoyanteMessage
                         beginCompteur(5)
                     }
                 } else {
-                    val noMortVoyanteMessage = "Vous êtes mort.   La voyante est en     train de jouer..."
+                    val noMortVoyanteMessage = "Vous êtes mort. La voyante est en train de jouer..."
                     messageText.text = noMortVoyanteMessage
                     beginCompteur(5)
                 }
