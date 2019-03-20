@@ -8,14 +8,14 @@
                                              android:background="@drawable/background3">
     <android.support.v7.widget.RecyclerView
             android:layout_width="0dp"
-            android:layout_height="618dp"
+            android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:id="@+id/deadRecyclerView"
             app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/deadTextView"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="75dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.185"/>
     <TextView
             android:text="@string/liste_des_morts"
@@ -33,4 +33,13 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="28dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.45"/>
+    <Button
+            android:text="Accueil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/goToHome"
+            android:background="@drawable/buttonshape" android:visibility="invisible" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"/>
 </android.support.constraint.ConstraintLayout>

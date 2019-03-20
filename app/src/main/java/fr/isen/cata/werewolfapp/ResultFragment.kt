@@ -35,6 +35,8 @@ class ResultFragment : Fragment() {
         deadTextView.text = titre
         mDatabase = FirebaseDatabase.getInstance().reference
 
+        goToHome.visibility = View.VISIBLE
+
         deadRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
 
         val players: ArrayList<PlayerModel?> = ArrayList()
@@ -86,15 +88,16 @@ class ResultFragment : Fragment() {
                     }
                 }
 
-                Handler().postDelayed({
-
+                goToHome.setOnClickListener {
                     Log.e("end", "effacer partie")
+                    mDatabase.child("Party").child(gameName).child("goToHome").setValue(true)
                     mDatabase.child("Party").child(gameName).removeValue()
                     val intent = Intent(context, HomeActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                }, 6000)
+                }
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

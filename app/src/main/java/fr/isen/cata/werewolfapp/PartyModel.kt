@@ -21,4 +21,5 @@ class PartyModel(
     var endGame: Boolean = false
     var wolfKill: String = ""
     var winner: Int = 0
+    var goToHome: Boolean = false
 }

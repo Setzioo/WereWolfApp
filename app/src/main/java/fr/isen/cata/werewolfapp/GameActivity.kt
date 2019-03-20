@@ -615,6 +615,23 @@ class GameActivity : AppCompatActivity() {
             }
         })
 
+        mDatabase.child("Party").child(gameName).child("goToHome").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val bool = dataSnapshot.value as Boolean
+                    if (bool) {
+                        if (musicPlayer != null) {
+                            musicPlayer!!.stop()
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "No Flag", databaseError.toException())
+            }
+        })
+
 
     }
 

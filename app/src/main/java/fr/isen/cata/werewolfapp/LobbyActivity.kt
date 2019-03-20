@@ -352,6 +352,8 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
         mDatabase.child("Party").child(gameName).child("voteResult").setValue("")
         mDatabase.child("Party").child(gameName).child("winner").setValue(0)
+        mDatabase.child("Party").child(gameName).child("goToHome").setValue(false)
+
 
 
         mDatabase.child("Party").child(gameName).child("lifePotion").setValue(true)
