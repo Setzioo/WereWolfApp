@@ -140,7 +140,9 @@ class PipoteurFragment : Fragment() {
             Toast.makeText(context, "Aucun joueur n'a été selectionné", Toast.LENGTH_LONG).show()
         }
 
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(true)
+        if(game!!.masterId == currentPlayer!!.id) {
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(true)
+        }
         val manager = MyFragmentManager()
         manager.NightFragment(context!!)
     }

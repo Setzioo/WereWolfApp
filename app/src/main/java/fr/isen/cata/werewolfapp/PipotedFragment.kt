@@ -45,7 +45,10 @@ class PipotedFragment : Fragment() {
             override fun onFinish() {
                 pipotedTimer.text = "0"
                 Handler().postDelayed({
-                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag").setValue(true)
+                    if(game!!.masterId == currentPlayer!!.id) {
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag")
+                            .setValue(true)
+                    }
                 }, 1500)
             }
         }.start()

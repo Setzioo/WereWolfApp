@@ -133,7 +133,9 @@ class LoupFragment : Fragment() {
                     mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
                 }
 
-                mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(true)
+                if(game!!.masterId == currentPlayer!!.id) {
+                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(true)
+                }
 
                 //val manager = MyFragmentManager()
                 //manager.NightFragment(context!!)

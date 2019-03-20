@@ -115,8 +115,10 @@ class VisionFragment : Fragment() {
     }
 
     fun endOfVision() {
-        mDatabase.child("Party").child(currentPlayer!!.currentGame!!).child("FinishFlags").child("VoyanteFlag")
-            .setValue(true)
+        if(game!!.masterId == currentPlayer!!.id) {
+            mDatabase.child("Party").child(currentPlayer!!.currentGame!!).child("FinishFlags").child("VoyanteFlag")
+                .setValue(true)
+        }
         val manager = MyFragmentManager()
         manager.NightFragment(context!!)
     }

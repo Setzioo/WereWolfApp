@@ -121,8 +121,10 @@ class ChasseurFragment : Fragment() {
             Toast.makeText(context, "Trop tard, vous avez mis trop de temps...", Toast.LENGTH_LONG).show()
         }
 
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag")
-            .setValue(true)
+        if(game!!.masterId == currentPlayer!!.id) {
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag")
+                .setValue(true)
+        }
 
         val manager = MyFragmentManager()
         manager.NightFragment(context!!)

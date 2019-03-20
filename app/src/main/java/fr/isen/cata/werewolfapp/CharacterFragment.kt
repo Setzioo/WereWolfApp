@@ -21,7 +21,8 @@ class CharacterFragment : Fragment() {
     private lateinit var mDatabase: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
-    private var gameName: String? = null
+    private var gameName: String = ""
+    private var game: PartyModel? = null
     private var currentRole : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,25 +90,30 @@ class CharacterFragment : Fragment() {
 
         val id: String = auth.currentUser!!.uid
 
-        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+        val mUserReference = FirebaseDatabase.getInstance().getReference("")
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val user: MutableList<PlayerModel?> = arrayListOf()
                 if (dataSnapshot.exists()) {
-                    for (i in dataSnapshot.children) {
+                    for (i in dataSnapshot.child("Users").children) {
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
                         if (i?.id == id) {
                             currentPlayer = i
-                            gameName = currentPlayer!!.currentGame
+                            gameName = currentPlayer!!.currentGame!!
                             currentRole = currentPlayer!!.role
                             changeCardImageCharacter(currentPlayer!!.role)
                         }
                     }
+                    if (dataSnapshot.exists()) {
+                        game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                    }
                     Handler().postDelayed({
-                        mDatabase.child("Party").child(gameName!!).child("nightGame").setValue(true)
+                        if(game!!.masterId == currentPlayer!!.id) {
+                            mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
+                        }
                     }, 5000)
 
                 }

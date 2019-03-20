@@ -86,7 +86,10 @@ class PrintDeadChasseurFragment : Fragment() {
                     }
                 }
                 Handler().postDelayed({
-                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintChasseurFlag").setValue(true)
+                    if(game!!.masterId == currentPlayer!!.id) {
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintChasseurFlag")
+                            .setValue(true)
+                    }
                 }, 6000)
             }
 

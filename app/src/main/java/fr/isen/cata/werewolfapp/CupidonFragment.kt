@@ -139,7 +139,9 @@ class CupidonFragment : Fragment() {
             Toast.makeText(context, "Aucun joueur selectionné", Toast.LENGTH_LONG).show()
         }
 
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
+        if(game!!.masterId == currentPlayer!!.id) {
+            mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
+        }
         val manager = MyFragmentManager()
         manager.NightFragment(context!!)
     }

@@ -87,7 +87,10 @@ class PrintDeadNightFragment : Fragment() {
                 }
 
                 Handler().postDelayed({
-                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintNightFlag").setValue(true)
+                    if(game!!.masterId == currentPlayer!!.id) {
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintNightFlag")
+                            .setValue(true)
+                    }
                 }, 6000)
             }
 

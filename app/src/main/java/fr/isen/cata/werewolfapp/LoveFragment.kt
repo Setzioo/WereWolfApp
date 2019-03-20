@@ -49,7 +49,9 @@ class LoveFragment : Fragment() {
             override fun onFinish() {
                 loveTimer.text = "0"
                 Handler().postDelayed({
-                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(true)
+                    if(game!!.masterId == currentPlayer!!.id) {
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(true)
+                    }
                 }, 1500)
             }
         }.start()

@@ -84,7 +84,10 @@ class PrintDeadVoteFragment : Fragment() {
                     }
                 }
                 Handler().postDelayed({
-                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintVoteFlag").setValue(true)
+                    if(game!!.masterId == currentPlayer!!.id) {
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintVoteFlag")
+                            .setValue(true)
+                    }
                 }, 6000)
             }
 
