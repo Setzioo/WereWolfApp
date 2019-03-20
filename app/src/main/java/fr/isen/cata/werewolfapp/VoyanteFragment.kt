@@ -50,7 +50,7 @@ class VoyanteFragment : Fragment() {
         object : CountDownTimer(compteurMax * 1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                timeLeft = "" + (millisUntilFinished / 1000 + 1)
+                timeLeft = "" + (millisUntilFinished / 1000 + 1).toString()
                 voyanteTimer.text = timeLeft
             }
 
