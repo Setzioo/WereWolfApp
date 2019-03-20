@@ -1133,10 +1133,16 @@ class GameActivity : AppCompatActivity() {
         for (player in alivePlayers!!) {
             if (player!!.role == "Loup-Garou") {
                 nbLoup++
+                Log.e("WIN",nbLoup.toString())
+
             } else {
                 nbVillageois++
+                Log.e("WIN",nbVillageois.toString())
+
             }
         }
+        Log.e("WIN",nbPlayer.toString())
+
         if (nbLoup == nbPlayer) {
             codeGame = 5
         } else if (nbVillageois == nbPlayer) {
