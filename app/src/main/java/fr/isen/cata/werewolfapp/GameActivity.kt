@@ -478,6 +478,26 @@ class GameActivity : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
+        mDatabase.child("Party").child(gameName).child("endGame").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                        val bool = dataSnapshot.value as Boolean
+                        Log.e("END", bool.toString())
+                        if (bool) {
+
+                                manager.FinJeuFragment(context)
+                        }
+
+
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "No Flag", databaseError.toException())
+            }
+        })
 
 
     }
@@ -1206,6 +1226,7 @@ class GameActivity : AppCompatActivity() {
         if (angeAlreadyWin) {
             codeGame = 4
         }
+        Log.e("END", "code : "+codeGame.toString())
         return codeGame
     }
 }
