@@ -1,17 +1,9 @@
 package fr.isen.cata.werewolfapp
 
-import android.content.Context
-import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Vibrator
-import android.support.v4.app.Fragment
-import android.widget.VideoView
-import android.support.v4.os.HandlerCompat.postDelayed
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.WindowManager
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -116,8 +108,10 @@ class GameActivity : AppCompatActivity() {
                         if (listPlayer != null) {
                             for (i in listPlayer!!) {
                                 listRole!!.add(i!!.role!!)
+                                Log.e("ROLES",i!!.role!!)
                             }
                         }
+
                     }
                 }
 
@@ -144,20 +138,19 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Chasseur")) {
-                            if(deadPlayers != null) {
+                            if (deadPlayers != null) {
                                 for (i in deadPlayers!!) {
                                     if (i!!.role == "Chasseur") {
                                         chasseurTurn()
                                         randomFlag = true
                                     }
                                 }
-                                if(!randomFlag) {
+                                if (!randomFlag) {
                                     raiseFlagVote()
                                 }
                             }
 
-                        }
-                        else {
+                        } else {
                             raiseFlagVote()
                         }
                     }
@@ -418,7 +411,8 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         mDatabase.child("Party").child(gameName).child("Flags").child("ChasseurFlag").setValue(false)
-                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag").setValue(false)
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag")
+                            .setValue(false)
 
                         voteTurn()
                     }
@@ -670,11 +664,9 @@ class GameActivity : AppCompatActivity() {
                             mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
                             mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
                         } else {
-                            if(game!!.Flags!!.VoteFlag) {
+                            if (game!!.Flags!!.VoteFlag) {
                                 mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
-                            }
-                            else
-                            {
+                            } else {
                                 raiseFlagVote()
                             }
                         }
@@ -695,8 +687,7 @@ class GameActivity : AppCompatActivity() {
                         if (isItTheEnd(didAngeWin) != 0) {
                             mDatabase.child("Party").child(gameName).child("winner").setValue(isItTheEnd(didAngeWin))
                             mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
-                        }
-                        else {
+                        } else {
                             raiseFlagChasseur()
                         }
 
@@ -869,7 +860,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun raiseFlagVote() {
-            mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(true)
+        mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(true)
     }
 
     private fun raiseFlagDeadNight() {
@@ -970,7 +961,6 @@ class GameActivity : AppCompatActivity() {
             }
         })
     }
-
 
 
     private fun checkForDeadVote() {
