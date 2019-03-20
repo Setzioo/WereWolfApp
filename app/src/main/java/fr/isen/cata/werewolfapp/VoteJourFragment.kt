@@ -121,20 +121,15 @@ class VoteJourFragment : Fragment() {
                             }
                         }
                     }
+                    if (!equality) {
+                        mUserReference.child("Users").child(idToKill).child("state").setValue(false)
+                    }
+
+                    if(isMasterPlayer)
+                    {
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(true)
+                    }
                 }
-
-                if (!equality) {
-                    mUserReference.child("Users").child(idToKill).child("state").setValue(false)
-                }
-
-                if(isMasterPlayer)
-                {
-                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(true)
-                }
-
-                /*val manager = MyFragmentManager()
-                manager.DayFragment(context!!)*/
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -184,7 +179,7 @@ class VoteJourFragment : Fragment() {
                             for (u in dataSnapshot.child("Users").children) {
                                 val user = u.getValue(PlayerModel::class.java)
                                 if (i == user!!.id) {
-                                    if (user.id != currentPlayer!!.id) {
+                                    if (user.id != currentPlayer!!.id && user.state) {
                                         players.add(user)
                                         voteRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
                                         jourAdapter = JourAdapter(players)
