@@ -1176,7 +1176,9 @@ class GameActivity : AppCompatActivity() {
 
         if (nbLoup == nbPlayer) {
             codeGame = 5
-        } else if (nbVillageois == nbPlayer) {
+        }
+
+        else if (nbVillageois == nbPlayer) {
             codeGame = 3
         }
         if (pipoteur) {

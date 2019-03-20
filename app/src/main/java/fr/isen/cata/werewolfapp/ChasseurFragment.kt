@@ -116,7 +116,6 @@ class ChasseurFragment : Fragment() {
             val mDatabase = FirebaseDatabase.getInstance().reference
             mDatabase.child("Users").child(victimPlayer.id).child("state").setValue(false)
             mDatabase.child("Users").child(victimPlayer.id).child("selected").setValue(false)
-            Toast.makeText(context, adapter.victimPlayer!!.pseudo + " est mort", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(context, "Trop tard, vous avez mis trop de temps...", Toast.LENGTH_LONG).show()
         }
