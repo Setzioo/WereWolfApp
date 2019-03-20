@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.widget.VideoView
 import android.support.v4.os.HandlerCompat.postDelayed
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -48,6 +49,7 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         auth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance().reference
