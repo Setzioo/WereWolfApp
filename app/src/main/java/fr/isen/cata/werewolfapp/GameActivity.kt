@@ -945,7 +945,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
 
-                        if (listRoleAlive!!.contains("Sorciere")) {
+                        if (listRoleAlive!!.contains("Voyante")) {
 
                             if (soundPlayer != null) {
                                 soundPlayer!!.stop()
