@@ -107,7 +107,7 @@ class CreateActivity : AppCompatActivity() {
         }
 
         removeButton.setOnClickListener {
-            if (nbPlayer > 1) {
+            if (nbPlayer > 5) {
                 nbPlayer -= 1
             } else {
                 Toast.makeText(this, "minimum 4 joueurs!", Toast.LENGTH_LONG).show()
