@@ -205,7 +205,7 @@ class GameActivity : AppCompatActivity() {
         val voyanteAlive : Boolean?
         val sorciereAlive : Boolean?
         val pipoteurAlive : Boolean?
-        if(voyante){
+        /*if(voyante){
             voyanteAlive = isVoyanteAlive()
             if(!voyanteAlive && !game!!.Flags!!.VoyanteFlag){
                 mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
@@ -241,7 +241,7 @@ class GameActivity : AppCompatActivity() {
                 mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
                 previousLowerFlag = false
             }
-        }
+        }*/
         flagDead = true
         if (game!!.Flags!!.DeadFlag) {
             Log.d("FUN", "low before night")
