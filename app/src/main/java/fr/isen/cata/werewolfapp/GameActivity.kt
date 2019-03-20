@@ -503,7 +503,7 @@ class GameActivity : AppCompatActivity() {
 
         game!!.Flags = flags
         if (!game!!.Flags!!.LowerFlag) {
-            if (!previousLowerFlag) {
+            if (previousLowerFlag) {
 
 
                 if (!game!!.endGame) {
