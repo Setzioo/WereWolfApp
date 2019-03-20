@@ -125,7 +125,7 @@ class LoupFragment : Fragment() {
                 }
 
                 if (!equality) {
-                    mDatabaseReference.child(idToKill).child("Users").child("state").setValue(false)
+                    mDatabaseReference.child("Users").child(idToKill).child("state").setValue(false)
                     mDatabase.child("Party").child(gameName).child("wolfKill").setValue(idToKill)
                 }
                 else

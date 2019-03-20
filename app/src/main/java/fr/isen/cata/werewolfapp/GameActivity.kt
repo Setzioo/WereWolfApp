@@ -418,7 +418,10 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("PipotedFlag").setValue(true)
     }
     private fun raiseFlagVote(){
-        mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(true)
+        if(currentPlayer!!.state)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(true)
+        }
     }
     private fun raiseFlagTour(){
         mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(true)
