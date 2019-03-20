@@ -305,7 +305,7 @@ class GameActivity : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
-        mPartyReference.child("Pipoteur").addValueEventListener(object : ValueEventListener {
+        mPartyReference.child("PipoteurFlag").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
