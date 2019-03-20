@@ -21,7 +21,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var mLobbyReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var context = this
-    private var previousLowerFlag = true
+    private var previousLowerFlag = false
     /* Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
 
         Ordre de jeu la nuit:
@@ -544,9 +544,14 @@ class GameActivity : AppCompatActivity() {
 
                 }
             }
-            previousLowerFlag = false
+            else{
+                previousLowerFlag = false
+            }
         }
-        previousLowerFlag = true
+        else{
+            previousLowerFlag = true
+
+        }
     }
 
     private fun checkDead() {
