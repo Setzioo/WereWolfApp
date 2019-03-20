@@ -2,6 +2,7 @@ package fr.isen.cata.werewolfapp
 
 import android.animation.ValueAnimator
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -12,6 +13,7 @@ import android.view.animation.AccelerateInterpolator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_tuto.*
+import kotlinx.android.synthetic.main.fragment_cupidon.*
 import kotlinx.android.synthetic.main.fragment_vision.*
 import kotlinx.android.synthetic.main.layout_character.*
 
@@ -21,8 +23,10 @@ class CharacterFragment : Fragment() {
     private lateinit var mDatabase: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var currentPlayer: PlayerModel? = null
-    private var gameName: String? = null
     private var currentRole : String? = null
+    var gameName: String = ""
+    var game: PartyModel? = null
+    var pileOfTurn: MutableList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +86,20 @@ class CharacterFragment : Fragment() {
         valueAnimator1.start()
 
         getCurrentPlayer()
+}
+
+    fun beginCompteur(compteurMax: Long) {
+        object : CountDownTimer(compteurMax * 1000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+                Handler().postDelayed({
+                    mDatabase.child("Party").child(gameName).child("pileOfTurn").setValue(pileOfTurn)
+                }, 1500)
+            }
+        }.start()
     }
 
 
@@ -89,28 +107,30 @@ class CharacterFragment : Fragment() {
 
         val id: String = auth.currentUser!!.uid
 
-        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
+        val mUserReference = FirebaseDatabase.getInstance().getReference("")
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val user: MutableList<PlayerModel?> = arrayListOf()
                 if (dataSnapshot.exists()) {
-                    for (i in dataSnapshot.children) {
+                    for (i in dataSnapshot.child("Users").children) {
                         user.add(i.getValue(PlayerModel::class.java))
                     }
                     for (i in user) {
                         if (i?.id == id) {
                             currentPlayer = i
-                            gameName = currentPlayer!!.currentGame
-                            currentRole = currentPlayer!!.role
+                            gameName = currentPlayer!!.currentGame!!
+                            currentRole = currentPlayer!!.role!!
                             changeCardImageCharacter(currentPlayer!!.role)
                         }
-                    }
-                    Handler().postDelayed({
-                        mDatabase.child("Party").child(gameName!!).child("nightGame").setValue(true)
-                        mDatabase.child("Party").child(gameName!!).child("endGame").setValue(false)
-                    }, 5000)
 
+                    }
+                }
+                if (dataSnapshot.exists()) {
+                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                    pileOfTurn = game!!.pileOfTurn
+                    pileOfTurn.removeAt(0)
+                    beginCompteur(5)
                 }
             }
 

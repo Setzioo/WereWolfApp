@@ -329,6 +329,7 @@ class LobbyActivity : AppCompatActivity() {
     private fun setDefaultPartyValue(gameName: String) {
         // TODO : Mettrea jour les eventFlags si besoin
         //Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
+        /*
         mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(false)
@@ -343,7 +344,7 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("PipotedFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("TamponFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("TamponFlag").setValue(false)*/
 
 
         mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
@@ -356,7 +357,7 @@ class LobbyActivity : AppCompatActivity() {
 
 
 
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
+       /* mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(false)
@@ -365,7 +366,7 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LowerFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LowerFlag").setValue(false)*/
     }
 
     private fun startGame() {
@@ -627,7 +628,7 @@ class LobbyActivity : AppCompatActivity() {
                 Sorciere(deathPotion = true, lifePotion = true),
                 Pipoteur()
             )
-            else -> arrayListOf(LoupGarou(), Villageois(), Voyante())
+            else -> arrayListOf(LoupGarou(), Voyante())  //TEST ------------------- TEST------------------- TEST
         }
         list.shuffle()
         return list

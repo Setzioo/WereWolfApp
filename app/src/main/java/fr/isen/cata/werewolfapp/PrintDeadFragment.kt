@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_chasseur.*
 import kotlinx.android.synthetic.main.fragment_print_dead.*
+import kotlinx.android.synthetic.main.fragment_vision.*
 
 class PrintDeadFragment : Fragment() {
 
@@ -24,6 +25,8 @@ class PrintDeadFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
+    var pileOfTurn: MutableList<String> = arrayListOf()
+    var isGameMaster: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,6 +72,11 @@ class PrintDeadFragment : Fragment() {
                     if (game != null) {
                         if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
+                            if(currentPlayer!!.id == game!!.masterId){
+                                pileOfTurn = game!!.pileOfTurn
+                                pileOfTurn.removeAt(0)
+                                isGameMaster = true
+                            }
                         }
                     }
                 }
@@ -85,15 +93,29 @@ class PrintDeadFragment : Fragment() {
                         }
                     }
                 }
-                Thread.sleep(6000)
-
-                mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(true)
+                beginCompteur(6)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
+    }
+
+    fun beginCompteur(compteurMax: Long) {
+        object : CountDownTimer(compteurMax * 1000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+                Handler().postDelayed({
+                    if(isGameMaster){
+                        mDatabase.child("Party").child(gameName).child("pileOfTurn").setValue(pileOfTurn)
+                    }
+                }, 1500)
+            }
+        }.start()
     }
 
     override fun onCreateView(

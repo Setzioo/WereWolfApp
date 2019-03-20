@@ -12,8 +12,7 @@ class PartyModel(
     var nbPlayer: Int = _nbPlayer
     var listPlayer: MutableList<String>? = _listPlayer
     var startGame: Boolean = _startGame
-    var Flags: FlagModel? = null
-    var FinishFlags: FlagModel? = null
+    var pileOfTurn: MutableList<String> = arrayListOf()
     var deathPotion: Boolean = true
     var lifePotion: Boolean = true
     var voteResult: String = ""//id of the dead

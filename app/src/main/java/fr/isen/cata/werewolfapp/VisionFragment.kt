@@ -22,6 +22,7 @@ class VisionFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
+    var pileOfTurn: MutableList<String> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,6 +61,8 @@ class VisionFragment : Fragment() {
                     if (game != null) {
                         if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
+                            pileOfTurn = game!!.pileOfTurn
+                            pileOfTurn.removeAt(0)
                         }
                     }
                 }
@@ -108,17 +111,10 @@ class VisionFragment : Fragment() {
             override fun onFinish() {
                 visionTimer.text = "0"
                 Handler().postDelayed({
-                    endOfVision()
+                    mDatabase.child("Party").child(gameName).child("pileOfTurn").setValue(pileOfTurn)
                 }, 1500)
             }
         }.start()
-    }
-
-    fun endOfVision() {
-        mDatabase.child("Party").child(currentPlayer!!.currentGame!!).child("FinishFlags").child("VoyanteFlag")
-            .setValue(true)
-        val manager = MyFragmentManager()
-        manager.NightFragment(context!!)
     }
 
     fun changeCardImage(role: String?) {

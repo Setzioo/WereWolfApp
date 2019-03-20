@@ -30,14 +30,13 @@ class GameActivity : AppCompatActivity() {
     lateinit var currentRole: String
     var listId: MutableList<String>? = arrayListOf()
     var listPlayer: MutableList<PlayerModel?>? = arrayListOf()
-    var aliveId: MutableList<String>? = arrayListOf()
     var alivePlayers: MutableList<PlayerModel?>? = arrayListOf()
     var gameName: String = ""
     var game: PartyModel? = null
     var nbTour: Int = 0
-    var didAngeWin = false
-    var isHunterDead = false
     var flagDead = true
+    var isGameMaster: Boolean = false
+    var pileOfTurn: MutableList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +47,97 @@ class GameActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
         mLobbyReference = FirebaseDatabase.getInstance().reference.child("")
 
+
+        getPlayerInfo()
+
     }
 
+    private fun playGame(turnPile: MutableList<String>) {
+        val actualTurn: String = turnPile[0]
+        var pileChange = false
+        Log.e("NEW", actualTurn)
 
-    /*
+        /*pileOfTurn.add("Begin")
+            pileOfTurn.add("DebutNuit")
+            pileOfTurn.add("Cupidon")
+            pileOfTurn.add("Lovers")
+            pileOfTurn.add("Voyante")
+            pileOfTurn.add("Loups")
+            pileOfTurn.add("Sorciere")
+            pileOfTurn.add("Pipoteur")
+            pileOfTurn.add("RecapMort")
+            pileOfTurn.add("VerifWin")*/
+
+        if(actualTurn == "Begin") {
+            manager.BeginningFragment(this)
+        }
+
+        if(actualTurn == "Cupidon") {
+            if (isCupidon()) {
+                if (currentPlayer!!.role == "Cupidon") {
+                    manager.CupidonFragment(this)
+                } else {
+                    manager.NightFragment(this)
+                }
+            } else {
+                pileOfTurn.removeAt(0)
+                pileChange = true
+            }
+        }
+
+        if(actualTurn == "Voyante") {
+            if (isVoyanteAlive()) {
+                if (currentPlayer!!.role == "Voyante") {
+                    manager.VoyanteFragment(this)
+                } else {
+                    manager.NightFragment(this)
+                }
+            } else {
+                pileOfTurn.removeAt(0)
+                pileChange = true
+            }
+        }
+
+        if(actualTurn == "Loups") {
+            if(currentPlayer!!.role == "Loup-Garou"){
+                manager.LoupsFragment(this)
+            } else {
+                manager.NightFragment(this)
+            }
+        }
+
+        if(actualTurn == "RecapMort") {
+            manager.PrintDeadFragment(this)
+        }
+
+        if(actualTurn == "VerifWin") {
+            manager.DayFragment(this)
+        }
+
+        if(pileChange){
+            mDatabase.child("Party").child(gameName).child("pileOfTurn").setValue(pileOfTurn)
+        }
+    }
+
+    private fun getPileInfo() {
+        val mPartyReference = FirebaseDatabase.getInstance().getReference("Party").child(gameName)
+
+        mPartyReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Log.e("NEW", "pileInfoListener")
+                    game = dataSnapshot.getValue(PartyModel::class.java)
+                    pileOfTurn = game!!.pileOfTurn
+                    playGame(pileOfTurn)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+
+    }
+
     private fun getPlayerInfo() {
 
         val id: String = auth.currentUser!!.uid
@@ -68,9 +154,10 @@ class GameActivity : AppCompatActivity() {
                     for (i in user) {
                         if (i?.id == id) {
                             currentPlayer = i
+                            Log.e("NEW", currentPlayer!!.pseudo)
                             gameName = currentPlayer!!.currentGame!!
+                            Log.e("NEW", gameName)
                             currentRole = currentPlayer!!.role!!
-
                         }
 
                     }
@@ -80,11 +167,14 @@ class GameActivity : AppCompatActivity() {
                     if (game != null) {
                         if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
-                            aliveId = listId
+                            if(game!!.masterId == currentPlayer!!.id){
+                                Log.e("NEW", game!!.masterId + " - " + currentPlayer!!.id)
+                                isGameMaster = true
+                                //createPile(listId!!.size)
+                                createPile(1)
+                            }
                         }
                     }
-
-
                 }
                 if (listId != null) {
                     for (i in listId!!) {
@@ -92,30 +182,20 @@ class GameActivity : AppCompatActivity() {
                             val users = u.getValue(PlayerModel::class.java)
                             if (i == users!!.id) {
                                 listPlayer!!.add(users)
-                            }
-                        }
-                    }
-                    if (nbTour == 0 && listPlayer != null && !game!!.Flags!!.VoteFlag) {
-                        Log.d("FUN", "init alive")
-                        alivePlayers = listPlayer
-                        if (alivePlayers != null) {
-                            for (i in alivePlayers!!) {
-                                //Log.d("FUN", "alive : "+i!!.id)
+                                if(users.state) {
+                                    alivePlayers!!.add(users)
+                                }
                             }
                         }
                     }
                 }
-                gameListener()
-                flagListener()
-
+                getPileInfo()
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
     }
-*/
 
     private fun isSorciere(): Boolean {
         for (player in listPlayer!!) {
@@ -374,7 +454,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
     */
-
+/*
     private fun night() {
         manager.NightFragment(context)
     }
@@ -437,7 +517,7 @@ class GameActivity : AppCompatActivity() {
             manager.ChasseurFragment(context)
         }
     }
-
+*/
 
 
     private fun raiseFlagCupidon() {
@@ -948,5 +1028,49 @@ class GameActivity : AppCompatActivity() {
     }
 
     */
+
+    private fun createPile(nbPlayer: Int) {
+        if(nbPlayer == 1) {
+            pileOfTurn.add("Begin")
+            pileOfTurn.add("Cupidon")
+            //pileOfTurn.add("Lovers")
+            pileOfTurn.add("Voyante")
+            pileOfTurn.add("Loups")
+            pileOfTurn.add("Sorciere")
+            pileOfTurn.add("Pipoteur")
+            pileOfTurn.add("RecapMort")
+            pileOfTurn.add("VerifWin")
+
+            pileOfTurn.add("VoteJour")
+            pileOfTurn.add("VerifWin")
+            pileOfTurn.add("Voyante")
+            pileOfTurn.add("Loups")
+            pileOfTurn.add("Sorciere")
+            pileOfTurn.add("Pipoteur")
+
+            pileOfTurn.add("VoteJour")
+            pileOfTurn.add("VerifWin")
+            pileOfTurn.add("Voyante")
+            pileOfTurn.add("Loups")
+            pileOfTurn.add("Sorciere")
+            pileOfTurn.add("Pipoteur")
+
+            pileOfTurn.add("VoteJour")
+            pileOfTurn.add("VerifWin")
+            pileOfTurn.add("Voyante")
+            pileOfTurn.add("Loups")
+            pileOfTurn.add("Sorciere")
+            pileOfTurn.add("Pipoteur")
+
+            pileOfTurn.add("VoteJour")
+            pileOfTurn.add("VerifWin")
+            pileOfTurn.add("DebutNuit")
+            pileOfTurn.add("Voyante")
+            pileOfTurn.add("Loups")
+            pileOfTurn.add("Sorciere")
+            pileOfTurn.add("Pipoteur")
+        }
+        mDatabase.child("Party").child(gameName).child("pileOfTurn").setValue(pileOfTurn)
+    }
 }
 

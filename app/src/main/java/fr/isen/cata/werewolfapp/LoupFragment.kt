@@ -28,6 +28,7 @@ class LoupFragment : Fragment() {
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
     private val compteurMax: Long = 15
+    var pileOfTurn: MutableList<String> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -105,6 +106,8 @@ class LoupFragment : Fragment() {
                         if (game!!.listPlayer != null) {
                             listId = game!!.listPlayer
                         }
+                        pileOfTurn = game!!.pileOfTurn
+                        pileOfTurn.removeAt(0)
                     }
                 }
                 if (listId != null) {
@@ -144,6 +147,7 @@ class LoupFragment : Fragment() {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
+        mDatabase.child("Party").child(gameName).child("pileOfTurn").setValue(pileOfTurn)
     }
 
 
