@@ -44,4 +44,17 @@
             android:layout_marginStart="16dp"
             app:layout_constraintTop_toTopOf="@+id/chasseurTimer"
             app:layout_constraintBottom_toBottomOf="@+id/chasseurTimer" android:id="@+id/chasseurTextView"/>
+    <TextView
+            android:layout_width="226dp"
+            android:layout_height="279dp"
+            android:id="@+id/noChasseurMessage" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:textSize="30sp" android:textColor="@color/blanc_casse"
+            android:textStyle="bold" android:textAlignment="center"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="5"/>
 </android.support.constraint.ConstraintLayout>

@@ -25,6 +25,9 @@ class ChasseurFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
+    var isChasseurPlayer: Boolean = false
+    var isAlivePlayer: Boolean = false
+    val players: ArrayList<PlayerModel?> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,13 +36,6 @@ class ChasseurFragment : Fragment() {
 
 
         mDatabase = FirebaseDatabase.getInstance().reference
-
-        chasseurRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
-
-        val players: ArrayList<PlayerModel?> = ArrayList()
-
-        adapter = ChasseurAdapter(players)
-        chasseurRecyclerView.adapter = adapter
 
         getVillagers(players)
     }
@@ -55,7 +51,9 @@ class ChasseurFragment : Fragment() {
             override fun onFinish() {
                 chasseurTimer.text = "0"
                 Handler().postDelayed({
-                    killPlayer(adapter.victimPlayer)
+                    if(isAlivePlayer && isChasseurPlayer) {
+                        killPlayer(adapter.victimPlayer)
+                    }
                 }, 1500)
             }
         }.start()
@@ -78,29 +76,42 @@ class ChasseurFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
+                            if(currentPlayer!!.role == "Chasseur") {
+                                isChasseurPlayer = true
+                            }
+                            if(currentPlayer!!.state){
+                                isAlivePlayer = true
+                            }
                         }
                     }
                 }
-                if (dataSnapshot.exists()) {
-                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if (game != null) {
-                        if (game!!.listPlayer != null) {
-                            listId = game!!.listPlayer
+                if(isAlivePlayer && isChasseurPlayer){
+                    if (dataSnapshot.exists()) {
+                        game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                        if (game != null) {
+                            if (game!!.listPlayer != null) {
+                                listId = game!!.listPlayer
+                            }
                         }
                     }
-                }
-                if (listId != null) {
-                    for (i in listId!!) {
-                        for (u in dataSnapshot.child("Users").children) {
-                            val user = u.getValue(PlayerModel::class.java)
-                            if (i == user!!.id) {
-                                if (user.id != currentPlayer!!.id && user.state) {
-                                    players.add(user)
-                                    adapter.notifyDataSetChanged()
+                    if (listId != null) {
+                        for (i in listId!!) {
+                            for (u in dataSnapshot.child("Users").children) {
+                                val user = u.getValue(PlayerModel::class.java)
+                                if (i == user!!.id) {
+                                    if (user.id != currentPlayer!!.id && user.state) {
+                                        players.add(user)
+                                        chasseurRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
+                                        adapter = ChasseurAdapter(players)
+                                        chasseurRecyclerView.adapter = adapter
+                                        adapter.notifyDataSetChanged()
+                                    }
                                 }
                             }
                         }
                     }
+                } else {
+                    noChasseurMessage.text = "Le Chasseur est en train de jouer..."
                 }
                 beginCompteur(10)
             }
@@ -120,19 +131,8 @@ class ChasseurFragment : Fragment() {
             Toast.makeText(context, "Trop tard, vous avez mis trop de temps...", Toast.LENGTH_LONG).show()
         }
 
-        if(game!!.masterId == currentPlayer!!.id) {
-            mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag")
-                .setValue(true)
-        }
-
-        val manager = MyFragmentManager()
-        manager.NightFragment(context!!)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag").setValue(true)
     }
-
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Toast.makeText(context, "Chasseur", Toast.LENGTH_LONG).show()
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
