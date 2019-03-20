@@ -211,4 +211,15 @@ class MyFragmentManager {
             .replace(R.id.fragment, fragment)
             .commitAllowingStateLoss()
     }
+    fun ResultFragment(context: Context){
+        val fragment: Fragment?
+        Log.e("MANGER","Print Dead")
+
+        fragment = ResultFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+
+
 }
