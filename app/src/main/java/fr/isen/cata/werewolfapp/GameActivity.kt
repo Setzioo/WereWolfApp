@@ -138,9 +138,25 @@ class GameActivity : AppCompatActivity() {
         }
         return false
     }
+    private fun isSorciereAlive(): Boolean {
+        for (player in alivePlayers!!) {
+            if (player!!.role == "Sorcière") {
+                return true
+            }
+        }
+        return false
+    }
 
     private fun isVoyante(): Boolean {
         for (player in listPlayer!!) {
+            if (player!!.role == "Voyante") {
+                return true
+            }
+        }
+        return false
+    }
+    private fun isVoyanteAlive(): Boolean {
+        for (player in alivePlayers!!) {
             if (player!!.role == "Voyante") {
                 return true
             }
@@ -190,6 +206,46 @@ class GameActivity : AppCompatActivity() {
         val voyante = isVoyante()
         val sorciere = isSorciere()
         val pipoteur = isPipoteur()
+        var voyanteAlive =false
+        var sorciereAlive = false
+        var pipoteurAlive = false
+        if(voyante){
+            voyanteAlive = isVoyanteAlive()
+            if(!voyanteAlive){
+                mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
+                previousLowerFlag = true
+                mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(true)
+                mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(true)
+                mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
+                previousLowerFlag = false
+            }
+        }
+        if(sorciere){
+            sorciereAlive = isSorciereAlive()
+            if(!sorciereAlive){
+                mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
+                previousLowerFlag = true
+                mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(true)
+                mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(true)
+                mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
+                previousLowerFlag = false
+
+            }
+        }
+        if(pipoteur){
+            pipoteurAlive = isPipoteurAlive()
+            if(!pipoteurAlive){
+                mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(true)
+                previousLowerFlag = true
+                mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(true)
+
+                mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(true)
+                mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag").setValue(true)
+                mDatabase.child("Party").child(gameName).child("Flags").child("PipotedFlag").setValue(true)
+                mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
+                previousLowerFlag = false
+            }
+        }
         flagDead = true
         if (game!!.Flags!!.DeadFlag) {
             Log.d("FUN", "low before night")
