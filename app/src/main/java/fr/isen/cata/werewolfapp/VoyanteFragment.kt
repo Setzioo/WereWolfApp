@@ -24,6 +24,7 @@ class VoyanteFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
+    var timeLeft: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +50,7 @@ class VoyanteFragment : Fragment() {
         object : CountDownTimer(compteurMax * 1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                val timeLeft = "" + (millisUntilFinished / 1000 + 1)
+                timeLeft = "" + (millisUntilFinished / 1000 + 1)
                 voyanteTimer.text = timeLeft
             }
 
