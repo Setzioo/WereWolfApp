@@ -394,7 +394,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun voyanteTurn() {
-        if (currentRole == "Voyante") {
+        if (currentRole == "Voyante" && game!!.nightGame) {
             manager.VoyanteFragment(context)
         }
     }
