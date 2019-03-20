@@ -63,8 +63,7 @@ class SorciereMortFragment : Fragment() {
                 sorciereMortCompteur.text = goText
                 Handler().postDelayed({
                     mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(true)
-                    val manager = MyFragmentManager()
-                    manager.NightFragment(context!!)
+
                 }, 1000)
             }
         }.start()
@@ -115,8 +114,7 @@ class SorciereMortFragment : Fragment() {
                                 }
 
                                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(true)
-                                val manager = MyFragmentManager()
-                                manager.NightFragment(context!!)
+
 
                             }
 
@@ -153,8 +151,7 @@ class SorciereMortFragment : Fragment() {
             }
 
             mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(true)
-            val manager = MyFragmentManager()
-            manager.NightFragment(context!!)
+
         }
     }
 
