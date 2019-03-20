@@ -417,7 +417,6 @@ class GameActivity : AppCompatActivity() {
 
     private fun raiseFlagVote() {
         if (currentPlayer!!.state) {
-            mDatabase.child("Party").child(gameName).child("Flags").child("TamponFlag").setValue(true)
             mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(true)
         }
     }
@@ -527,7 +526,9 @@ class GameActivity : AppCompatActivity() {
                         {
 
                         }
-                        else if (flags.VoteFlag) {
+                        else if (flags.VoteFlag)
+                        {
+                            mDatabase.child("Party").child(gameName).child("Flags").child("TamponFlag").setValue(true)
                             voteTurn()
                         } else if (flags.ChasseurFlag) {
                             chasseurTurn()
