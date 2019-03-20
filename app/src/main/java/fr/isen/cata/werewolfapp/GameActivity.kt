@@ -309,12 +309,16 @@ class GameActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
+                    Log.e("PIPO",bool.toString())
                     if (bool) {
                         if (listRole!!.contains("Pipoteur")) {
                             pipoteurTurn()
                         } else {
+                            Log.e("PIPO","Mec c'est censé aller")
+
                             if(currentPlayer!!.id == game!!.masterId)
                             {
+                                Log.e("PIPO","I am the master")
                                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(true)
                             }
 
