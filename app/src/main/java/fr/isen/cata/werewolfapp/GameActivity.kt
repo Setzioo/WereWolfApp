@@ -1015,6 +1015,8 @@ class GameActivity : AppCompatActivity() {
                             }
 
                         }
+                        Log.e("ALIVE","size : " + alivePlayers!!.size.toString())
+
                     }
                 }
             }
@@ -1032,6 +1034,8 @@ class GameActivity : AppCompatActivity() {
 
         if (alivePlayers != null) {
             Log.e("FUN", "check des morts")
+            Log.e("ALIVE","size in checkDeadVote : " + alivePlayers!!.size.toString())
+
             for (player in alivePlayers!!) {
 
                 if (!player!!.state) {//si mort
@@ -1077,12 +1081,15 @@ class GameActivity : AppCompatActivity() {
         deadPlayers!!.clear()
         var isLoverDead = false
 
+        Log.e("ALIVE","size in checkDead: " + alivePlayers!!.size.toString())
+
+
         if (alivePlayers != null) {
             Log.e("FUN", "check des morts")
             for (player in alivePlayers!!) {
 
                 if (!player!!.state) {//si mort
-                    Log.d("FUN", "dead : " + player.id)
+                    Log.e("FUN", "dead : " + player.id)
                     deadPlayers!!.add(player)
                     if (player.inLove) {
                         isLoverDead = true
@@ -1102,6 +1109,9 @@ class GameActivity : AppCompatActivity() {
                 Log.d("FUN", "mise à mort")
 
                 alivePlayers!!.removeAll(deadPlayers!!)
+
+                Log.e("ALIVE","size after dead removal: " + alivePlayers!!.size.toString())
+
 
             }
             aliveId = arrayListOf()
@@ -1133,15 +1143,15 @@ class GameActivity : AppCompatActivity() {
         for (player in alivePlayers!!) {
             if (player!!.role == "Loup-Garou") {
                 nbLoup++
-                Log.e("WIN",nbLoup.toString())
+                Log.e("WIN", "nbLoup : $nbLoup")
 
             } else {
                 nbVillageois++
-                Log.e("WIN",nbVillageois.toString())
+                Log.e("WIN", "nbVillageois : $nbVillageois")
 
             }
         }
-        Log.e("WIN",nbPlayer.toString())
+        Log.e("WIN", "nbPlayer : $nbPlayer")
 
         if (nbLoup == nbPlayer) {
             codeGame = 5
