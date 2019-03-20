@@ -1036,8 +1036,8 @@ class GameActivity : AppCompatActivity() {
             //pileOfTurn.add("Lovers")
             pileOfTurn.add("Voyante")
             pileOfTurn.add("Loups")
-            pileOfTurn.add("Sorciere")
-            pileOfTurn.add("Pipoteur")
+            //pileOfTurn.add("Sorciere")
+            //pileOfTurn.add("Pipoteur")
             pileOfTurn.add("RecapMort")
             pileOfTurn.add("VerifWin")
 
