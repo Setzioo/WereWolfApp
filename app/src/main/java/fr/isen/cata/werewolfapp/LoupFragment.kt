@@ -29,7 +29,6 @@ class LoupFragment : Fragment() {
     private val compteurMax: Long = 15
     var isLoupPlayer: Boolean = false
     var isAlivePlayer: Boolean = false
-    var theMasterWolf: PlayerModel? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -120,10 +119,7 @@ class LoupFragment : Fragment() {
                         for (i in listId!!) {
                             for (u in dataSnapshot.child("Users").children) {
                                 val user = u.getValue(PlayerModel::class.java)
-                                if(user!!.role == "Loup-Garou") {
-                                    theMasterWolf = user
-                                }
-                                if (i == user.id) {
+                                if (i == user!!.id) {
                                     if (user.nbVotesLoup > nbVotesMax) {
                                         nbVotesMax = user.nbVotesLoup
                                         equality = false
@@ -144,9 +140,9 @@ class LoupFragment : Fragment() {
                     {
                         mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
                     }
-                    if(theMasterWolf!!.id == currentPlayer!!.id) {
-                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(true)
-                    }
+                }
+                if(game!!.masterId == currentPlayer!!.id) {
+                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(true)
                 }
             }
 
