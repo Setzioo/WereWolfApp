@@ -198,6 +198,10 @@ class GameActivity : AppCompatActivity() {
         if (game!!.Flags!!.VoteFlag) {
             lowerFlagVote()
         }
+        if (game!!.Flags!!.TamponFlag)
+        {
+            mDatabase.child("Party").child(gameName).child("Flags").child("TamponFlag").setValue(false)
+        }
 
         //Log.e("FUN", "cupidon : "+cupidon+" voyante : "+voyante+" sorciere : "+sorciere+" pipoteur : "+pipoteur)
         if (currentPlayer!!.state) {//Si vivant
