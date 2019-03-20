@@ -100,7 +100,7 @@ class FinJeuFragment : Fragment() {
                                         }
                                     }
                                     3 -> {
-                                        if(user.role == "Villageois" || user.role == "Voyante" || user.role == "Cupidon" || user.role == "Chasseur" || user.role == "Sorcière"){
+                                        if(user.role == "Villageois" || user.role == "Voyante" || user.role == "Cupidon" || user.role == "Chasseur" || user.role == "Sorciere" || user.role == "Ange"){
                                             players.add(user)
                                             adapter.notifyDataSetChanged()
                                         }
