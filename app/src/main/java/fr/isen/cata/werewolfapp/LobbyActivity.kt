@@ -343,6 +343,8 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("PipotedFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("TamponFlag").setValue(false)
+
 
         mDatabase.child("Party").child(gameName).child("endGame").setValue(true)
         mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)

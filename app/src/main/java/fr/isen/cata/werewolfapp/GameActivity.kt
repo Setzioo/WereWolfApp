@@ -417,6 +417,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun raiseFlagVote() {
         if (currentPlayer!!.state) {
+            mDatabase.child("Party").child(gameName).child("Flags").child("TamponFlag").setValue(true)
             mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(true)
         }
     }
@@ -451,6 +452,8 @@ class GameActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("nightGame").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("TamponFlag").setValue(false)
+
         mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
 
     }
@@ -519,7 +522,12 @@ class GameActivity : AppCompatActivity() {
                         }
 
                     } else {
-                        if (flags.VoteFlag) {
+
+                        if(flags.TamponFlag)
+                        {
+
+                        }
+                        else if (flags.VoteFlag) {
                             voteTurn()
                         } else if (flags.ChasseurFlag) {
                             chasseurTurn()
@@ -535,7 +543,7 @@ class GameActivity : AppCompatActivity() {
                             loupsTurn()
                         } else if (flags.VoyanteFlag) {
                             voyanteTurn()
-                        } else if (flags.CupidonFlag) {
+                        } else if (flags.LoverFlag) {
                             loverTurn()
                         } else if (flags.CupidonFlag) {
                             cupidonTurn()

@@ -15,6 +15,7 @@ class FlagModel{
     var PipotedFlag : Boolean = false
     var PrintFlag : Boolean = false
     var endPrint : Boolean = false
+    var TamponFlag: Boolean = false
 
 
 }
