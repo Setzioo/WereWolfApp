@@ -104,7 +104,7 @@ class GameActivity : AppCompatActivity() {
                     }
                     Log.e("ALIVE", "nbTour : $nbTour")
 
-                    if (nbTour == 0 && listPlayer != null && !game!!.Flags!!.VoteFlag) {
+                    if (nbTour == 0 && listPlayer != null && !game!!.Flags!!.DeadNightFlag) {
                         Log.d("FUN", "init alive")
                         alivePlayers = listPlayer
                         Log.e("ALIVE","size in Info : " + alivePlayers!!.size.toString())
