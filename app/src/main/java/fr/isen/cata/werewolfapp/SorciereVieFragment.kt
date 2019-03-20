@@ -109,7 +109,7 @@ class SorciereVieFragment : Fragment() {
                         }
                         else
                         {
-                            estMortText.visibility = View.INVISIBLE
+                            whoIsDeadText.visibility = View.INVISIBLE
                             choixSorciereMort.visibility = View.INVISIBLE
                             ResurrectButton.visibility = View.INVISIBLE
                             letHimDieButton.visibility = View.INVISIBLE

@@ -41,5 +41,5 @@
             android:background="@drawable/buttonshape" android:visibility="invisible" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" android:textColor="@color/blanc_casse"/>
 </android.support.constraint.ConstraintLayout>

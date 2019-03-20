@@ -88,7 +88,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun createUser(userId: String) {
-        val userPseudo = "Wawa nudiste"
+        val userPseudo = "User" + userId.subSequence(0,2)
         val userTest = PlayerModel(userId, userPseudo)
         val mDatabase = FirebaseDatabase.getInstance().reference
         mDatabase.child("Users").child(userId).setValue(userTest)

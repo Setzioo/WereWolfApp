@@ -125,9 +125,9 @@ class CharacterFragment : Fragment() {
         })
     }
     fun changeCardImageCharacter(role: String?) {
-        if (role == "Sorcière") {
+        if (role == "Sorciere") {
             Cards.setImageResource(R.drawable.sorciere)
-            val ruleSorciere = "Sorcière"
+            val ruleSorciere = "Sorciere"
             characterResultText.text = ruleSorciere
         }
         if (role == "Voyante") {
