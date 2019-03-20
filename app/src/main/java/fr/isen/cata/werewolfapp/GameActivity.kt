@@ -961,7 +961,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun raiseFlagPrintChasseur() {
         if (currentPlayer!!.id == game!!.masterId) {
-            mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlagChasseur").setValue(true)
+            mDatabase.child("Party").child(gameName).child("Flags").child("PrintChasseurFlag").setValue(true)
         }
     }
 
