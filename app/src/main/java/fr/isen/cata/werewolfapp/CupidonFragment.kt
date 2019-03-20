@@ -128,8 +128,8 @@ class CupidonFragment : Fragment() {
             //mDatabase.child("Users").child(victimPlayer.id).child("state").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
-            mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("inLove").setValue(false)
-            mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("inLove").setValue(false)
+            mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("inLove").setValue(true)
+            mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("inLove").setValue(true)
             Toast.makeText(
                 context,
                 adapter.victimPlayer!!.pseudo + " et " + adapter.victimPlayer2!!.pseudo + " sont amoureux!",
