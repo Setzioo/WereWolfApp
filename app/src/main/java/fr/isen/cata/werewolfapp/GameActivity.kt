@@ -995,17 +995,19 @@ class GameActivity : AppCompatActivity() {
 
         mPlayerReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val tempListPlayer : MutableList<PlayerModel>? = arrayListOf()
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.getValue(PartyModel::class.java)
 
+
                 }
                 if (listId != null) {
-                    listPlayer!!.clear()
+                    tempListPlayer!!.clear()
                     for (i in listId!!) {
                         for (u in dataSnapshot.child("Users").children) {
                             val users = u.getValue(PlayerModel::class.java)
                             if (i == users!!.id) {
-                                listPlayer!!.add(users)
+                                tempListPlayer!!.add(users)
                             }
                         }
                     }
@@ -1013,9 +1015,9 @@ class GameActivity : AppCompatActivity() {
                     Log.e("ALIVE","size aliveId: " + aliveId!!.size.toString())
 
                     alivePlayers!!.clear()
-                    if (aliveId != null && listPlayer != null) {
+                    if (aliveId != null && tempListPlayer != null) {
                         for (i in aliveId!!) {
-                            for (u in listPlayer!!) {
+                            for (u in tempListPlayer!!) {
                                 if (i == u!!.id) {
                                     alivePlayers!!.add(u)
                                 }
