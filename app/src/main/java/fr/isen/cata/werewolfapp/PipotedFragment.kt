@@ -45,6 +45,7 @@ class PipotedFragment : Fragment() {
             override fun onFinish() {
                 pipotedTimer.text = "0"
                 Handler().postDelayed({
+                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag").setValue(true)
                 }, 1500)
             }
         }.start()
@@ -56,7 +57,6 @@ class PipotedFragment : Fragment() {
         } else {
             messagePipoted.text = "Le pipoteur vous a épargné"
         }
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag").setValue(true)
     }
 
     private fun getPipoted() {

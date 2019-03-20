@@ -49,6 +49,7 @@ class LoveFragment : Fragment() {
             override fun onFinish() {
                 loveTimer.text = "0"
                 Handler().postDelayed({
+                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(true)
                 }, 1500)
             }
         }.start()
@@ -64,7 +65,6 @@ class LoveFragment : Fragment() {
             pseudoLove.setBackgroundResource(R.drawable.pseudoshape)
             getPlayerAvatar(lovePlayer!!)
         }
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(true)
     }
 
     private fun getLover() {

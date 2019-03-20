@@ -1,6 +1,7 @@
 package fr.isen.cata.werewolfapp
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
@@ -82,9 +83,9 @@ class PrintDeadVoteFragment : Fragment() {
                         }
                     }
                 }
-                Thread.sleep(6000)
-
-                mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(true)
+                Handler().postDelayed({
+                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintVoteFlag").setValue(true)
+                }, 6000)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

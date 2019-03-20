@@ -85,9 +85,9 @@ class PrintDeadChasseurFragment : Fragment() {
                         }
                     }
                 }
-                Thread.sleep(6000)
-
-                mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(true)
+                Handler().postDelayed({
+                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintChasseurFlag").setValue(true)
+                }, 6000)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
