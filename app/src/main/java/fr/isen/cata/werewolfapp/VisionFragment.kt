@@ -22,6 +22,8 @@ class VisionFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
+    var isVoyantePlayer: Boolean = false
+    var isAlivePlayer: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,41 +54,59 @@ class VisionFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                        }
-                    }
-                }
-                if (dataSnapshot.exists()) {
-                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if (game != null) {
-                        if (game!!.listPlayer != null) {
-                            listId = game!!.listPlayer
-                        }
-                    }
-                }
-                if (listId != null) {
-                    for (i in listId!!) {
-                        for (u in dataSnapshot.child("Users").children) {
-                            val user = u.getValue(PlayerModel::class.java)
-                            if (i == user!!.id) {
-                                if (user.selected) {
-                                    selectedPlayer = user
-                                    selectedPlayerPseudo.text = selectedPlayer!!.pseudo
-                                    val estText = "est"
-                                    messageText.text = estText
-                                    selectedPlayerRole.text = selectedPlayer!!.role
-                                    changeCardImage(selectedPlayer!!.role)
-                                    mDatabase.child("Users").child(selectedPlayer!!.id).child("selected")
-                                        .setValue(false)
-                                    onePlayerSelected = true
-                                    beginCompteur(5)
-                                }
+                            if(currentPlayer!!.role == "Voyante") {
+                                isVoyantePlayer = true
+                            }
+                            if(currentPlayer!!.state){
+                                isAlivePlayer = true
                             }
                         }
                     }
                 }
-                if (!onePlayerSelected) {
-                    val tooMuchTimeText = "Trop tard ! Vous avez pris trop de temps pour choisir!    Rendormez-vous!"
-                    messageText.text = tooMuchTimeText
+                if(isAlivePlayer){
+                    if(isVoyantePlayer){
+                        if (dataSnapshot.exists()) {
+                            game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                            if (game != null) {
+                                if (game!!.listPlayer != null) {
+                                    listId = game!!.listPlayer
+                                }
+                            }
+                        }
+                        if (listId != null) {
+                            for (i in listId!!) {
+                                for (u in dataSnapshot.child("Users").children) {
+                                    val user = u.getValue(PlayerModel::class.java)
+                                    if (i == user!!.id) {
+                                        if (user.selected) {
+                                            selectedPlayer = user
+                                            selectedPlayerPseudo.text = selectedPlayer!!.pseudo
+                                            val estText = "est"
+                                            messageText.text = estText
+                                            selectedPlayerRole.text = selectedPlayer!!.role
+                                            changeCardImage(selectedPlayer!!.role)
+                                            mDatabase.child("Users").child(selectedPlayer!!.id).child("selected")
+                                                .setValue(false)
+                                            onePlayerSelected = true
+                                            beginCompteur(5)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (!onePlayerSelected) {
+                            val tooMuchTimeText = "Trop tard ! Vous avez pris trop de temps pour choisir!    Rendormez-vous!"
+                            messageText.text = tooMuchTimeText
+                            beginCompteur(5)
+                        }
+                    } else {
+                        val noVoyanteMessage = "La voyante est en train de jouer..."
+                        messageText.text = noVoyanteMessage
+                        beginCompteur(5)
+                    }
+                } else {
+                    val noMortVoyanteMessage = "Vous êtes mort. La voyante est en train de jouer..."
+                    messageText.text = noMortVoyanteMessage
                     beginCompteur(5)
                 }
             }
@@ -115,7 +135,7 @@ class VisionFragment : Fragment() {
     }
 
     fun endOfVision() {
-        if(game!!.masterId == currentPlayer!!.id) {
+        if(isVoyantePlayer) {
             mDatabase.child("Party").child(currentPlayer!!.currentGame!!).child("FinishFlags").child("VoyanteFlag")
                 .setValue(true)
         }

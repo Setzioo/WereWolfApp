@@ -24,6 +24,8 @@ class VoyanteFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
+    var isVoyantePlayer: Boolean = false
+    val players: ArrayList<PlayerModel?> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,13 +36,6 @@ class VoyanteFragment : Fragment() {
         Log.e("FUN", "DEBUT VOYANTE")
 
         mDatabase = FirebaseDatabase.getInstance().reference
-
-        voyanteRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
-
-        val players: ArrayList<PlayerModel?> = ArrayList()
-
-        adapter = VoyanteAdapter(players)
-        voyanteRecyclerView.adapter = adapter
 
         getVillagers(players)
     }
@@ -80,25 +75,35 @@ class VoyanteFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
+                            if(currentPlayer!!.role == "Voyante" && currentPlayer!!.state) {
+                                isVoyantePlayer = true
+                            } else {
+                                voyanteTextView.text = "La voyante joue..."
+                            }
                         }
                     }
                 }
-                if (dataSnapshot.exists()) {
-                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if (game != null) {
-                        if (game!!.listPlayer != null) {
-                            listId = game!!.listPlayer
+                if(isVoyantePlayer){
+                    if (dataSnapshot.exists()) {
+                        game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                        if (game != null) {
+                            if (game!!.listPlayer != null) {
+                                listId = game!!.listPlayer
+                            }
                         }
                     }
-                }
-                if (listId != null) {
-                    for (i in listId!!) {
-                        for (u in dataSnapshot.child("Users").children) {
-                            val user = u.getValue(PlayerModel::class.java)
-                            if (i == user!!.id) {
-                                if (user.id != currentPlayer!!.id && user.state) {
-                                    players.add(user)
-                                    adapter.notifyDataSetChanged()
+                    if (listId != null) {
+                        for (i in listId!!) {
+                            for (u in dataSnapshot.child("Users").children) {
+                                val user = u.getValue(PlayerModel::class.java)
+                                if (i == user!!.id) {
+                                    if (user.id != currentPlayer!!.id && user.state) {
+                                        voyanteRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
+                                        adapter = VoyanteAdapter(players)
+                                        voyanteRecyclerView.adapter = adapter
+                                        players.add(user)
+                                        adapter.notifyDataSetChanged()
+                                    }
                                 }
                             }
                         }
