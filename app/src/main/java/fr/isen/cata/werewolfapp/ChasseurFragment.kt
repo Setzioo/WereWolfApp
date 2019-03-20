@@ -115,7 +115,6 @@ class ChasseurFragment : Fragment() {
                 }
                 beginCompteur(10)
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
