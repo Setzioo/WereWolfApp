@@ -170,9 +170,8 @@ class GameActivity : AppCompatActivity() {
                         if (listRole!!.contains("Cupidon")) {
                             cupidonTurn()
                         } else {
-                            Handler().postDelayed({
-                                mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag")
-                            }, 1000)
+
+                            mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
                         }
                     }
                 }
@@ -188,7 +187,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         checkForDead()
-                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadNightFlag")
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadNightFlag").setValue(true)
                     }
                 }
             }
@@ -203,7 +202,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         checkForDead()
-                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadVoteFlag")
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadVoteFlag").setValue(true)
                     }
                 }
             }
@@ -218,7 +217,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         checkForDead()
-                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadChasseurFlag")
+                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadChasseurFlag").setValue(true)
                     }
                 }
             }
@@ -265,20 +264,7 @@ class GameActivity : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
-        mPartyReference.child("LowerFlag").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    val bool = dataSnapshot.value as Boolean
-                    if (bool) {
 
-                    }
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
-            }
-        })
         mPartyReference.child("PipotedFlag").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -380,34 +366,6 @@ class GameActivity : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
-        mPartyReference.child("TaamponFlag").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    val bool = dataSnapshot.value as Boolean
-                    if (bool) {
-
-                    }
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
-            }
-        })
-        mPartyReference.child("TourFlag").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    val bool = dataSnapshot.value as Boolean
-                    if (bool) {
-
-                    }
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
-            }
-        })
         mPartyReference.child("VoteFlag").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -446,21 +404,6 @@ class GameActivity : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
-
-        mPartyReference.child("endPrint").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    val bool = dataSnapshot.value as Boolean
-                    if (bool) {
-
-                    }
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
-            }
-        })
         mDatabase.child("Party").child(gameName).child("nightGame").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -468,19 +411,13 @@ class GameActivity : AppCompatActivity() {
                     if (bool) {
                         lowerFlags()
                         if (!game!!.Flags!!.CupidonFlag) {
-                            Handler().postDelayed({
-                                raiseFlagCupidon()
-                            }, 1000)
+                            raiseFlagCupidon()
                         } else {
-                            Handler().postDelayed({
-                                raiseFlagVoyante()
-                            }, 1000)
+                            raiseFlagVoyante()
                         }
                     } else {
                         nbTour++
-                        Handler().postDelayed({
-                            raiseFlagDeadNight()
-                        }, 1000)
+                        raiseFlagDeadNight()
                     }
 
                 }
@@ -900,7 +837,6 @@ class GameActivity : AppCompatActivity() {
 
         mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(false)
@@ -916,7 +852,6 @@ class GameActivity : AppCompatActivity() {
 
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("SorciereFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoteFlag").setValue(false)
