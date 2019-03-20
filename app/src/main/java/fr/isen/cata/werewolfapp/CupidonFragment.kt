@@ -125,24 +125,14 @@ class CupidonFragment : Fragment() {
     private fun lovePlayers() {
         if (adapter.victimPlayer != null && adapter.victimPlayer2 != null) {
             val mDatabase = FirebaseDatabase.getInstance().reference
-            //mDatabase.child("Users").child(victimPlayer.id).child("state").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("inLove").setValue(true)
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("inLove").setValue(true)
-            Toast.makeText(
-                context,
-                adapter.victimPlayer!!.pseudo + " et " + adapter.victimPlayer2!!.pseudo + " sont amoureux!",
-                Toast.LENGTH_LONG
-            ).show()
         } else if (adapter.victimPlayer != null) {
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
-            Toast.makeText(context, "Qu'un seul joueur a été selectionné...", Toast.LENGTH_LONG).show()
         } else if (adapter.victimPlayer2 != null) {
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
-            Toast.makeText(context, "Qu'un seul joueur a été selectionné...", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(context, "Aucun joueur selectionné", Toast.LENGTH_LONG).show()
         }
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
     }
