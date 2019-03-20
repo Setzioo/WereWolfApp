@@ -38,12 +38,9 @@ class Chasseur : RoleModel(
     "S'il se fait dévorer par les Loups Garous ou exécuter malencontreusement par les joueurs, le Chasseur a le pouvoir de répliquer avant de rendre l'âme, en éliminant immédiatement n'importe quel autre joueur de son choix."
 )
 
-class Sorciere(
-    val deathPotion: Boolean,
-    val lifePotion: Boolean
-) : RoleModel(
+class Sorciere : RoleModel(
     6,
-    "Sorcière",
+    "Sorciere",
     "Elle sait concocter 2 potions extrèmement puissantes.\nUne potion de guérison, pour ressusciter le joueur tué par les Loups-Garous, une potion d'empoisonnement, utilisée la nuit pour éliminer un joueur. La sorcière ne peut utiliser chaque potion qu\'une seule fois dans la partie. Elle peut se servir de ses 2 potions dans la même nuit."
 )
 

@@ -492,7 +492,7 @@ class LobbyActivity : AppCompatActivity() {
             4 -> arrayListOf(
                 LoupGarou(),
                 Pipoteur(), Ange(),
-                Sorciere(true, true)
+                Sorciere()
             )
 
             5 -> arrayListOf(
@@ -547,7 +547,7 @@ class LobbyActivity : AppCompatActivity() {
                 Voyante(),
                 Chasseur(),
                 Cupidon(),
-                Sorciere(deathPotion = true, lifePotion = true)
+                Sorciere()
             )
 
             12 -> arrayListOf(
@@ -566,7 +566,7 @@ class LobbyActivity : AppCompatActivity() {
                 Voyante(),
                 Chasseur(),
                 Cupidon(),
-                Sorciere(deathPotion = true, lifePotion = true),
+                Sorciere(),
                 Pipoteur()
             )
 
@@ -586,7 +586,7 @@ class LobbyActivity : AppCompatActivity() {
                 Voyante(),
                 Cupidon(),
                 Chasseur(),
-                Sorciere(deathPotion = true, lifePotion = true),
+                Sorciere(),
                 Pipoteur()
             )
 
@@ -606,7 +606,7 @@ class LobbyActivity : AppCompatActivity() {
                 Ange(),
                 Cupidon(),
                 Chasseur(),
-                Sorciere(deathPotion = true, lifePotion = true),
+                Sorciere(),
                 Pipoteur()
             )
 
@@ -617,7 +617,7 @@ class LobbyActivity : AppCompatActivity() {
                 Ange(),
                 Cupidon(),
                 Chasseur(),
-                Sorciere(deathPotion = true, lifePotion = true),
+                Sorciere(),
                 Pipoteur()
             )
 
@@ -638,7 +638,7 @@ class LobbyActivity : AppCompatActivity() {
                 Ange(),
                 Cupidon(),
                 Chasseur(),
-                Sorciere(deathPotion = true, lifePotion = true),
+                Sorciere(),
                 Pipoteur()
             )
             else -> arrayListOf(LoupGarou(), LoupGarou(), Voyante())
