@@ -152,8 +152,7 @@ class GameActivity : AppCompatActivity() {
                             if (deadPlayers != null) {
                                 for (i in deadPlayers!!) {
                                     if (i!!.role == "Chasseur") {
-                                        if(soundPlayer != null)
-                                        {
+                                        if (soundPlayer != null) {
                                             soundPlayer!!.stop()
                                         }
                                         soundPlayer = MediaPlayer.create(context, R.raw.chasseur_mort_modif)
@@ -190,8 +189,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Cupidon")) {
-                            if(soundPlayer != null)
-                            {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.cupidon_reveil)
@@ -274,8 +272,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Loup-Garou")) {
-                            if(soundPlayer != null)
-                            {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.loup_reveil)
@@ -304,8 +301,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Cupidon")) {
-                            if(soundPlayer != null)
-                            {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.village_reveil)
@@ -335,8 +331,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Pipoteur")) {
-                            if(soundPlayer != null)
-                            {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.village_reveil)
@@ -367,8 +362,7 @@ class GameActivity : AppCompatActivity() {
                     Log.e("PIPO", bool.toString())
                     if (bool) {
                         if (listRole!!.contains("Pipoteur")) {
-                            if(soundPlayer != null)
-                            {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.pipoteur_reveil)
@@ -442,8 +436,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Sorciere")) {
-                            if(soundPlayer != null)
-                            {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.sorciere_reveil)
@@ -495,8 +488,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Voyante")) {
-                            if(soundPlayer != null)
-                            {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.voyante_reveil)
@@ -528,8 +520,7 @@ class GameActivity : AppCompatActivity() {
                         val bool = dataSnapshot.value as Boolean
                         Log.e("NIGHTGAME", bool.toString())
                         if (bool) {
-                            if(musicPlayer != null)
-                            {
+                            if (musicPlayer != null) {
                                 musicPlayer!!.stop()
                             }
                             musicPlayer = MediaPlayer.create(context, R.raw.musique_nuit)
@@ -542,8 +533,7 @@ class GameActivity : AppCompatActivity() {
                                 raiseFlagVoyante()
                             }
                         } else {
-                            if(musicPlayer != null)
-                            {
+                            if (musicPlayer != null) {
                                 musicPlayer!!.stop()
                             }
                             musicPlayer = MediaPlayer.create(context, R.raw.village_reveil_7min)
@@ -568,13 +558,12 @@ class GameActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
 
-                        val bool = dataSnapshot.value as Boolean
-                        Log.e("END", bool.toString())
-                        if (bool) {
+                    val bool = dataSnapshot.value as Boolean
+                    Log.e("END", bool.toString())
+                    if (bool) {
 
-                                manager.FinJeuFragment(context)
-                        }
-
+                        manager.FinJeuFragment(context)
+                    }
 
 
                 }
@@ -609,8 +598,7 @@ class GameActivity : AppCompatActivity() {
                                     if (game!!.Flags!!.VoteFlag) {
                                         mDatabase.child("Party").child(gameName).child("nightGame")
                                             .setValue(true)
-                                    }
-                                    else {
+                                    } else {
                                         raiseFlagVote()
                                     }
                                 }
@@ -620,14 +608,12 @@ class GameActivity : AppCompatActivity() {
                             if (game!!.Flags!!.VoteFlag) {
                                 mDatabase.child("Party").child(gameName).child("nightGame")
                                     .setValue(true)
-                            }
-                            else {
+                            } else {
                                 raiseFlagVote()
                             }
                         }
                     }
                 }
-
 
 
             }
@@ -642,8 +628,7 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRole!!.contains("Cupidon")) {
-                            if(soundPlayer != null)
-                            {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.cupidon_endort)
@@ -709,8 +694,7 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if(soundPlayer != null)
-                        {
+                        if (soundPlayer != null) {
                             soundPlayer!!.stop()
                         }
                         soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
@@ -731,8 +715,7 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if(soundPlayer != null)
-                        {
+                        if (soundPlayer != null) {
                             soundPlayer!!.stop()
                         }
                         soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
@@ -767,8 +750,7 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if(soundPlayer != null)
-                        {
+                        if (soundPlayer != null) {
                             soundPlayer!!.stop()
                         }
                         soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
@@ -796,23 +778,23 @@ class GameActivity : AppCompatActivity() {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
                         if (listRoleAlive!!.contains("Pipoteur")) {
-                            raiseFlagPipoted()
-                        } else {
-                            if(soundPlayer != null)
-                            {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.pipoteur_endort)
                             soundPlayer!!.start()
                             soundPlayer!!.setOnCompletionListener {
-                                if (currentPlayer!!.id == game!!.masterId) {
-                                    mDatabase.child("Party").child(gameName).child("nightGame")
-                                        .setValue(false)
-                                }
+                                raiseFlagPipoted()
                             }
-
-
                         }
+                    } else {
+
+                        if (currentPlayer!!.id == game!!.masterId) {
+                            mDatabase.child("Party").child(gameName).child("nightGame")
+                                .setValue(false)
+                        }
+
+
                     }
                 }
             }
@@ -903,10 +885,8 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if (listRoleAlive!!.contains("Sorciere"))
-                        {
-                            if(soundPlayer != null)
-                            {
+                        if (listRoleAlive!!.contains("Sorciere")) {
+                            if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
                             soundPlayer = MediaPlayer.create(context, R.raw.sorciere_endort)
@@ -914,8 +894,7 @@ class GameActivity : AppCompatActivity() {
                             soundPlayer!!.setOnCompletionListener {
                                 raiseFlagPipoteur()
                             }
-                        }
-                        else {
+                        } else {
                             raiseFlagPipoteur()
                         }
 
@@ -958,9 +937,7 @@ class GameActivity : AppCompatActivity() {
                             soundPlayer!!.setOnCompletionListener {
                                 raiseFlagLoups()
                             }
-                        }
-                        else
-                        {
+                        } else {
                             raiseFlagLoups()
                         }
                     }
@@ -1250,6 +1227,9 @@ class GameActivity : AppCompatActivity() {
             if (isLoverDead) {
                 for (p in alivePlayers!!) {
                     if (p!!.inLove) {
+                        if (currentPlayer!!.id == game!!.masterId) {
+                            mDatabase.child("Users").child(p!!.id).child("state").setValue(false)
+                        }
                         deadPlayers!!.add(p)
                     }
                 }
@@ -1300,6 +1280,9 @@ class GameActivity : AppCompatActivity() {
             if (isLoverDead) {
                 for (p in alivePlayers!!) {
                     if (p!!.inLove) {
+                        if (currentPlayer!!.id == game!!.masterId) {
+                            mDatabase.child("Users").child(p!!.id).child("state").setValue(false)
+                        }
                         deadPlayers!!.add(p)
                     }
                 }
@@ -1356,9 +1339,7 @@ class GameActivity : AppCompatActivity() {
 
         if (nbLoup == nbPlayer) {
             codeGame = 5
-        }
-
-        else if (nbVillageois == nbPlayer) {
+        } else if (nbVillageois == nbPlayer) {
             codeGame = 3
         }
         if (pipoteur) {
@@ -1386,7 +1367,7 @@ class GameActivity : AppCompatActivity() {
         if (angeAlreadyWin) {
             codeGame = 4
         }
-        Log.e("END", "code : "+codeGame.toString())
+        Log.e("END", "code : " + codeGame.toString())
         return codeGame
     }
 }
