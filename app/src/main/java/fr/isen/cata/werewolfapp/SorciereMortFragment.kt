@@ -100,7 +100,7 @@ class SorciereMortFragment : Fragment() {
 
                             sorciereRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
 
-                            sorciereAdapter = SorciereAdapter(players)
+                            sorciereAdapter = SorciereAdapter(players, this@SorciereMortFragment)
 
                             sorciereRecyclerView.adapter = sorciereAdapter
 

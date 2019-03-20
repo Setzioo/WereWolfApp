@@ -17,12 +17,13 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class SorciereAdapter(private val players: ArrayList<PlayerModel?>) :
+class SorciereAdapter(private val players: ArrayList<PlayerModel?>, _sorciereMortFragment: SorciereMortFragment) :
     RecyclerView.Adapter<SorciereAdapter.ViewHolder>() {
 
     val mDatabase = FirebaseDatabase.getInstance().reference
     private lateinit var auth: FirebaseAuth
     private lateinit var gameName: String
+    var sorciereMortFragment =_sorciereMortFragment
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,7 +34,7 @@ class SorciereAdapter(private val players: ArrayList<PlayerModel?>) :
 
         holder.card.setOnClickListener {
             val id = players[position]!!.id
-            SorciereMortFragment().compteur!!.cancel()
+            sorciereMortFragment.compteur!!.cancel()
             useDeathPotion(id, holder)
         }
 
