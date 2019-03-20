@@ -365,9 +365,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun playDay() {
-        /*if(game!!.Flags!!.ChasseurFlag && !game!!.FinishFlags!!.ChasseurFlag){
+        if(game!!.Flags!!.ChasseurFlag && !game!!.FinishFlags!!.ChasseurFlag){
             checkDead()
-        }*/
+        }
         if (!game!!.Flags!!.DeadFlag && !game!!.Flags!!.VoteFlag) {
             raiseFlagDead()
         } else if (game!!.FinishFlags!!.VoteFlag && !game!!.Flags!!.DeadFlag) {
@@ -390,7 +390,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun loverTurn() {
-        //manager.LoveFragment(context)
+        manager.LoveFragment(context)
     }
 
     private fun voyanteTurn() {
@@ -748,11 +748,12 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun allGame() {
-        //Log.d("FUN", "tour : "+nbTour.toString())
+        Log.d("FUN", "tour : "+nbTour.toString())
         if (game!!.nightGame) {
+            Log.e("FUN", "night")
             playNight()
         } else {
-            //Log.e("FUN", "day")
+            Log.e("FUN", "day")
             playDay()
         }
     }
