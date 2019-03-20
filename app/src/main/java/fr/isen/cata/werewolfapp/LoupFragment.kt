@@ -62,11 +62,11 @@ class LoupFragment : Fragment() {
 
             override fun onTick(millisUntilFinished: Long) {
                 val timeLeft = "" + (millisUntilFinished / 1000 + 1)
-                wolfieTiming.text = timeLeft
+                wolfieTiming.text = "10"
             }
 
             override fun onFinish() {
-                wolfieTiming.text = "0"
+                //wolfieTiming.text = "0"
                 Handler().postDelayed({
                     endOfWolfiesTurn()
                 }, 1500)
