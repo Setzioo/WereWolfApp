@@ -17,6 +17,7 @@ class FlagModel{
     var PrintNightFlag : Boolean = false
     var PrintChasseurFlag : Boolean = false
     var PrintVoteFlag : Boolean = false
+    var startGame: Boolean = false
 
 
 }

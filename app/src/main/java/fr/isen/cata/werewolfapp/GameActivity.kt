@@ -427,6 +427,21 @@ class GameActivity : AppCompatActivity() {
                 Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
+        mDatabase.child("Party").child(gameName).child("startGame").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val bool = dataSnapshot.value as Boolean
+                    if (bool) {
+                        raiseFlagCupidon()
+                    }
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("TAG", "No Flag", databaseError.toException())
+            }
+        })
 
     }
 

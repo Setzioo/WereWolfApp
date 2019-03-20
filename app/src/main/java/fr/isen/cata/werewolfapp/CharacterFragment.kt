@@ -107,7 +107,7 @@ class CharacterFragment : Fragment() {
                         }
                     }
                     Handler().postDelayed({
-                        mDatabase.child("Party").child(gameName!!).child("nightGame").setValue(true)
+                        mDatabase.child("Party").child(gameName!!).child("startGame").setValue(true)
                     }, 5000)
 
                 }
