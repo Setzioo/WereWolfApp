@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_loup.*
@@ -40,7 +39,6 @@ class LoupFragment : Fragment() {
 
         mDatabase = FirebaseDatabase.getInstance().reference
         Log.e("FUN", "LOUP")
-        Toast.makeText(context, "Loups", Toast.LENGTH_LONG).show()
 
         loupRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
         wolfies.layoutManager = GridLayoutManager(context!!, 1, GridLayoutManager.HORIZONTAL, false)
