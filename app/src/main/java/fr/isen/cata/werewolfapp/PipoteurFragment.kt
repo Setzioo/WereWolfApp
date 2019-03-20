@@ -25,6 +25,9 @@ class PipoteurFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
+    var isAlivePlayer: Boolean = false
+    var isPipoteurPlayer: Boolean = false
+    val players: ArrayList<PlayerModel?> = ArrayList()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,13 +38,6 @@ class PipoteurFragment : Fragment() {
         Toast.makeText(context, "Pipoteur", Toast.LENGTH_LONG).show()
 
         mDatabase = FirebaseDatabase.getInstance().reference
-
-        pipoteurRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
-
-        val players: ArrayList<PlayerModel?> = ArrayList()
-
-        adapter = PipoteurAdapter(players)
-        pipoteurRecyclerView.adapter = adapter
 
         getVillagers(players)
     }
@@ -63,33 +59,45 @@ class PipoteurFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                        }
-                    }
-                }
-                if (dataSnapshot.exists()) {
-                    game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if (game != null) {
-                        if (game!!.listPlayer != null) {
-                            listId = game!!.listPlayer
-                        }
-                    }
-                }
-                if (listId != null) {
-                    players.clear()
-                    for (i in listId!!) {
-                        for (u in dataSnapshot.child("Users").children) {
-                            val user = u.getValue(PlayerModel::class.java)
-                            if (i == user!!.id) {
-                                if (user.state && user.id != currentPlayer!!.id) {
-                                    players.add(user)
-                                    Log.e("Pipoteur", "joueur ajouté : " + user.pseudo)
-                                    adapter.notifyDataSetChanged()
-                                }
+                            if(currentPlayer!!.role == "Pipoteur") {
+                                isPipoteurPlayer = true
+                            }
+                            if(currentPlayer!!.state){
+                                isAlivePlayer = true
                             }
                         }
                     }
                 }
-                beginCompteur(15)
+                if(isPipoteurPlayer && isAlivePlayer) {
+                    if (dataSnapshot.exists()) {
+                        game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
+                        if (game != null) {
+                            if (game!!.listPlayer != null) {
+                                listId = game!!.listPlayer
+                            }
+                        }
+                    }
+                    if (listId != null) {
+                        players.clear()
+                        for (i in listId!!) {
+                            for (u in dataSnapshot.child("Users").children) {
+                                val user = u.getValue(PlayerModel::class.java)
+                                if (i == user!!.id) {
+                                    if (user.state && user.id != currentPlayer!!.id) {
+                                        players.add(user)
+                                        pipoteurRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
+                                        adapter = PipoteurAdapter(players)
+                                        pipoteurRecyclerView.adapter = adapter
+                                        adapter.notifyDataSetChanged()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    noPipoteurMessage.text = "Le Pipoteur est en train de pipoter..."
+                }
+                beginCompteur(10)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -109,7 +117,9 @@ class PipoteurFragment : Fragment() {
             override fun onFinish() {
                 pipoteurTimer.text = "0"
                 Handler().postDelayed({
-                    pipotedPlayers()
+                    if(isAlivePlayer && isPipoteurPlayer) {
+                        pipotedPlayers()
+                    }
                 }, 1500)
             }
         }.start()
@@ -121,8 +131,8 @@ class PipoteurFragment : Fragment() {
             //mDatabase.child("Users").child(victimPlayer.id).child("state").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
-            mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("charmed").setValue(false)
-            mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("charmed").setValue(false)
+            mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("charmed").setValue(true)
+            mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("charmed").setValue(true)
             Toast.makeText(
                 context,
                 adapter.victimPlayer!!.pseudo + " et " + adapter.victimPlayer2!!.pseudo + " sont maintenant enchantés!",
@@ -140,11 +150,7 @@ class PipoteurFragment : Fragment() {
             Toast.makeText(context, "Aucun joueur n'a été selectionné", Toast.LENGTH_LONG).show()
         }
 
-        if(game!!.masterId == currentPlayer!!.id) {
-            mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(true)
-        }
-        val manager = MyFragmentManager()
-        manager.NightFragment(context!!)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(true)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
