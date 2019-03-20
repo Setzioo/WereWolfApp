@@ -1,6 +1,8 @@
 package fr.isen.cata.werewolfapp
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
@@ -9,9 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_chasseur.*
 import kotlinx.android.synthetic.main.fragment_print_dead.*
 
-class PrintDeadEndFragment : Fragment() {
+class PrintDeadNightFragment : Fragment() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var adapter: PrintDeadAdapter
@@ -27,6 +30,7 @@ class PrintDeadEndFragment : Fragment() {
         Log.e("FUN", "Affichage des morts")
         Log.e("LANCE", "Print dead")
 
+
         mDatabase = FirebaseDatabase.getInstance().reference
 
         deadRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
@@ -38,7 +42,6 @@ class PrintDeadEndFragment : Fragment() {
 
         getDeadPlayers(players)
 
-        Thread.sleep(10000)
     }
 
     private fun getDeadPlayers(players: ArrayList<PlayerModel?>) {
@@ -74,14 +77,17 @@ class PrintDeadEndFragment : Fragment() {
                         for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
                             if (i == user!!.id) {
-
-                                players.add(user)
-                                adapter.notifyDataSetChanged()
-
+                                if (!user.state) {
+                                    players.add(user)
+                                    adapter.notifyDataSetChanged()
+                                }
                             }
                         }
                     }
                 }
+                Thread.sleep(6000)
+
+                mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(true)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -117,6 +123,6 @@ class PrintDeadEndFragment : Fragment() {
      */
 
     companion object {
-        fun newInstance() = PrintDeadVoteFragment()
+        fun newInstance() = PrintDeadNightFragment()
     }
 }

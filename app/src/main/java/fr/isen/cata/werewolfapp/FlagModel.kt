@@ -7,15 +7,16 @@ class FlagModel{
     var SorciereFlag : Boolean = false
     var PipoteurFlag : Boolean = false
     var VoteFlag : Boolean = false
-    var TourFlag : Boolean = false
-    var DeadFlag : Boolean = false
+    var DeadNightFlag : Boolean = false
+    var DeadVoteFlag : Boolean = false
+    var DeadChasseurFlag : Boolean = false
     var ChasseurFlag : Boolean = false
     var LowerFlag : Boolean = false
     var LoverFlag : Boolean = false
     var PipotedFlag : Boolean = false
-    var PrintFlag : Boolean = false
-    var endPrint : Boolean = false
-    var TamponFlag: Boolean = false
+    var PrintNightFlag : Boolean = false
+    var PrintChasseurFlag : Boolean = false
+    var PrintVoteFlag : Boolean = false
 
 
 }

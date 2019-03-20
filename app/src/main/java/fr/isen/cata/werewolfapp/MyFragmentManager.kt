@@ -4,10 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 
@@ -185,11 +182,31 @@ class MyFragmentManager {
             .commitAllowingStateLoss()
     }
 
-    fun PrintDeadFragment(context: Context){
+    fun PrintDeadNightFragment(context: Context){
         val fragment: Fragment?
         Log.e("MANGER","Print Dead")
 
-        fragment = PrintDeadFragment.newInstance()
+        fragment = PrintDeadNightFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+
+    fun PrintDeadVoteFragment(context: Context){
+        val fragment: Fragment?
+        Log.e("MANGER","Print Dead")
+
+        fragment = PrintDeadVoteFragment.newInstance()
+        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .commitAllowingStateLoss()
+    }
+
+    fun PrintDeadChasseurFragment(context: Context){
+        val fragment: Fragment?
+        Log.e("MANGER","Print Dead")
+
+        fragment = PrintDeadChasseurFragment.newInstance()
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
             .commitAllowingStateLoss()

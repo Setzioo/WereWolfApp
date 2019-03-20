@@ -335,13 +335,17 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("Flags").child("SorciereFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("PipoteurFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("VoteFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("DeadFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("DeadNightFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("DeadVoteFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("DeadChasseurFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("TourFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("ChasseurFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("LoverFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("LowerFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("PipotedFlag").setValue(false)
-        mDatabase.child("Party").child(gameName).child("Flags").child("PrintFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("PrintNightFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("PrintChasseurFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("Flags").child("PrintVoteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("endPrint").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("TamponFlag").setValue(false)
 
@@ -354,7 +358,7 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("lifePotion").setValue(true)
         mDatabase.child("Party").child(gameName).child("deathPotion").setValue(true)
 
-
+        mDatabase.child("Party").child(gameName).child("hasShot").setValue(false)
 
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("VoyanteFlag").setValue(false)
@@ -366,6 +370,15 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LowerFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadNightFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadVoteFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("DeadChasseurFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintNightFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintChasseurFlag").setValue(false)
+        mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintVoteFlag").setValue(false)
+
+
+
     }
 
     private fun startGame() {
