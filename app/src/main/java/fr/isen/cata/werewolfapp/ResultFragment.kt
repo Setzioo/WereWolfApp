@@ -92,7 +92,7 @@ class ResultFragment : Fragment() {
                     mDatabase.child("Party").child(gameName).removeValue()
                     val intent = Intent(context, HomeActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                 }, 6000)
             }
