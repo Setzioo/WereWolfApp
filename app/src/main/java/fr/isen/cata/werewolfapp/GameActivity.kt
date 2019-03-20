@@ -509,7 +509,6 @@ class GameActivity : AppCompatActivity() {
                 if (!game!!.endGame) {
                     if (flags!!.DeadFlag) {
                         if (flags!!.endPrint) {
-                            Thread.sleep(2000)
                             game!!.Flags!!.DeadFlag = false
                             checkDead()
                         }
