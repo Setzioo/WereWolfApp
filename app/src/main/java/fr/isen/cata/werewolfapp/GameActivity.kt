@@ -202,9 +202,9 @@ class GameActivity : AppCompatActivity() {
         val voyante = isVoyante()
         val sorciere = isSorciere()
         val pipoteur = isPipoteur()
-        val voyanteAlive : Boolean?
-        val sorciereAlive : Boolean?
-        val pipoteurAlive : Boolean?
+        //val voyanteAlive : Boolean?
+        //val sorciereAlive : Boolean?
+        //val pipoteurAlive : Boolean?
         /*if(voyante){
             voyanteAlive = isVoyanteAlive()
             if(!voyanteAlive && !game!!.Flags!!.VoyanteFlag){
