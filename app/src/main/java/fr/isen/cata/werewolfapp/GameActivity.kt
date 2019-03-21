@@ -96,26 +96,28 @@ class GameActivity : AppCompatActivity() {
 
 
                 }
-                if (listId != null) {
-                    for (i in listId!!) {
-                        for (u in dataSnapshot.child("Users").children) {
-                            val users = u.getValue(PlayerModel::class.java)
-                            if (i == users!!.id) {
-                                listPlayer!!.add(users)
-                            }
-                        }
-                    }
-
-                    if (nbTour == 0 && listPlayer != null && !game!!.Flags!!.DeadNightFlag) {
-                        alivePlayers = listPlayer
-
-
-                        if (listPlayer != null) {
-                            for (i in listPlayer!!) {
-                                listRole!!.add(i!!.role!!)
+                if(dataSnapshot.exists()) {
+                    if (listId != null) {
+                        for (i in listId!!) {
+                            for (u in dataSnapshot.child("Users").children) {
+                                val users = u.getValue(PlayerModel::class.java)
+                                if (i == users!!.id) {
+                                    listPlayer!!.add(users)
+                                }
                             }
                         }
 
+                        if (nbTour == 0 && listPlayer != null && !game!!.Flags!!.DeadNightFlag) {
+                            alivePlayers = listPlayer
+
+
+                            if (listPlayer != null) {
+                                for (i in listPlayer!!) {
+                                    listRole!!.add(i!!.role!!)
+                                }
+                            }
+
+                        }
                     }
                 }
 
