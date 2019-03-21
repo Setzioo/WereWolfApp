@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_pipoteur.*
@@ -33,9 +32,7 @@ class PipoteurFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("LANCE","Pipoteur")
 
-        Toast.makeText(context, "Pipoteur", Toast.LENGTH_LONG).show()
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
@@ -59,16 +56,16 @@ class PipoteurFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                            if(currentPlayer!!.role == "Pipoteur") {
+                            if (currentPlayer!!.role == "Pipoteur") {
                                 isPipoteurPlayer = true
                             }
-                            if(currentPlayer!!.state){
+                            if (currentPlayer!!.state) {
                                 isAlivePlayer = true
                             }
                         }
                     }
                 }
-                if(isPipoteurPlayer && isAlivePlayer) {
+                if (isPipoteurPlayer && isAlivePlayer) {
                     if (dataSnapshot.exists()) {
                         game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                         if (game != null) {
@@ -96,7 +93,8 @@ class PipoteurFragment : Fragment() {
                     }
                 } else {
                     pipoteurTextView.text = ""
-                    noPipoteurMessage.text = "Le Pipoteur est en train de pipoter..."
+                    val isPipotingText = "Le Pipoteur est en train de pipoter..."
+                    noPipoteurMessage.text = isPipotingText
                 }
                 beginCompteur(10)
             }
@@ -118,7 +116,7 @@ class PipoteurFragment : Fragment() {
             override fun onFinish() {
                 pipoteurTimer.text = "0"
                 Handler().postDelayed({
-                    if(isAlivePlayer && isPipoteurPlayer) {
+                    if (isAlivePlayer && isPipoteurPlayer) {
                         pipotedPlayers()
                     }
                 }, 1500)
@@ -129,34 +127,23 @@ class PipoteurFragment : Fragment() {
     private fun pipotedPlayers() {
         if (adapter.victimPlayer != null && adapter.victimPlayer2 != null) {
             val mDatabase = FirebaseDatabase.getInstance().reference
-            //mDatabase.child("Users").child(victimPlayer.id).child("state").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("charmed").setValue(true)
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("charmed").setValue(true)
-            Toast.makeText(
-                context,
-                adapter.victimPlayer!!.pseudo + " et " + adapter.victimPlayer2!!.pseudo + " sont maintenant enchantés!",
-                Toast.LENGTH_LONG
-            ).show()
+
         } else if (adapter.victimPlayer != null) {
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("charmed").setValue(true)
             mDatabase.child("Users").child(adapter.victimPlayer!!.id).child("selected").setValue(false)
-            Toast.makeText(context, adapter.victimPlayer!!.pseudo +" a été enchanté", Toast.LENGTH_LONG).show()
         } else if (adapter.victimPlayer2 != null) {
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("charmed").setValue(true)
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
-            Toast.makeText(context, adapter.victimPlayer2!!.pseudo +" a été enchanté", Toast.LENGTH_LONG).show()
         } else {
-            Toast.makeText(context, "Aucun joueur n'a été selectionné", Toast.LENGTH_LONG).show()
         }
 
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag").setValue(true)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -166,17 +153,6 @@ class PipoteurFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_pipoteur, container, false)
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = PipoteurFragment()

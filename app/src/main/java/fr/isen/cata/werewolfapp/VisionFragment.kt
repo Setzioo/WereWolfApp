@@ -28,7 +28,6 @@ class VisionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("LANCE","Vision")
 
 
         mDatabase = FirebaseDatabase.getInstance().reference
@@ -54,17 +53,17 @@ class VisionFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                            if(currentPlayer!!.role == "Voyante") {
+                            if (currentPlayer!!.role == "Voyante") {
                                 isVoyantePlayer = true
                             }
-                            if(currentPlayer!!.state){
+                            if (currentPlayer!!.state) {
                                 isAlivePlayer = true
                             }
                         }
                     }
                 }
-                if(isAlivePlayer){
-                    if(isVoyantePlayer){
+                if (isAlivePlayer) {
+                    if (isVoyantePlayer) {
                         if (dataSnapshot.exists()) {
                             game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                             if (game != null) {
@@ -95,7 +94,8 @@ class VisionFragment : Fragment() {
                             }
                         }
                         if (!onePlayerSelected) {
-                            val tooMuchTimeText = "Trop tard ! Vous avez pris trop de temps pour choisir!    Rendormez-vous!"
+                            val tooMuchTimeText =
+                                "Trop tard ! Vous avez pris trop de temps pour choisir!    Rendormez-vous!"
                             messageText.text = tooMuchTimeText
                             beginCompteur(5)
                         }
@@ -135,7 +135,7 @@ class VisionFragment : Fragment() {
     }
 
     fun endOfVision() {
-        if(isVoyantePlayer) {
+        if (isVoyantePlayer) {
             mDatabase.child("Party").child(currentPlayer!!.currentGame!!).child("FinishFlags").child("VoyanteFlag")
                 .setValue(true)
         }

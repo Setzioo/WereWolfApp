@@ -8,13 +8,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_love.*
-import kotlinx.android.synthetic.main.voyante_vote_view_row.*
 
 class LoveFragment : Fragment() {
 
@@ -30,7 +28,6 @@ class LoveFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("LANCE","Love")
 
 
         mDatabase = FirebaseDatabase.getInstance().reference
@@ -49,7 +46,7 @@ class LoveFragment : Fragment() {
             override fun onFinish() {
                 loveTimer.text = "0"
                 Handler().postDelayed({
-                    if(game!!.masterId == currentPlayer!!.id) {
+                    if (game!!.masterId == currentPlayer!!.id) {
                         mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoverFlag").setValue(true)
                     }
                 }, 1500)
@@ -57,12 +54,14 @@ class LoveFragment : Fragment() {
         }.start()
     }
 
-    private fun displayLover(){
-        if(lovePlayer == null) {
-            messageLove.text = "Le coup de foudre n'est pas pour aujourd'hui"
+    private fun displayLover() {
+        if (lovePlayer == null) {
+            val pasCoupFoudre = "Le coup de foudre n'est pas pour aujourd'hui"
+            messageLove.text = pasCoupFoudre
             pseudoLove.setBackgroundResource(R.color.transparentBackground)
         } else {
-            messageLove.text = "Votre coeur appartient maintenant à"
+            val coupFoudre = "Votre coeur appartient maintenant à"
+            messageLove.text = coupFoudre
             pseudoLove.text = lovePlayer!!.pseudo
             pseudoLove.setBackgroundResource(R.drawable.pseudoshape)
             getPlayerAvatar(lovePlayer!!)
@@ -123,12 +122,10 @@ class LoveFragment : Fragment() {
         val storageReference = FirebaseStorage.getInstance().reference.child(player.id + "/avatar")
 
         storageReference.downloadUrl.addOnSuccessListener {
-            // Got the download URL for 'users/me/profile.png'
             Picasso.get()
                 .load(it)
                 .into(avatarPlayerLove)
         }.addOnFailureListener {
-            // Handle any errors
         }
     }
 
@@ -140,17 +137,6 @@ class LoveFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_love, container, false)
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = LoveFragment()

@@ -32,8 +32,6 @@ class ChasseurFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("LANCE","Chasseur")
-
 
         mDatabase = FirebaseDatabase.getInstance().reference
         getVillagers(players)
@@ -50,7 +48,7 @@ class ChasseurFragment : Fragment() {
             override fun onFinish() {
                 chasseurTimer.text = "0"
                 Handler().postDelayed({
-                    if(isChasseurPlayer) {
+                    if (isChasseurPlayer) {
                         killPlayer(adapter.victimPlayer)
                     }
                 }, 1500)
@@ -75,16 +73,16 @@ class ChasseurFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                            if(currentPlayer!!.role == "Chasseur") {
+                            if (currentPlayer!!.role == "Chasseur") {
                                 isChasseurPlayer = true
                             }
-                            if(currentPlayer!!.state){
+                            if (currentPlayer!!.state) {
                                 isAlivePlayer = true
                             }
                         }
                     }
                 }
-                if(isChasseurPlayer){
+                if (isChasseurPlayer) {
                     if (dataSnapshot.exists()) {
                         game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                         if (game != null) {
@@ -110,10 +108,12 @@ class ChasseurFragment : Fragment() {
                         }
                     }
                 } else {
-                    noChasseurMessage.text = "Le Chasseur est en train de jouer..."
+                    val chasseurJourText = "Le Chasseur est en train de jouer..."
+                    noChasseurMessage.text = chasseurJourText
                 }
                 beginCompteur(10)
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
@@ -140,18 +140,6 @@ class ChasseurFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_chasseur, container, false)
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = ChasseurFragment()

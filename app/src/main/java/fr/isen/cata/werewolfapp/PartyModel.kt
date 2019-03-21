@@ -16,7 +16,7 @@ class PartyModel(
     var FinishFlags: FlagModel? = null
     var deathPotion: Boolean = true
     var lifePotion: Boolean = true
-    var voteResult: String = ""//id of the dead
+    var voteResult: String = ""
     var nightGame: Boolean = false
     var endGame: Boolean = false
     var wolfKill: String = ""

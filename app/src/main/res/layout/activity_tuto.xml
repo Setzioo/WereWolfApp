@@ -22,49 +22,55 @@
                         android:layout_height="wrap_content" app:srcCompat="@drawable/cupidon"
                         android:id="@+id/rule_carte_cupidon" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/rules_role_cupidon"/>
+                        app:layout_constraintBottom_toTopOf="@+id/rules_role_cupidon"
+                        android:contentDescription="@string/carte_cupidon"/>
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@drawable/pipoteur"
                         android:id="@+id/rule_carte_pipoteur" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/rules_roles_pipoteur"/>
+                        app:layout_constraintBottom_toTopOf="@+id/rules_roles_pipoteur"
+                        android:contentDescription="@string/carte_pipoteur"/>
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@drawable/loup_garou"
                         android:id="@+id/rule_carte_loup" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/rules_role_loup"/>
+                        app:layout_constraintBottom_toTopOf="@+id/rules_role_loup" android:contentDescription="@string/carte_loup"/>
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@drawable/sorciere"
                         android:id="@+id/rule_carte_sorciere" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/rules_roles_sorciere"/>
+                        app:layout_constraintBottom_toTopOf="@+id/rules_roles_sorciere"
+                        android:contentDescription="@string/carte_sorciere"/>
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@drawable/villageaois"
                         android:id="@+id/rule_carte_villageoi" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/rules_role_vilageois"/>
+                        app:layout_constraintBottom_toTopOf="@+id/rules_role_vilageois"
+                        android:contentDescription="@string/carte_villageois"/>
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@drawable/chasseur"
                         android:id="@+id/rule_carte_chasseur" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/rules_role_chasseur"/>
+                        app:layout_constraintBottom_toTopOf="@+id/rules_role_chasseur"
+                        android:contentDescription="@string/carte_chasseur"/>
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@drawable/ange"
                         android:id="@+id/rule_carte_ange" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/rules_roles_ange"/>
+                        app:layout_constraintBottom_toTopOf="@+id/rules_roles_ange" android:contentDescription="@string/carte_ange"/>
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@drawable/voyante"
                         android:id="@+id/rule_carte_voyante" app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/rules_role_voyante"/>
+                        app:layout_constraintBottom_toTopOf="@+id/rules_role_voyante"
+                        android:contentDescription="@string/carte_voyante"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/rules_title" android:textStyle="bold"

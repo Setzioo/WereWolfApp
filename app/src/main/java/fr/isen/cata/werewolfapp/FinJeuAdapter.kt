@@ -44,12 +44,10 @@ class FinJeuAdapter(private val players: ArrayList<PlayerModel?>) :
         val storageReference = FirebaseStorage.getInstance().reference.child(player.id + "/avatar")
 
         storageReference.downloadUrl.addOnSuccessListener {
-            // Got the download URL for 'users/me/profile.png'
             Picasso.get()
                 .load(it)
                 .into(holder.avatar)
         }.addOnFailureListener {
-            // Handle any errors
         }
     }
 }

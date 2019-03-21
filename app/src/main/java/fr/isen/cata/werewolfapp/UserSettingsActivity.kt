@@ -60,12 +60,10 @@ class UserSettingsActivity : AppCompatActivity() {
         val storageReference = FirebaseStorage.getInstance().reference.child(auth.currentUser!!.uid + "/avatar")
 
         storageReference.downloadUrl.addOnSuccessListener {
-            // Got the download URL for 'users/me/profile.png'
             Picasso.get()
                 .load(it)
                 .into(avatarView)
         }.addOnFailureListener {
-            // Handle any errors
         }
     }
 
@@ -76,14 +74,11 @@ class UserSettingsActivity : AppCompatActivity() {
     }
 
     private fun saveAvatar() {
-        // Create a storage reference from our app
         val storage = FirebaseStorage.getInstance()
 
         val storageRef = storage.reference
 
-        // Create a reference to "mountains.jpg"
         val mountainsRef = storageRef.child(auth.currentUser!!.uid + "/avatar")
-        // Get the data from an ImageView as bytes
         val bitmap = (avatarView.drawable as BitmapDrawable).bitmap
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -91,10 +86,8 @@ class UserSettingsActivity : AppCompatActivity() {
 
         val uploadTask = mountainsRef.putBytes(data)
         uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
         }.addOnSuccessListener {
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
+
         }
     }
 
@@ -154,7 +147,6 @@ class UserSettingsActivity : AppCompatActivity() {
                             currentPlayer = i
 
                             pseudoText.text = currentPlayer!!.pseudo
-                            Log.d("USERID------", currentPlayer!!.id)
 
                         }
                     }

@@ -30,10 +30,8 @@ class VoyanteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("LANCE","Voyante")
 
 
-        Log.e("FUN", "DEBUT VOYANTE")
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
@@ -53,7 +51,7 @@ class VoyanteFragment : Fragment() {
                 voyanteTimer.text = "0"
                 Handler().postDelayed({
                     val manager = MyFragmentManager()
-                    manager.VisionFragment(context!!)
+                    manager.visionFragment(context!!)
                 }, 1500)
             }
         }.start()
@@ -75,15 +73,16 @@ class VoyanteFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                            if(currentPlayer!!.role == "Voyante" && currentPlayer!!.state) {
+                            if (currentPlayer!!.role == "Voyante" && currentPlayer!!.state) {
                                 isVoyantePlayer = true
                             } else {
-                                voyanteTextView.text = "La voyante joue..."
+                                val laVoyanteJoueText = "La voyante joue..."
+                                voyanteTextView.text = laVoyanteJoueText
                             }
                         }
                     }
                 }
-                if(isVoyantePlayer){
+                if (isVoyantePlayer) {
                     if (dataSnapshot.exists()) {
                         game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                         if (game != null) {
@@ -126,18 +125,6 @@ class VoyanteFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_voyante, container, false)
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = VoyanteFragment()

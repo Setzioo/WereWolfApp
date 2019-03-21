@@ -67,12 +67,14 @@
             android:id="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/emailContainerIn"
             app:layout_constraintBottom_toBottomOf="@+id/emailContainerIn"
-            app:layout_constraintStart_toStartOf="@+id/emailContainerIn" android:layout_marginStart="8dp"/>
+            app:layout_constraintStart_toStartOf="@+id/emailContainerIn" android:layout_marginStart="8dp"
+            android:contentDescription="@string/petite_enveloppe"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_lock_idle_lock"
             android:id="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/passwordContainerIn"
             app:layout_constraintBottom_toBottomOf="@+id/passwordContainerIn"
-            app:layout_constraintStart_toStartOf="@+id/passwordContainerIn" android:layout_marginStart="8dp"/>
+            app:layout_constraintStart_toStartOf="@+id/passwordContainerIn" android:layout_marginStart="8dp"
+            android:contentDescription="@string/petit_cadenas"/>
 </android.support.constraint.ConstraintLayout>

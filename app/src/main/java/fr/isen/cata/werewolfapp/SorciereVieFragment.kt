@@ -11,13 +11,11 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_sorciere_vie.*
-import kotlinx.android.synthetic.main.fragment_video.*
 
 
 class SorciereVieFragment : Fragment() {
@@ -38,12 +36,6 @@ class SorciereVieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("LANCE", "Sorciere Vie")
-
-
-
-
-        Toast.makeText(context, "Sorciere", Toast.LENGTH_LONG).show()
 
         buttonEffect(ResurrectButton)
         buttonEffect(letHimDieButton)
@@ -51,8 +43,6 @@ class SorciereVieFragment : Fragment() {
         mDatabase = FirebaseDatabase.getInstance().reference
 
         getLifePotion()
-
-
 
 
     }
@@ -95,7 +85,7 @@ class SorciereVieFragment : Fragment() {
                                     sorciereVieCompteur.text = goText
                                     Handler().postDelayed({
                                         val manager = MyFragmentManager()
-                                        manager.SorciereMortFragment(context!!)
+                                        manager.sorciereMortFragment(context!!)
                                     }, 1000)
                                 }
                             }.start()
@@ -106,9 +96,7 @@ class SorciereVieFragment : Fragment() {
                                 displayNoPotionLife()
                             }
 
-                        }
-                        else
-                        {
+                        } else {
                             whoIsDeadText.visibility = View.INVISIBLE
                             choixSorciereMort.visibility = View.INVISIBLE
                             ResurrectButton.visibility = View.INVISIBLE
@@ -117,9 +105,6 @@ class SorciereVieFragment : Fragment() {
                             sorciereVieCompteur.visibility = View.INVISIBLE
                             val noSorciereText = "La sorcière est en train de jouer ..."
                             estMortText.text = noSorciereText
-
-
-
 
 
                         }
@@ -158,14 +143,13 @@ class SorciereVieFragment : Fragment() {
 
         }
         val manager = MyFragmentManager()
-        manager.SorciereMortFragment(context!!)
+        manager.sorciereMortFragment(context!!)
     }
 
     private fun getWolfKill() {
 
         val mUserReference = FirebaseDatabase.getInstance().getReference("")
         auth = FirebaseAuth.getInstance()
-        val id: String = auth.currentUser!!.uid
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -240,12 +224,10 @@ class SorciereVieFragment : Fragment() {
         val storageReference = FirebaseStorage.getInstance().reference.child(player.id + "/avatar")
 
         storageReference.downloadUrl.addOnSuccessListener {
-            // Got the download URL for 'users/me/profile.png'
             Picasso.get()
                 .load(it)
                 .into(deadFace)
         }.addOnFailureListener {
-            // Handle any errors
         }
     }
 
@@ -275,19 +257,6 @@ class SorciereVieFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sorciere_vie, container, false)
     }
-
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = SorciereVieFragment()

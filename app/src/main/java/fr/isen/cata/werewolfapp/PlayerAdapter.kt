@@ -23,7 +23,6 @@ class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
-        //holder.pseudo.text = players[position]!!
         idIntoName(players[position]!!, holder)
 
         getCurrentGame(holder, position)
@@ -54,14 +53,13 @@ class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adap
 
     private fun getCurrentGame(holder: PlayerAdapter.ViewHolder, position: Int) {
 
-        var mUserReference = FirebaseDatabase.getInstance().getReference("")
+        val mUserReference = FirebaseDatabase.getInstance().getReference("")
         val id: String = auth.currentUser!!.uid
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val users: MutableList<PlayerModel?> = arrayListOf()
                 if (dataSnapshot.exists()) {
-                    Log.e("FUN", "test 2")
                     for (i in dataSnapshot.child("Users").children) {
                         users.add(i.getValue(PlayerModel::class.java))
                     }
@@ -69,15 +67,12 @@ class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adap
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                            Log.e("FUN", currentPlayer!!.id)
                         }
                     }
                 }
                 if (dataSnapshot.exists()) {
-                    Log.e("FUN", "test 3")
                     currentLobby = dataSnapshot.child("Lobby").child(gameName!!).getValue(LobbyModel::class.java)
                     masterPlayerId = currentLobby!!.masterId
-                    Log.e("FUN", masterPlayerId)
                     if(players[position] == masterPlayerId) {
                         holder.kickButton.setTextColor(Color.WHITE)
                         holder.kickButton.setBackgroundResource(R.drawable.buttonshapelocked)
@@ -142,7 +137,6 @@ class PlayerAdapter(private val players: ArrayList<String?>) : RecyclerView.Adap
 
                         list!!.remove(idToRemove)
 
-                        Log.d("ABC", idToRemove)
 
                         mDatabase.child("Lobby").child(gameName).child("listPlayer").setValue(list)
                         mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)

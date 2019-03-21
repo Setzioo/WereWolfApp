@@ -20,12 +20,11 @@ class PrintDeadAdapter(private val players: ArrayList<PlayerModel?>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
-        //holder.pseudo.text = players[position]!!
         getPlayerAvatar(holder, players[position]!!)
         holder.pseudoButton.text = players[position]!!.pseudo
         holder.roleButton.text = players[position]!!.role
         holder.heartIcon.bringToFront()
-        if(players[position]!!.inLove){
+        if (players[position]!!.inLove) {
             holder.heartIcon.setImageResource(R.drawable.coeur_amoureux)
         }
     }
@@ -50,12 +49,10 @@ class PrintDeadAdapter(private val players: ArrayList<PlayerModel?>) :
         val storageReference = FirebaseStorage.getInstance().reference.child(player.id + "/avatar")
 
         storageReference.downloadUrl.addOnSuccessListener {
-            // Got the download URL for 'users/me/profile.png'
             Picasso.get()
                 .load(it)
                 .into(holder.avatar)
         }.addOnFailureListener {
-            // Handle any errors
         }
     }
 }

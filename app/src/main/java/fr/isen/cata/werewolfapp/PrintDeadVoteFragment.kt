@@ -25,8 +25,6 @@ class PrintDeadVoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("FUN", "Affichage des morts")
-        Log.e("LANCE", "Print dead")
 
 
         mDatabase = FirebaseDatabase.getInstance().reference
@@ -84,7 +82,7 @@ class PrintDeadVoteFragment : Fragment() {
                     }
                 }
                 Handler().postDelayed({
-                    if(game!!.masterId == currentPlayer!!.id) {
+                    if (game!!.masterId == currentPlayer!!.id) {
                         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintVoteFlag")
                             .setValue(true)
                     }
@@ -105,23 +103,6 @@ class PrintDeadVoteFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_print_dead, container, false)
 
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = PrintDeadVoteFragment()

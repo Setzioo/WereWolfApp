@@ -76,7 +76,8 @@ class LobbyActivity : AppCompatActivity() {
                                         if (dataSnapshot.exists()) {
 
                                             val list =
-                                                dataSnapshot.child("listPlayer").getValue(object : GenericTypeIndicator<ArrayList<String>>() {})
+                                                dataSnapshot.child("listPlayer")
+                                                    .getValue(object : GenericTypeIndicator<ArrayList<String>>() {})
 
                                             removeIdFromLobby(currentPlayer!!, list!!, gameName)
                                         }
@@ -124,7 +125,6 @@ class LobbyActivity : AppCompatActivity() {
 
                             checkMasterPresenceAndEmptiness(currentPlayer!!)
 
-                            Log.d("USERID------", currentPlayer!!.id)
 
                         }
                     }
@@ -143,10 +143,10 @@ class LobbyActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    var list = dataSnapshot.child("listPlayer").value
+                    val list =
+                        dataSnapshot.child("listPlayer").getValue(object : GenericTypeIndicator<ArrayList<String>>() {})
 
                     if (list != null) {
-                        list = list as ArrayList<String>
                         val masterId = dataSnapshot.child("masterId").value as String
                         if (!list.contains(masterId)) {
                             removeIdFromLobby(currentPlayer, list, gameName)
@@ -172,7 +172,6 @@ class LobbyActivity : AppCompatActivity() {
 
         list.remove(idToRemove)
 
-        Log.d("ABC", idToRemove)
 
         mDatabase.child("Lobby").child(gameName).child("listPlayer").setValue(list)
         mDatabase.child("Users").child(idToRemove).child("inLobby").setValue(false)
@@ -197,7 +196,6 @@ class LobbyActivity : AppCompatActivity() {
 
                             getLobbyPlayerList(players)
 
-                            Log.d("USERID------", currentPlayer!!.id)
 
                         }
                     }
@@ -256,7 +254,6 @@ class LobbyActivity : AppCompatActivity() {
 
                             setLauncherListener()
 
-                            Log.d("USERID------", currentPlayer!!.id)
 
                         }
                     }
@@ -327,8 +324,6 @@ class LobbyActivity : AppCompatActivity() {
     }
 
     private fun setDefaultPartyValue(gameName: String) {
-        // TODO : Mettrea jour les eventFlags si besoin
-        //Roles actuels : Loup  Villageois  Voyante  Ange  Cupidon  Chasseur  Sorciere  Pipoteur
         mDatabase.child("Party").child(gameName).child("Flags").child("LoupFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("VoyanteFlag").setValue(false)
         mDatabase.child("Party").child(gameName).child("Flags").child("CupidonFlag").setValue(false)
@@ -377,7 +372,6 @@ class LobbyActivity : AppCompatActivity() {
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintVoteFlag").setValue(false)
 
 
-
     }
 
     private fun startGame() {
@@ -392,7 +386,6 @@ class LobbyActivity : AppCompatActivity() {
                     lobby = dataSnapshot.getValue(LobbyModel::class.java)
                     val nbPlayerAsked = lobby!!.nbPlayer
                     val nbPlayerReady = lobby!!.listPlayer!!.size
-                    Log.e("NUMBER", "voulu : $nbPlayerAsked, prets : $nbPlayerReady")
                     if (lobby!!.masterId == currentPlayer!!.id) {
                         val playerList: MutableList<String?> = arrayListOf()
 
@@ -422,13 +415,11 @@ class LobbyActivity : AppCompatActivity() {
     }
 
     private fun attributeRole(lobby: LobbyModel?, listOfUser: MutableList<String?>) {
-        Log.e("RECCUP", "attribute")
         lobby?.let {
             val nbPlayer = lobby.nbPlayer
             val listPlayer = lobby.listPlayer
             val listPlayerInGameId: List<String?> = listOfUser.filter { userId -> listPlayer!!.contains(userId!!) }
             val listPlayerInGame: ArrayList<PlayerModel?> = ArrayList()
-            Log.d("YOOOO", listOfUser.toString())
 
             idIntoPlayerModel(listPlayerInGameId, listPlayerInGame, nbPlayer)
 
@@ -463,7 +454,6 @@ class LobbyActivity : AppCompatActivity() {
 
                     listPlayerInGame.forEachIndexed { key, player ->
                         player?.role = roleList[key].name
-                        Log.e("ROLE", "player: " + player?.pseudo + " role : " + player?.role)
                     }
                     listPlayerInGame.forEach {
                         mDatabase = FirebaseDatabase.getInstance().reference.child("")
@@ -646,6 +636,7 @@ class LobbyActivity : AppCompatActivity() {
         list.shuffle()
         return list
     }
+
     fun buttonEffect(button: View) {
         val color = Color.parseColor("#228B22")
         button.setOnTouchListener { v, event ->

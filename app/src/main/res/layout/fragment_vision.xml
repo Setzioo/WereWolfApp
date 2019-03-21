@@ -51,9 +51,9 @@
             android:id="@+id/selectedPlayerCard" android:layout_marginTop="80dp"
             app:layout_constraintTop_toBottomOf="@+id/selectedPlayerRole"
             app:layout_constraintStart_toStartOf="@+id/selectedPlayerRole"
-            app:layout_constraintEnd_toEndOf="@+id/selectedPlayerRole"/>
+            app:layout_constraintEnd_toEndOf="@+id/selectedPlayerRole" android:contentDescription="@string/carte_player_selected"/>
     <TextView
-            android:text="5"
+            android:text="@string/_5"
             android:layout_width="53dp"
             android:layout_height="53dp"
             android:id="@+id/visionTimer" android:textSize="36sp"

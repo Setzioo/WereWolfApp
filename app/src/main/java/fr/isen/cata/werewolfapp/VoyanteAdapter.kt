@@ -63,18 +63,15 @@ class VoyanteAdapter(private val players: ArrayList<PlayerModel?>) : RecyclerVie
         val storageReference = FirebaseStorage.getInstance().reference.child(player.id + "/avatar")
 
         storageReference.downloadUrl.addOnSuccessListener {
-            // Got the download URL for 'users/me/profile.png'
             Picasso.get()
                 .load(it)
                 .into(holder.avatar)
         }.addOnFailureListener {
-            // Handle any errors
         }
     }
 
     private fun getSelectedChange(holder: ViewHolder, position: Int) {
         val mUserReference = mDatabase.child("Users")
-        //val playersSelected: ArrayList<PlayerModel?> = ArrayList()
 
         mUserReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

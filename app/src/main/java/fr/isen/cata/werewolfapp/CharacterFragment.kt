@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_tuto.*
-import kotlinx.android.synthetic.main.fragment_vision.*
 import kotlinx.android.synthetic.main.layout_character.*
 
 
@@ -23,7 +21,7 @@ class CharacterFragment : Fragment() {
     private var currentPlayer: PlayerModel? = null
     private var gameName: String = ""
     private var game: PartyModel? = null
-    private var currentRole : String? = null
+    private var currentRole: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +42,6 @@ class CharacterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.e("LANCE","Character")
 
         animateCards()
 
@@ -111,7 +107,7 @@ class CharacterFragment : Fragment() {
                         game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                     }
                     Handler().postDelayed({
-                        if(game!!.masterId == currentPlayer!!.id) {
+                        if (game!!.masterId == currentPlayer!!.id) {
                             mDatabase.child("Party").child(gameName).child("nightGame").setValue(true)
                         }
                     }, 5000)
@@ -124,6 +120,7 @@ class CharacterFragment : Fragment() {
             }
         })
     }
+
     fun changeCardImageCharacter(role: String?) {
         if (role == "Sorciere") {
             Cards.setImageResource(R.drawable.sorciere)
@@ -166,6 +163,7 @@ class CharacterFragment : Fragment() {
             characterResultText.text = ruleAnge
         }
     }
+
     companion object {
         fun newInstance() = CharacterFragment()
     }

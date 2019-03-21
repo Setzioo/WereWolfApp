@@ -90,7 +90,6 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>) : RecyclerView.A
                         if (i?.id == id) {
                             currentPlayer = i
 
-                            Log.d("USERID------", currentPlayer!!.id)
 
                         }
                     }
@@ -122,7 +121,7 @@ class LobbyAdapter(private val lobbies: ArrayList<LobbyModel?>) : RecyclerView.A
         }
     }
 
-    fun buttonEffectWrong(button: View) {
+    private fun buttonEffectWrong(button: View) {
         val color = Color.parseColor("#DB1702")
         button.setOnTouchListener { v, event ->
 

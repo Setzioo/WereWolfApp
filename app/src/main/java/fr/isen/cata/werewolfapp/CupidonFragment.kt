@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_cupidon.*
@@ -32,10 +31,6 @@ class CupidonFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.e("LANCE","Cupidon")
-
-        Toast.makeText(context, "Cupidon", Toast.LENGTH_LONG).show()
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
@@ -59,13 +54,13 @@ class CupidonFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                            if(currentPlayer!!.role == "Cupidon"){
+                            if (currentPlayer!!.role == "Cupidon") {
                                 isCupidonPlayer = true
                             }
                         }
                     }
                 }
-                if(isCupidonPlayer){
+                if (isCupidonPlayer) {
                     if (dataSnapshot.exists()) {
                         game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                         if (game != null) {
@@ -92,7 +87,8 @@ class CupidonFragment : Fragment() {
                         }
                     }
                 } else {
-                    cupidonTextView.text = "Cupidon fait son choix..."
+                    val choixCupiText = "Cupidon fait son choix..."
+                    cupidonTextView.text = choixCupiText
                 }
                 beginCompteur(10)
             }
@@ -114,7 +110,7 @@ class CupidonFragment : Fragment() {
             override fun onFinish() {
                 cupidonTimer.text = "0"
                 Handler().postDelayed({
-                    if(isCupidonPlayer){
+                    if (isCupidonPlayer) {
                         lovePlayers()
                     }
                 }, 1500)
@@ -135,10 +131,6 @@ class CupidonFragment : Fragment() {
             mDatabase.child("Users").child(adapter.victimPlayer2!!.id).child("selected").setValue(false)
         }
         mDatabase.child("Party").child(gameName).child("FinishFlags").child("CupidonFlag").setValue(true)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(

@@ -1,7 +1,6 @@
 package fr.isen.cata.werewolfapp
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -11,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_chasseur.*
 import kotlinx.android.synthetic.main.fragment_print_dead.*
 
 class PrintDeadNightFragment : Fragment() {
@@ -27,9 +25,6 @@ class PrintDeadNightFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("FUN", "Affichage des morts")
-        Log.e("LANCE", "Print dead")
-
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
@@ -87,7 +82,7 @@ class PrintDeadNightFragment : Fragment() {
                 }
 
                 Handler().postDelayed({
-                    if(game!!.masterId == currentPlayer!!.id) {
+                    if (game!!.masterId == currentPlayer!!.id) {
                         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PrintNightFlag")
                             .setValue(true)
                     }
@@ -109,22 +104,6 @@ class PrintDeadNightFragment : Fragment() {
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = PrintDeadNightFragment()

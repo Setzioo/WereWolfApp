@@ -2,9 +2,7 @@ package fr.isen.cata.werewolfapp
 
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.WindowManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -58,10 +56,9 @@ class GameActivity : AppCompatActivity() {
 
 
 
-        manager.BeginningFragment(context)
+        manager.beginningFragment(context)
 
         getPlayerInfo()
-
 
     }
 
@@ -108,18 +105,14 @@ class GameActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    Log.e("ALIVE", "nbTour : $nbTour")
 
                     if (nbTour == 0 && listPlayer != null && !game!!.Flags!!.DeadNightFlag) {
-                        Log.d("FUN", "init alive")
                         alivePlayers = listPlayer
 
-                        Log.e("ALIVE", "size in Info : " + alivePlayers!!.size.toString())
 
                         if (listPlayer != null) {
                             for (i in listPlayer!!) {
                                 listRole!!.add(i!!.role!!)
-                                Log.e("ROLES", i!!.role!!)
                             }
                         }
 
@@ -135,7 +128,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
     }
@@ -180,7 +172,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("CupidonFlag").addValueEventListener(object : ValueEventListener {
@@ -209,7 +200,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("DeadNightFlag").addValueEventListener(object : ValueEventListener {
@@ -227,7 +217,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("DeadVoteFlag").addValueEventListener(object : ValueEventListener {
@@ -245,7 +234,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("DeadChasseurFlag").addValueEventListener(object : ValueEventListener {
@@ -263,7 +251,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("LoupFlag").addValueEventListener(object : ValueEventListener {
@@ -292,7 +279,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("LoverFlag").addValueEventListener(object : ValueEventListener {
@@ -321,7 +307,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
 
@@ -352,14 +337,12 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("PipoteurFlag").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
-                    Log.e("PIPO", bool.toString())
                     if (bool) {
                         if (listRole!!.contains("Pipoteur")) {
                             if (soundPlayer != null) {
@@ -371,10 +354,8 @@ class GameActivity : AppCompatActivity() {
                                 pipoteurTurn()
                             }
                         } else {
-                            Log.e("PIPO", "Mec c'est censé aller")
 
                             if (currentPlayer!!.id == game!!.masterId) {
-                                Log.e("PIPO", "I am the master")
                                 mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipoteurFlag")
                                     .setValue(true)
                             }
@@ -385,7 +366,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("PrintNightFlag").addValueEventListener(object : ValueEventListener {
@@ -399,7 +379,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("PrintChasseurFlag").addValueEventListener(object : ValueEventListener {
@@ -413,7 +392,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("PrintVoteFlag").addValueEventListener(object : ValueEventListener {
@@ -427,7 +405,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("SorciereFlag").addValueEventListener(object : ValueEventListener {
@@ -457,7 +434,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("VoteFlag").addValueEventListener(object : ValueEventListener {
@@ -479,7 +455,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("VoyanteFlag").addValueEventListener(object : ValueEventListener {
@@ -509,7 +484,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mDatabase.child("Party").child(gameName).child("nightGame").addValueEventListener(object : ValueEventListener {
@@ -518,7 +492,6 @@ class GameActivity : AppCompatActivity() {
 
                     if (gameStarted) {
                         val bool = dataSnapshot.value as Boolean
-                        Log.e("NIGHTGAME", bool.toString())
                         if (bool) {
                             if (musicPlayer != null) {
                                 musicPlayer!!.stop()
@@ -551,7 +524,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mDatabase.child("Party").child(gameName).child("endGame").addValueEventListener(object : ValueEventListener {
@@ -559,7 +531,6 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
 
                     val bool = dataSnapshot.value as Boolean
-                    Log.e("END", bool.toString())
                     if (bool) {
                         when (game!!.winner) {
                             1 -> {
@@ -603,7 +574,7 @@ class GameActivity : AppCompatActivity() {
 
                             }
                         }
-                        manager.FinJeuFragment(context)
+                        manager.finJeuFragment(context)
                     }
 
 
@@ -611,7 +582,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
 
@@ -628,7 +598,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
 
@@ -677,7 +646,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("CupidonFlag").addValueEventListener(object : ValueEventListener {
@@ -702,7 +670,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("DeadNightFlag").addValueEventListener(object : ValueEventListener {
@@ -716,7 +683,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("DeadVoteFlag").addValueEventListener(object : ValueEventListener {
@@ -730,7 +696,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("DeadChasseurFlag").addValueEventListener(object : ValueEventListener {
@@ -744,7 +709,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("LoupFlag").addValueEventListener(object : ValueEventListener {
@@ -765,7 +729,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("LoverFlag").addValueEventListener(object : ValueEventListener {
@@ -786,7 +749,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("LowerFlag").addValueEventListener(object : ValueEventListener {
@@ -800,7 +762,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("PipotedFlag").addValueEventListener(object : ValueEventListener {
@@ -823,7 +784,6 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("PipoteurFlag").addValueEventListener(object : ValueEventListener {
@@ -853,7 +813,6 @@ class GameActivity : AppCompatActivity() {
 
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
         mPartyReference.child("PrintNightFlag").addValueEventListener(
@@ -877,7 +836,6 @@ class GameActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e("TAG", "No Flag", databaseError.toException())
                 }
             })
         mPartyReference.child("PrintChasseurFlag").addValueEventListener(
@@ -908,7 +866,6 @@ class GameActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e("TAG", "No Flag", databaseError.toException())
                 }
             })
         mPartyReference.child("PrintVoteFlag").addValueEventListener(
@@ -933,7 +890,6 @@ class GameActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e("TAG", "No Flag", databaseError.toException())
                 }
             })
         mPartyReference.child("SorciereFlag").addValueEventListener(
@@ -968,7 +924,6 @@ class GameActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e("TAG", "No Flag", databaseError.toException())
                 }
             })
         mPartyReference.child("VoteFlag").addValueEventListener(
@@ -984,7 +939,6 @@ class GameActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e("TAG", "No Flag", databaseError.toException())
                 }
             })
         mPartyReference.child("VoyanteFlag").addValueEventListener(
@@ -1012,7 +966,6 @@ class GameActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e("TAG", "No Flag", databaseError.toException())
                 }
             })
 
@@ -1047,60 +1000,60 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun cupidonTurn() {
-        manager.CupidonFragment(context)
+        manager.cupidonFragment(context)
 
     }
 
     private fun loverTurn() {
-        manager.LoveFragment(context)
+        manager.loveFragment(context)
     }
 
     private fun voyanteTurn() {
-        manager.VoyanteFragment(context)
+        manager.voyanteFragment(context)
 
     }
 
     private fun loupsTurn() {
-        manager.LoupsFragment(context)
+        manager.loupsFragment(context)
 
     }
 
     private fun sorciereTurn() {
-        manager.SorciereVieFragment(context)
+        manager.sorciereVieFragment(context)
 
     }
 
     private fun pipoteurTurn() {
-        manager.PipoteurFragment(context)
+        manager.pipoteurFragment(context)
     }
 
     private fun pipotedTurn() {
-        manager.PipotedFragment(context)
+        manager.pipotedFragment(context)
     }
 
     private fun voteTurn() {
-        manager.VoteJourFragment(context)
+        manager.voteJourFragment(context)
     }
 
     private fun printDeadNightTurn() {
-        manager.PrintDeadNightFragment(context)
+        manager.printDeadNightFragment(context)
 
     }
 
     private fun printDeadVoteTurn() {
-        manager.PrintDeadVoteFragment(context)
+        manager.printDeadVoteFragment(context)
 
 
     }
 
     private fun printDeadChasseurTurn() {
-        manager.PrintDeadChasseurFragment(context)
+        manager.printDeadChasseurFragment(context)
 
 
     }
 
     private fun chasseurTurn() {
-        manager.ChasseurFragment(context)
+        manager.chasseurFragment(context)
 
     }
 
@@ -1241,33 +1194,29 @@ class GameActivity : AppCompatActivity() {
                         for (u in dataSnapshot.child("Users").children) {
                             val users = u.getValue(PlayerModel::class.java)
                             if (i == users!!.id) {
-                                listPlayer!!.add(users)
+                                listPlayer.add(users)
                             }
                         }
                     }
-                    Log.e("ALIVE", "size before clear: " + alivePlayers!!.size.toString())
-                    Log.e("ALIVE", "size aliveId: " + aliveId!!.size.toString())
 
                     alivePlayers!!.clear()
 
-                    if (aliveId != null && listPlayer != null) {
+                    if (aliveId != null) {
                         for (i in aliveId!!) {
-                            for (u in listPlayer!!) {
-                                if (i == u!!.id) {
+                            for (u in listPlayer) {
+                                if (i == u.id) {
                                     alivePlayers!!.add(u)
                                     listRoleAlive!!.add(u.role!!)
                                 }
                             }
 
                         }
-                        Log.e("ALIVE", "size : " + alivePlayers!!.size.toString())
 
                     }
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "No Flag", databaseError.toException())
             }
         })
     }
@@ -1278,13 +1227,11 @@ class GameActivity : AppCompatActivity() {
         var isLoverDead = false
 
         if (alivePlayers != null) {
-            Log.e("FUN", "check des morts")
-            Log.e("ALIVE", "size in checkDeadVote : " + alivePlayers!!.size.toString())
+
 
             for (player in alivePlayers!!) {
 
                 if (!player!!.state) {//si mort
-                    Log.d("FUN", "dead : " + player.id)
                     deadPlayers!!.add(player)
                     if (player.inLove) {
                         isLoverDead = true
@@ -1295,7 +1242,7 @@ class GameActivity : AppCompatActivity() {
                 for (p in alivePlayers!!) {
                     if (p!!.inLove) {
                         if (currentPlayer!!.id == game!!.masterId) {
-                            mDatabase.child("Users").child(p!!.id).child("state").setValue(false)
+                            mDatabase.child("Users").child(p.id).child("state").setValue(false)
                         }
                         deadPlayers!!.add(p)
                     }
@@ -1311,7 +1258,6 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
 
-                Log.d("FUN", "mise à mort")
 
                 alivePlayers!!.removeAll(deadPlayers!!)
 
@@ -1329,15 +1275,12 @@ class GameActivity : AppCompatActivity() {
         deadPlayers!!.clear()
         var isLoverDead = false
 
-        Log.e("ALIVE", "size in checkDead: " + alivePlayers!!.size.toString())
 
 
         if (alivePlayers != null) {
-            Log.e("FUN", "check des morts")
             for (player in alivePlayers!!) {
 
                 if (!player!!.state) {//si mort
-                    Log.e("FUN", "dead : " + player.id)
                     deadPlayers!!.add(player)
                     if (player.inLove) {
                         isLoverDead = true
@@ -1348,7 +1291,7 @@ class GameActivity : AppCompatActivity() {
                 for (p in alivePlayers!!) {
                     if (p!!.inLove) {
                         if (currentPlayer!!.id == game!!.masterId) {
-                            mDatabase.child("Users").child(p!!.id).child("state").setValue(false)
+                            mDatabase.child("Users").child(p.id).child("state").setValue(false)
                         }
                         deadPlayers!!.add(p)
                     }
@@ -1357,11 +1300,8 @@ class GameActivity : AppCompatActivity() {
 
             if (deadPlayers != null && deadPlayers!!.size != 0) {
 
-                Log.d("FUN", "mise à mort")
 
                 alivePlayers!!.removeAll(deadPlayers!!)
-
-                Log.e("ALIVE", "size after dead removal: " + alivePlayers!!.size.toString())
 
 
             }
@@ -1394,15 +1334,12 @@ class GameActivity : AppCompatActivity() {
         for (player in alivePlayers!!) {
             if (player!!.role == "Loup-Garou") {
                 nbLoup++
-                Log.e("WIN", "nbLoup : $nbLoup")
 
             } else {
                 nbVillageois++
-                Log.e("WIN", "nbVillageois : $nbVillageois")
 
             }
         }
-        Log.e("WIN", "nbPlayer : $nbPlayer")
 
         if (nbLoup == nbPlayer) {
             codeGame = 5
@@ -1434,7 +1371,6 @@ class GameActivity : AppCompatActivity() {
         if (angeAlreadyWin) {
             codeGame = 4
         }
-        Log.e("END", "code : " + codeGame.toString())
         return codeGame
     }
 }

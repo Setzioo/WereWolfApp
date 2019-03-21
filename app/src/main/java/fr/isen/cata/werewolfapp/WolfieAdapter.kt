@@ -19,7 +19,6 @@ class WolfieAdapter(private val players: ArrayList<PlayerModel?>) : RecyclerView
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
-        //holder.pseudo.text = players[position]!!
         getPlayerAvatar(holder, players[position]!!)
         holder.pseudo.text = players[position]!!.pseudo
 
@@ -43,43 +42,12 @@ class WolfieAdapter(private val players: ArrayList<PlayerModel?>) : RecyclerView
         val storageReference = FirebaseStorage.getInstance().reference.child(player.id + "/avatar")
 
         storageReference.downloadUrl.addOnSuccessListener {
-            // Got the download URL for 'users/me/profile.png'
             Picasso.get()
                 .load(it)
                 .into(holder.avatar)
         }.addOnFailureListener {
-            // Handle any errors
         }
     }
-
-    /*
-    private fun idIntoPlayerModel(idPlayer: String, holder: LoupAdapter.ViewHolder) {
-
-        val mUserReference = FirebaseDatabase.getInstance().getReference("Users")
-
-        mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: MutableList<PlayerModel?> = arrayListOf()
-                if (dataSnapshot.exists()) {
-                    user.clear()
-                    for (i in dataSnapshot.children) {
-                        user.add(i.getValue(PlayerModel::class.java))
-                    }
-                    for (i in user) {
-                        if (i?.id ==idPlayer) {
-                            playerInModel = i
-                            getPlayerAvatar(holder, playerInModel!!)
-                            holder.pseudo.text = playerInModel!!.pseudo
-                        }
-                    }
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
-            }
-        })
-    }
-    */
 
 }
 

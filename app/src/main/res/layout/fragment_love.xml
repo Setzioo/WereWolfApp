@@ -17,7 +17,7 @@
             android:layout_marginTop="72dp" app:layout_constraintEnd_toEndOf="@+id/messageLove"
             app:layout_constraintHorizontal_bias="0.485"/>
     <TextView
-            android:text="5"
+            android:text="@string/_5"
             android:layout_width="53dp"
             android:layout_height="53dp"
             android:id="@+id/loveTimer" android:textSize="36sp"

@@ -3,7 +3,6 @@ package fr.isen.cata.werewolfapp
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.widget.LinearLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -28,12 +27,10 @@ class JoinActivity : AppCompatActivity() {
 
         mLobbyReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                //val user: MutableList<LobbyModel?> = arrayListOf()
                 lobbies.clear()
                 if (dataSnapshot.exists()) {
 
                     for (i in dataSnapshot.children) {
-                        //user.add(i.getValue(LobbyModel::class.java))
                         lobbies.add(i.getValue(LobbyModel::class.java))
                         (lobbyView.adapter as LobbyAdapter).notifyDataSetChanged()
                     }
@@ -41,7 +38,6 @@ class JoinActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
 

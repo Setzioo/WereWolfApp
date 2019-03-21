@@ -4,8 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
@@ -15,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_chasseur.*
 import kotlinx.android.synthetic.main.fragment_print_dead.*
 
 class ResultFragment : Fragment() {
@@ -31,8 +28,6 @@ class ResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("FUN", "Affichage des morts")
-        Log.e("LANCE", "Print dead")
 
         buttonEffect(goToHome)
 
@@ -86,15 +81,14 @@ class ResultFragment : Fragment() {
                         for (u in dataSnapshot.child("Users").children) {
                             val user = u.getValue(PlayerModel::class.java)
                             if (i == user!!.id) {
-                                    players.add(user)
-                                    adapter.notifyDataSetChanged()
+                                players.add(user)
+                                adapter.notifyDataSetChanged()
                             }
                         }
                     }
                 }
 
                 goToHome.setOnClickListener {
-                    Log.e("end", "effacer partie")
                     mDatabase.child("Party").child(gameName).child("goToHome").setValue(true)
                     mDatabase.child("Party").child(gameName).removeValue()
                     val intent = Intent(context, HomeActivity::class.java)
@@ -139,28 +133,12 @@ class ResultFragment : Fragment() {
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = ResultFragment()
     }
 
-    private fun deleteParty(){
+    private fun deleteParty() {
 
     }
 }

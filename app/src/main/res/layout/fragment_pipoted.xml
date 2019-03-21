@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              android:background="@drawable/background_pipoteur_motif">
 
     <TextView
-            android:text="5"
+            android:text="@string/_5"
             android:layout_width="53dp"
             android:layout_height="53dp"
             android:id="@+id/pipotedTimer" android:textSize="36sp"
@@ -28,12 +27,13 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="5" android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/imageView5" app:layout_constraintEnd_toEndOf="@+id/imageView5"
-            android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/imageView5"/>
+            app:layout_constraintStart_toStartOf="@+id/cartePipoteurInPipoFrag" app:layout_constraintEnd_toEndOf="@+id/cartePipoteurInPipoFrag"
+            android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/cartePipoteurInPipoFrag"/>
     <ImageView
             app:srcCompat="@drawable/pipoteur"
-            android:id="@+id/imageView5"
+            android:id="@+id/cartePipoteurInPipoFrag"
             android:layout_width="200dp" android:layout_height="200dp" android:layout_marginTop="176dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/carte_pipoteur"/>
 </android.support.constraint.ConstraintLayout>

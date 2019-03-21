@@ -43,7 +43,6 @@ class CreateActivity : AppCompatActivity() {
                     for (i in user) {
                         if (i?.id == id) {
                             currentPlayer = i
-                            Log.e("teeesssesseeeese", currentPlayer!!.pseudo)
                         }
                     }
                 }
@@ -75,9 +74,6 @@ class CreateActivity : AppCompatActivity() {
         })
 
 
-
-
-
         val partys: ArrayList<PartyModel?> = ArrayList()
 
         val mPartyReference = FirebaseDatabase.getInstance().getReference("Party")
@@ -91,6 +87,7 @@ class CreateActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
@@ -130,11 +127,11 @@ class CreateActivity : AppCompatActivity() {
             for (party in partys) {
                 if (nameLobby == party!!.name) {
                     nameValid = false
-                    Toast.makeText(this, "Attention ce nom existe déjà, la partie est en cours!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Attention ce nom existe déjà, la partie est en cours!", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
             if (nameValid) {
-                Log.e("lobbyyyyyyyyyyyy", "est tu là")
                 onCreateLobby()
             }
             nameValid = true

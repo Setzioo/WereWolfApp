@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">WereWolfApp</string>
-    <string name="accueil">Accueil</string>
+
     <string name="creer_une_partie">Créer une partie</string>
     <string name="rejoindre">Rejoindre</string>
     <string name="nombre_de_joueurs">Nombre de joueurs</string>
@@ -35,14 +35,48 @@
     <string name="cr_er">Créer</string>
     <string name="se_souvenir_de_moi">Se souvenir de moi</string>
     <string name="r_gles">Règles</string>
-    <string name="le_gagnant_n_est">Le gagnant est ...</string>
+    <string name="le_gagnant_n_est">Le gagnant est …</string>
     <string name="coucou">coucou</string>
     <string name="_10">10</string>
     <string name="nom_de_la_carte">nom de la carte</string>
-    <string name="votre_carte_n_est">Votre carte est ...</string>
+    <string name="votre_carte_n_est">Votre carte est …</string>
     <string name="textview">TextView</string>
-    <string name="pseudo">Pseudo</string>
+
     <string name="liste_des_morts">Liste des morts</string>
     <string name="selectionnez_deux_amoureux">Selectionnez deux amoureux</string>
+
+    <string name="bouton_ajouter">Bouton ajouter</string>
+    <string name="bouton_supprimer">Bouton supprimer</string>
+    <string name="bouton_creer">Bouton creer</string>
+    <string name="bouton_regles">Bouton Regles</string>
+    <string name="parties_rejoindre">Parties à rejoindre :</string>
+    <string name="carte_launcher">Carte launcher</string>
+    <string name="petite_enveloppe">Petite enveloppe</string>
+    <string name="petit_cadenas">Petit Cadenas</string>
+    <string name="carte_cupidon">Carte Cupidon</string>
+
+    <string name="carte_loup">Carte Loup</string>
+    <string name="carte_sorciere">Carte Sorciere</string>
+    <string name="carte_villageois">Carte Villageois</string>
+    <string name="carte_chasseur">Carte Chasseur</string>
+    <string name="carte_ange">Carte Ange</string>
+    <string name="carte_voyante">Carte Voyante</string>
+    <string name="petit_crayon">Petit Crayon</string>
+    <string name="petit_coeur">Petit coeur</string>
+
+
+    <string name="carte_pipoteur">Carte Pipoteur</string>
+    <string name="_15">15</string>
+    <string name="imagemaster">imageMaster</string>
+    <string name="accueil">Accueil</string>
+    <string name="personne_ne_doit_mourir">Personne ne doit mourir</string>
+    <string name="qui_doit_mourir">Qui doit mourir ?</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="veux_tu_sauver_ce_joueur">Veux tu sauver ce joueur ?</string>
+    <string name="oui">Oui</string>
+    <string name="non">Non</string>
+    <string name="est_mort">est mort</string>
+    <string name="carte_player_selected">Carte player selected</string>
     <string name="_5">5</string>
+    <string name="carte_joueur">Carte Joueur</string>
 </resources>

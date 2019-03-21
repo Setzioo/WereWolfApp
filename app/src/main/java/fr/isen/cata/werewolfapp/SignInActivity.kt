@@ -20,7 +20,7 @@ class SignInActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     var loginPrefs: SharedPreferences? = null
-    val loginFilename: String = "loginPreferences"
+    private val loginFilename: String = "loginPreferences"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,8 +75,7 @@ class SignInActivity : AppCompatActivity() {
                     )
                         .show()
                 }
-            }
-            else{
+            } else {
                 Toast.makeText(
                     this,
                     "Vous n'avez pas de connexion",

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +26,7 @@ class FinJeuFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("FUN", "Affichage des gagnats")
-        Log.e("LANCE", "Fin du jeu")
+
 
         mDatabase = FirebaseDatabase.getInstance().reference
 
@@ -49,7 +47,6 @@ class FinJeuFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         val id: String = auth.currentUser!!.uid
 
-        Log.e("FUN", "Test 1")
 
         mUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -66,7 +63,6 @@ class FinJeuFragment : Fragment() {
                     }
                 }
                 if (dataSnapshot.exists()) {
-                    Log.e("FUN", "Test 2")
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                     winnerNumber = game!!.winner
                     if (game != null) {
@@ -75,16 +71,11 @@ class FinJeuFragment : Fragment() {
                         }
                     }
                 }
-                Log.e("FUN", "Test 3")
                 if (listId != null) {
-                    Log.e("FUN", "Test 4")
                     for (i in listId!!) {
-                        Log.e("FUN", "Test 5")
                         for (u in dataSnapshot.child("Users").children) {
-                            Log.e("FUN", "Test 6")
                             val user = u.getValue(PlayerModel::class.java)
                             if (i == user!!.id) {
-                                Log.e("FUN", "Test 7")
                                 when(winnerNumber) {
                                     1-> {
                                         if(user.inLove){
@@ -118,7 +109,6 @@ class FinJeuFragment : Fragment() {
                                         }
                                     }
                                     else -> {
-                                        Log.e("FUN", "winnerNumber : " + winnerNumber)
                                     }
                                 }
                             }
@@ -128,43 +118,49 @@ class FinJeuFragment : Fragment() {
                 displayMessageWin()
                 Handler().postDelayed({
                     val manager = MyFragmentManager()
-                    manager.ResultFragment(context!!)
+                    manager.resultFragment(context!!)
                 }, 7000)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("TAG", "loadPost:onCancelled", databaseError.toException())
             }
         })
     }
 
     private fun displayMessageWin() {
+        val ontGagne = "ont gagné !"
+        val aGagne = "a gagné !"
         when(winnerNumber) {
             1-> {
-                roleMessageFin.text = "Les amoureux"
-                roleMessage2Fin.text = "ont gagné !"
+                val lesAmoureux = "Les amoureux"
+                roleMessageFin.text = lesAmoureux
+                roleMessage2Fin.text = ontGagne
                 backgroundFin.setBackgroundResource(R.drawable.cupidon_coeur_2)
             }
             2 -> {
-                roleMessageFin.text = "Le pipoteur"
-                roleMessage2Fin.text = "a gagné !"
+                val lePipoteur = "Le pipoteur"
+                roleMessageFin.text = lePipoteur
+                roleMessage2Fin.text = aGagne
                 roleMessageFin.setTextColor(Color.BLACK)
                 roleMessage2Fin.setTextColor(Color.BLACK)
                 backgroundFin.setBackgroundResource(R.drawable.victoire_pipoteur_2)
             }
             3 -> {
-                roleMessageFin.text = "Les villageois"
-                roleMessage2Fin.text = "ont gagné !"
+                val lesVillageois = "Les villageois"
+                roleMessageFin.text = lesVillageois
+                roleMessage2Fin.text = ontGagne
                 backgroundFin.setBackgroundResource(R.drawable.victoire_village)
             }
             4 -> {
-                roleMessageFin.text = "L'ange"
-                roleMessage2Fin.text = "a gagné !"
+                val lAnge = "L'ange"
+                roleMessageFin.text = lAnge
+                roleMessage2Fin.text = aGagne
                 backgroundFin.setBackgroundResource(R.drawable.victoire_ange_background)
             }
             5 -> {
-                roleMessageFin.text = "Les loup-garou"
-                roleMessage2Fin.text = "ont gagné !"
+                val lesLoupGarous = "Les loup-garou"
+                roleMessageFin.text = lesLoupGarous
+                roleMessage2Fin.text = ontGagne
                 backgroundFin.setBackgroundResource(R.drawable.victoire_loup_garou)
             }
         }
@@ -178,23 +174,6 @@ class FinJeuFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_fin_jeu, container, false)
 
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = FinJeuFragment()

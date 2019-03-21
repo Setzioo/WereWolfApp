@@ -26,7 +26,6 @@ class PipotedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("LANCE","Pipoted")
 
 
         mDatabase = FirebaseDatabase.getInstance().reference
@@ -45,7 +44,7 @@ class PipotedFragment : Fragment() {
             override fun onFinish() {
                 pipotedTimer.text = "0"
                 Handler().postDelayed({
-                    if(game!!.masterId == currentPlayer!!.id) {
+                    if (game!!.masterId == currentPlayer!!.id) {
                         mDatabase.child("Party").child(gameName).child("FinishFlags").child("PipotedFlag")
                             .setValue(true)
                     }
@@ -54,11 +53,13 @@ class PipotedFragment : Fragment() {
         }.start()
     }
 
-    private fun displayPipoted(){
-        if(currentPlayer!!.charmed) {
-            messagePipoted.text = "Vous avez été enchanté"
+    private fun displayPipoted() {
+        if (currentPlayer!!.charmed) {
+            val enchantedText = "Vous avez été enchanté"
+            messagePipoted.text = enchantedText
         } else {
-            messagePipoted.text = "Le pipoteur vous a épargné"
+            val notEnchantedText = "Le pipoteur vous a épargné"
+            messagePipoted.text = notEnchantedText
         }
     }
 
@@ -103,17 +104,6 @@ class PipotedFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_pipoted, container, false)
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = PipotedFragment()

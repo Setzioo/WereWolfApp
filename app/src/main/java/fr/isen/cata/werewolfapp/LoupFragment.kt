@@ -33,12 +33,9 @@ class LoupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("LANCE","Loup")
-        Log.e("LANCE","Loup")
 
 
         mDatabase = FirebaseDatabase.getInstance().reference
-        Log.e("FUN", "LOUP")
 
         loupRecyclerView.layoutManager = GridLayoutManager(context!!, 2)
         wolfies.layoutManager = GridLayoutManager(context!!, 1, GridLayoutManager.HORIZONTAL, false)
@@ -97,10 +94,10 @@ class LoupFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                            if(currentPlayer!!.role == "Loup-Garou") {
+                            if (currentPlayer!!.role == "Loup-Garou") {
                                 isLoupPlayer = true
                             }
-                            if(currentPlayer!!.state) {
+                            if (currentPlayer!!.state) {
                                 isAlivePlayer = true
                             }
                         }
@@ -108,7 +105,7 @@ class LoupFragment : Fragment() {
                 }
                 if (dataSnapshot.exists()) {
                     game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
-                    if(game!!.masterId == currentPlayer!!.id){
+                    if (game!!.masterId == currentPlayer!!.id) {
                         isMasterPlayer = true
                     }
                     if (game != null) {
@@ -117,7 +114,7 @@ class LoupFragment : Fragment() {
                         }
                     }
                 }
-                if(isAlivePlayer && isLoupPlayer) {
+                if (isAlivePlayer && isLoupPlayer) {
                     if (listId != null) {
                         for (i in listId!!) {
                             for (u in dataSnapshot.child("Users").children) {
@@ -138,13 +135,11 @@ class LoupFragment : Fragment() {
                     if (!equality) {
                         mDatabaseReference.child("Users").child(idToKill).child("state").setValue(false)
                         mDatabase.child("Party").child(gameName).child("wolfKill").setValue(idToKill)
-                    }
-                    else
-                    {
+                    } else {
                         mDatabase.child("Party").child(gameName).child("wolfKill").setValue("")
                     }
                 }
-                if(isMasterPlayer) {
+                if (isMasterPlayer) {
                     mDatabase.child("Party").child(gameName).child("FinishFlags").child("LoupFlag").setValue(true)
                 }
             }
@@ -173,16 +168,16 @@ class LoupFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                            if(currentPlayer!!.role == "Loup-Garou") {
+                            if (currentPlayer!!.role == "Loup-Garou") {
                                 isLoupPlayer = true
                             }
-                            if(currentPlayer!!.state) {
+                            if (currentPlayer!!.state) {
                                 isAlivePlayer = true
                             }
                         }
                     }
                 }
-                if(isAlivePlayer && isLoupPlayer){
+                if (isAlivePlayer && isLoupPlayer) {
                     if (dataSnapshot.exists()) {
                         game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                         if (game != null) {
@@ -205,7 +200,8 @@ class LoupFragment : Fragment() {
                         }
                     }
                 } else {
-                    noWolfMessage.text = "Les loups jouent..."
+                    val lesLoupsJouent = "Les loups jouent..."
+                    noWolfMessage.text = lesLoupsJouent
                 }
             }
 
@@ -232,16 +228,16 @@ class LoupFragment : Fragment() {
                         if (i?.id == id) {
                             currentPlayer = i
                             gameName = currentPlayer!!.currentGame!!
-                            if(currentPlayer!!.role == "Loup-Garou") {
+                            if (currentPlayer!!.role == "Loup-Garou") {
                                 isLoupPlayer = true
                             }
-                            if(currentPlayer!!.state) {
+                            if (currentPlayer!!.state) {
                                 isAlivePlayer = true
                             }
                         }
                     }
                 }
-                if(isLoupPlayer && isAlivePlayer) {
+                if (isLoupPlayer && isAlivePlayer) {
                     if (dataSnapshot.exists()) {
                         game = dataSnapshot.child("Party").child(gameName).getValue(PartyModel::class.java)
                         if (game != null) {
@@ -298,19 +294,6 @@ class LoupFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_loup, container, false)
     }
-
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
     companion object {
         fun newInstance() = LoupFragment()

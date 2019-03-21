@@ -35,31 +35,19 @@ class CupidonAdapter(private val players: ArrayList<PlayerModel?>) : RecyclerVie
         holder.cards.setOnClickListener {
             val mDatabase = FirebaseDatabase.getInstance().reference
 
-            if (victimPlayer != null && victimPlayer2 != null) {
-                Log.e(
-                    "CUPIDON",
-                    players[position]!!.pseudo + " - " + victimPlayer!!.pseudo + " - " + victimPlayer2!!.pseudo
-                )
-            }
-
             if ((victimPlayer2 != null && players[position]!!.pseudo == victimPlayer2!!.pseudo) && (victimPlayer != null && players[position]!!.pseudo == victimPlayer!!.pseudo)) {
                 mDatabase.child("Users").child(victimPlayer!!.id).child("selected").setValue(false)
                 victimPlayer = null
                 victimPlayer2 = null
-                Log.e("CUPIDON", players[position]!!.pseudo + "  n'est plus sélectionné")
             } else if (victimPlayer != null && players[position]!!.pseudo == victimPlayer!!.pseudo) {
                 mDatabase.child("Users").child(victimPlayer!!.id).child("selected").setValue(false)
                 victimPlayer = null
-                Log.e("CUPIDON", players[position]!!.pseudo + "  n'est plus sélectionné")
             } else if (victimPlayer2 != null && players[position]!!.pseudo == victimPlayer2!!.pseudo) {
                 mDatabase.child("Users").child(victimPlayer2!!.id).child("selected").setValue(false)
                 victimPlayer2 = null
-                Log.e("CUPIDON", players[position]!!.pseudo + " n'est plus sélectionné")
             } else if (victimPlayer != null && victimPlayer2 != null) {
-                Log.e("CUPIDON", "---DEJA-DEUX-JOUEURS")
             } else {
                 mDatabase.child("Users").child(players[position]!!.id).child("selected").setValue(true)
-                Log.e("CUPIDON", players[position]!!.pseudo + " selectionné !")
             }
         }
     }
@@ -94,7 +82,7 @@ class CupidonAdapter(private val players: ArrayList<PlayerModel?>) : RecyclerVie
 
     private fun getSelectedChange(holder: ViewHolder, position: Int) {
         val mUserReference = mDatabase.child("Users")
-        var playerExist: Boolean = false
+        var playerExist: Boolean
 
         mUserReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -116,10 +104,8 @@ class CupidonAdapter(private val players: ArrayList<PlayerModel?>) : RecyclerVie
                                 }
                                 if (victimPlayer == null && !playerExist) {
                                     victimPlayer = tempPlayer
-                                    Log.e("CUPIDON", "nouvelle victime 1 : " + victimPlayer!!.pseudo)
                                 } else if (victimPlayer2 == null && !playerExist) {
                                     victimPlayer2 = tempPlayer
-                                    Log.e("CUPIDON", "nouvelle victime 2 : " + victimPlayer2!!.pseudo)
                                 }
 
                                 holder.pseudoButton.setBackgroundResource(R.drawable.pseudoselectedshape)
