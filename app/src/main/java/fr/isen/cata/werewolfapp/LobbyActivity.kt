@@ -481,41 +481,41 @@ class LobbyActivity : AppCompatActivity() {
         val list = when (nbPlayer) {
             4 -> arrayListOf(
                 LoupGarou(),
-                Cupidon(), Villageois(),
-                Villageois()
+                Villageois(), Villageois(),
+                Voyante()
             )
 
             5 -> arrayListOf(
                 LoupGarou(),
-                Villageois(), Villageois(),
+                Villageois(), Ange(),
                 Voyante(),
                 Chasseur()
             )
 
             6 -> arrayListOf(
                 LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(),
+                Villageois(), Ange(),
                 Voyante(),
                 Chasseur()
             )
 
             7 -> arrayListOf(
                 LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(),
+                Villageois(), Villageois(), Ange(),
                 Voyante(),
                 Chasseur()
             )
 
             8 -> arrayListOf(
                 LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(),
+                Villageois(), Villageois(), Villageois(), Ange(),
                 Voyante(),
                 Chasseur()
             )
 
             9 -> arrayListOf(
-                LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(),
+                LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Sorciere(), Ange(),
                 Voyante(),
                 Chasseur(),
                 Cupidon()
@@ -523,8 +523,8 @@ class LobbyActivity : AppCompatActivity() {
 
 
             10 -> arrayListOf(
-                LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(),
+                LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Sorciere(),
                 Voyante(),
                 Chasseur(),
                 Cupidon(),
@@ -532,8 +532,8 @@ class LobbyActivity : AppCompatActivity() {
             )
 
             11 -> arrayListOf(
-                LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(),
                 Voyante(),
                 Chasseur(),
                 Cupidon(),
@@ -542,7 +542,7 @@ class LobbyActivity : AppCompatActivity() {
 
             12 -> arrayListOf(
                 LoupGarou(), LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(),
+                Villageois(), Villageois(), Villageois(), Sorciere(),
                 Voyante(),
                 Chasseur(),
                 Cupidon(),
@@ -551,8 +551,8 @@ class LobbyActivity : AppCompatActivity() {
             )
 
             13 -> arrayListOf(
-                LoupGarou(), LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                LoupGarou(), LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(),
                 Voyante(),
                 Chasseur(),
                 Cupidon(),
@@ -561,8 +561,8 @@ class LobbyActivity : AppCompatActivity() {
             )
 
             14 -> arrayListOf(
-                LoupGarou(), LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                LoupGarou(), LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(), Sorciere(),
                 Voyante(),
                 Chasseur(),
                 Cupidon(),
@@ -571,8 +571,8 @@ class LobbyActivity : AppCompatActivity() {
             )
 
             15 -> arrayListOf(
-                LoupGarou(), LoupGarou(), LoupGarou(),
-                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
+                LoupGarou(), LoupGarou(), LoupGarou(), LoupGarou(),
+                Villageois(), Villageois(), Villageois(), Villageois(), Villageois(), Villageois(),
                 Voyante(),
                 Cupidon(),
                 Chasseur(),
@@ -584,7 +584,7 @@ class LobbyActivity : AppCompatActivity() {
                 LoupGarou(),
                 LoupGarou(),
                 LoupGarou(),
-                Villageois(),
+                LoupGarou(),
                 Villageois(),
                 Villageois(),
                 Villageois(),

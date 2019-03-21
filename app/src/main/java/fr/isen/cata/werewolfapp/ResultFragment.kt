@@ -41,8 +41,6 @@ class ResultFragment : Fragment() {
 
         val players: ArrayList<PlayerModel?> = ArrayList()
 
-        adapter = PrintDeadAdapter(players)
-        deadRecyclerView.adapter = adapter
 
         getDeadPlayers(players)
 
