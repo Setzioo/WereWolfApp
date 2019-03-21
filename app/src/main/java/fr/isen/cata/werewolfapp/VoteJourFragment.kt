@@ -189,9 +189,9 @@ class VoteJourFragment : Fragment() {
                                 }
                             }
                         }
-                    } else {
-                        noPlayerAliveMessage.text = "Les vivants votent..."
                     }
+                } else {
+                    noPlayerAliveMessage.text = "Les vivants votent..."
                 }
             }
 

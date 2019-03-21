@@ -25,7 +25,7 @@ class PrintDeadAdapter(private val players: ArrayList<PlayerModel?>) :
         holder.pseudoButton.text = players[position]!!.pseudo
         holder.roleButton.text = players[position]!!.role
         holder.heartIcon.bringToFront()
-        if(players[position]!!.charmed){
+        if(players[position]!!.inLove){
             holder.heartIcon.setImageResource(R.drawable.coeur_amoureux)
         }
     }
