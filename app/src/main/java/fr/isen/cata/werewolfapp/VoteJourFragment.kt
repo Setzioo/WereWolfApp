@@ -28,7 +28,7 @@ class VoteJourFragment : Fragment() {
     var gameName: String = ""
     var game: PartyModel? = null
     var listId: MutableList<String>? = arrayListOf()
-    private val compteurMax: Long = 10
+    private val compteurMax: Long = 40
     var isAlivePlayer: Boolean = false
     var isMasterPlayer: Boolean = true
     val players: ArrayList<PlayerModel?> = ArrayList()
