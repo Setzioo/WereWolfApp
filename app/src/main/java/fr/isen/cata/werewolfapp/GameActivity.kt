@@ -504,27 +504,44 @@ class GameActivity : AppCompatActivity() {
                     if (gameStarted) {
                         val bool = dataSnapshot.value as Boolean
                         if (bool) {
-                            if (musicPlayer != null) {
-                                musicPlayer!!.stop()
+                            if (soundPlayer != null) {
+                                soundPlayer!!.stop()
                             }
-                            musicPlayer = MediaPlayer.create(context, R.raw.musique_nuit)
-                            musicPlayer!!.start()
+                            soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
+                            soundPlayer!!.start()
+                            soundPlayer!!.setOnCompletionListener {
+                                if (musicPlayer != null) {
+                                    musicPlayer!!.stop()
+                                }
+                                musicPlayer = MediaPlayer.create(context, R.raw.musique_nuit)
+                                musicPlayer!!.start()
 
-                            lowerFlags()
-                            if (!game!!.Flags!!.CupidonFlag) {
-                                raiseFlagCupidon()
-                            } else {
-                                raiseFlagVoyante()
+
+                                lowerFlags()
+                                if (!game!!.Flags!!.CupidonFlag) {
+                                    raiseFlagCupidon()
+                                } else {
+                                    raiseFlagVoyante()
+                                }
                             }
+
                         } else {
-                            if (musicPlayer != null) {
-                                musicPlayer!!.stop()
+                            if (soundPlayer != null) {
+                                soundPlayer!!.stop()
                             }
-                            musicPlayer = MediaPlayer.create(context, R.raw.village_reveil_7min)
-                            musicPlayer!!.start()
+                            soundPlayer = MediaPlayer.create(context, R.raw.village_reveil)
+                            soundPlayer!!.start()
+                            soundPlayer!!.setOnCompletionListener {
+                                if (musicPlayer != null) {
+                                    musicPlayer!!.stop()
+                                }
+                                musicPlayer = MediaPlayer.create(context, R.raw.village_reveil_7min)
+                                musicPlayer!!.start()
 
-                            nbTour++
-                            raiseFlagDeadNight()
+                                nbTour++
+                                raiseFlagDeadNight()
+                            }
+
                         }
                     } else {
                         gameStarted = true
@@ -730,7 +747,7 @@ class GameActivity : AppCompatActivity() {
                         if (soundPlayer != null) {
                             soundPlayer!!.stop()
                         }
-                        soundPlayer = MediaPlayer.create(context, R.raw.village_endort)
+                        soundPlayer = MediaPlayer.create(context, R.raw.village_endort) // TODO : musique loup a mettre
                         soundPlayer!!.start()
                         soundPlayer!!.setOnCompletionListener {
                             raiseFlagSorciere()
@@ -1211,6 +1228,7 @@ class GameActivity : AppCompatActivity() {
                     }
 
                     alivePlayers!!.clear()
+                    listRoleAlive!!.clear()
 
                     if (aliveId != null) {
                         for (i in aliveId!!) {
