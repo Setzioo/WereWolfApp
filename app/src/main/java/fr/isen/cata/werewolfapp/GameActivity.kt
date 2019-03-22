@@ -159,7 +159,16 @@ class GameActivity : AppCompatActivity() {
                                     }
                                 }
                                 if (!randomFlag) {
-                                    raiseFlagVote()
+                                    if (currentPlayer!!.id == game!!.masterId) {
+                                        mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag")
+                                            .setValue(true)
+                                    }
+                                }
+                            }
+                            else {
+                                if (currentPlayer!!.id == game!!.masterId) {
+                                    mDatabase.child("Party").child(gameName).child("FinishFlags").child("ChasseurFlag")
+                                        .setValue(true)
                                 }
                             }
 
