@@ -317,7 +317,7 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if (listRole!!.contains("Pipoteur")) {
+                        if (listRole!!.contains("Pipoteur")) { //TODO : changer en listRoleAlive
                             if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
@@ -346,7 +346,7 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if (listRole!!.contains("Pipoteur")) {
+                        if (listRole!!.contains("Pipoteur")) { //TODO : changer en listRoleAlive
                             if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
@@ -464,7 +464,7 @@ class GameActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val bool = dataSnapshot.value as Boolean
                     if (bool) {
-                        if (listRole!!.contains("Voyante")) {
+                        if (listRole!!.contains("Voyante")) { //TODO : changer listRole en listRoleAlive
                             if (soundPlayer != null) {
                                 soundPlayer!!.stop()
                             }
@@ -479,8 +479,8 @@ class GameActivity : AppCompatActivity() {
                                     .setValue(true)
                             }
 
-                        }
-                    }
+                }
+            }
 
                 }
             }
