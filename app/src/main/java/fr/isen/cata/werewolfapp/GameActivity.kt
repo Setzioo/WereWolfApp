@@ -62,6 +62,10 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+
+    }
+
     private fun getPlayerInfo() {
 
         val id: String = auth.currentUser!!.uid
