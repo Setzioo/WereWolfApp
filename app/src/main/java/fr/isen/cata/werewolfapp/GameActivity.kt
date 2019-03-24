@@ -751,7 +751,7 @@ class GameActivity : AppCompatActivity() {
                         if (soundPlayer != null) {
                             soundPlayer!!.stop()
                         }
-                        soundPlayer = MediaPlayer.create(context, R.raw.village_endort) // TODO : musique loup a mettre
+                        soundPlayer = MediaPlayer.create(context, R.raw.loup_endort) // TODO : musique loup a mettre
                         soundPlayer!!.start()
                         soundPlayer!!.setOnCompletionListener {
                             raiseFlagSorciere()
